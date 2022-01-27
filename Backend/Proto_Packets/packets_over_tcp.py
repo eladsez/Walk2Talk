@@ -1,7 +1,8 @@
 from typing import List
 
+from scapy.layers.inet import IP, TCP
+from scapy.packet import Raw
 
-# SCAPPY :O:.:><
 
 def create_active_clients_packet():
     """
@@ -9,6 +10,7 @@ def create_active_clients_packet():
     The client can send it to the server to get the active clients on the server
     :return:
     """
+
     pass
 
 
@@ -19,7 +21,11 @@ def active_clients_packet(client_names: List[str]):
     :param client_names:
     :return:
     """
-    pass
+    l1 = IP(dst='')  # dest ip, where we want to send the pkt
+    l2 = TCP()  # on which protocol to invoke it
+    l3 = Raw(load=client_names)  # what data to send
+    pkt = l1 / l2 / l3
+    return pkt
 
 
 def create_server_files_packet():
@@ -38,7 +44,11 @@ def server_files_packet(files: List[str]):
     :param files:
     :return:
     """
-    pass
+    l1 = IP(dst='')  # dest ip, where we want to send the pkt
+    l2 = TCP()  # on which protocol to invoke it
+    l3 = Raw(load=files)  # what data to send
+    pkt = l1 / l2 / l3
+    return pkt
 
 
 def create_msg_packet(reciever_name: str, sender_name: str, msg: str):
@@ -48,6 +58,7 @@ def create_msg_packet(reciever_name: str, sender_name: str, msg: str):
     :param reciever_name:
     :return:
     """
+    pass
 
 
 def msg_packet(sender_name: str, msg: str):
@@ -58,7 +69,11 @@ def msg_packet(sender_name: str, msg: str):
     :param msg:
     :return:
     """
-    pass
+    l1 = IP(dst='')  # dest ip, where we want to send the pkt
+    l2 = TCP()  # on which protocol to invoke it
+    l3 = Raw(load=msg)  # what data to send
+    pkt = l1 / l2 / l3
+    return pkt
 
 
 def encrypt_packet(dekan_pkt):
@@ -77,3 +92,9 @@ def decrypt_packet(encrypted_pkt):
     :return:
     """
     pass
+
+
+if __name__ == '__main__':
+    clients = ["Josh", "Mike", "Ron"]
+    print(active_clients_packet(clients).show())
+    print(clients)
