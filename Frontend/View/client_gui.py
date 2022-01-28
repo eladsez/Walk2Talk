@@ -58,6 +58,7 @@ class Room():
                            command=None)  # TODO: fill this with the disconnect command
         exit_chat.place(relheight=0.0570, relwidth=0.1190, relx=0.0080, rely=0.0075)
 
+        # TODO: sending messages should integrate with the msg_box and only allow to send when clicked on it
         # send msg button:
         send_msg = Button(self.chat_window, text="Send", command=None)  # TODO: fill this with the send command
         send_msg.place(relheight=0.1050, relwidth=0.135, relx=0.7180, rely=0.8875)
@@ -65,6 +66,23 @@ class Room():
         # send all button:
         send_msg = Button(self.chat_window, text="Send All", command=None)  # TODO: fill this with the send all command
         send_msg.place(relheight=0.1050, relwidth=0.135, relx=0.8580, rely=0.8875)
+
+        # get clients
+        get_clients = Button(self.chat_window, text="Show Connected",
+                             command=None)  # TODO: fill this with the refresh connected
+        get_clients.place(relheight=0.0570, relwidth=0.2680, relx=0.7250, rely=0.0075)
+
+        # files / clients box:
+        data = Label(self.chat_window, text="Files/Connected Clients")
+        data.place(relheight=0.0650, relwidth=0.27, relx=0.723, rely=0.0750)
+
+        # get files
+        get_files = Button(self.chat_window, text="Show Files", command=None)  # TODO: fill with right command
+        get_files.place(relheight=0.0570, relwidth=0.2680, relx=0.442, rely=0.0075)
+
+        #clear chat:
+        clear_chat = Button(self.chat_window,text="Clear Chat",command = None) #TODO: create a command for that
+        clear_chat.place(relheight=0.0650, relwidth=0.27, relx=0.442, rely=0.0750)
 
     def generate_background(self):
         # Background load:
