@@ -1,6 +1,6 @@
 """
 This class is a listener class that each client has, and it keeps the client on listening to the server.
-it updates constantly the client data send - recv.
+it updates constantly the client imgs send - recv.
 we use it by implementing the observable design pattern.
 """
 
@@ -27,7 +27,7 @@ class Listener():
 
     def notify(self, client, *args, **kwargs):
         """
-        This method updates the data to all clients.
+        This method updates the imgs to all clients.
         :param client:
         :param args:
         :param kwargs:

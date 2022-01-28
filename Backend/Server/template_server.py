@@ -27,13 +27,13 @@ class Server:
     def handle_client(self, client_addr):
         while True:
             client_sock = self.clients[client_addr]
-            # data received from client
-            data = client_sock.recv(1024)
-            if not data:
+            # imgs received from client
+            imgs = client_sock.recv(1024)
+            if not imgs:
                 print('Bye')
                 # lock released on exit
                 break
-            self.broadcast(client_addr, data)
+            self.broadcast(client_addr, imgs)
 
         self.clients.pop(client_addr)
         # connection closed

@@ -17,13 +17,13 @@ def create_active_clients_packet():
 def active_clients_packet(client_names: List[str]):
     """
     This method gets the client name list.
-    it imports the data to a packet which the server will send to the client the request came from.
+    it imports the imgs to a packet which the server will send to the client the request came from.
     :param client_names:
     :return:
     """
-    l1 = IP(dst='')  # dest ip, where we want to send the pkt
+    l1 = IP(dst='127.0.0.1')  # dest ip, where we want to send the pkt
     l2 = TCP()  # on which protocol to invoke it
-    l3 = Raw(load=client_names)  # what data to send
+    l3 = Raw(load=client_names)  # what imgs to send [ shaked , guy, elad, nerya ]
     pkt = l1 / l2 / l3
     return pkt
 
@@ -40,13 +40,13 @@ def create_server_files_packet():
 def server_files_packet(files: List[str]):
     """
     This methods gets the server files list.
-    it imports the data to a packet which the server will send to the client.
+    it imports the imgs to a packet which the server will send to the client.
     :param files:
     :return:
     """
     l1 = IP(dst='')  # dest ip, where we want to send the pkt
     l2 = TCP()  # on which protocol to invoke it
-    l3 = Raw(load=files)  # what data to send
+    l3 = Raw(load=files)  # what imgs to send
     pkt = l1 / l2 / l3
     return pkt
 
@@ -64,14 +64,14 @@ def create_msg_packet(reciever_name: str, sender_name: str, msg: str):
 def msg_packet(sender_name: str, msg: str):
     """
     This method gets the sender name.
-    it imports the data to a packet which will be sent to the receiver ( other client )
+    it imports the imgs to a packet which will be sent to the receiver ( other client )
     :param sender_name:
     :param msg:
     :return:
     """
     l1 = IP(dst='')  # dest ip, where we want to send the pkt
     l2 = TCP()  # on which protocol to invoke it
-    l3 = Raw(load=msg)  # what data to send
+    l3 = Raw(load=msg)  # what imgs to send
     pkt = l1 / l2 / l3
     return pkt
 
