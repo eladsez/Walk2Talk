@@ -1,17 +1,32 @@
 from typing import List
 
-from scapy.layers.inet import IP, TCP
-from scapy.packet import Raw
+MSG_TYPE = '1'
+REQ_TYPE = '2'
+LIST_TYPE = '3'
+
+"""
+----------------------------massage packet template----------------------------
+ 1 (massage type) | sender name | receiver name (could be 'broadcast')| massage
+-------------------------------------------------------------------------------
+
+-------------------------list/names request packet template--------------------
+ 2 (request type) | files/names
+-------------------------------------------------------------------------------
+
+--------------------------list response packet template------------------------
+ 3 (list type) | files/names | the list in str format separate with ','
+-------------------------------------------------------------------------------
+
+"""
 
 
-def create_active_clients_packet():
+def get_active_clients_packet():
     """
     This method returns a single packet.
     The client can send it to the server to get the active clients on the server
     :return:
     """
-
-    pass
+    return REQ_TYPE + '|names'
 
 
 def active_clients_packet(client_names: List[str]):
@@ -21,62 +36,66 @@ def active_clients_packet(client_names: List[str]):
     :param client_names:
     :return:
     """
-    l1 = IP(dst='127.0.0.1')  # dest ip, where we want to send the pkt
-    l2 = TCP()  # on which protocol to invoke it
-    l3 = Raw(load=client_names)  # what imgs to send [ shaked , guy, elad, nerya ]
-    pkt = l1 / l2 / l3
+    pkt = LIST_TYPE + '|names|' + client_names[0]
+    for name in client_names:
+        if client_names[0] == name:
+            continue
+        pkt += ',' + name
     return pkt
 
 
-def create_server_files_packet():
+def get_server_files_packet():
     """
     This method returns a single packet.
     The client can send it to the server to get the file list available to download on the server.
     :return:
     """
-    pass
+    return REQ_TYPE + '|flies'
 
 
 def server_files_packet(files: List[str]):
     """
     This methods gets the server files list.
-    it imports the imgs to a packet which the server will send to the client.
+    it imports the images to a packet which the server will send to the client.
     :param files:
     :return:
     """
-    l1 = IP(dst='')  # dest ip, where we want to send the pkt
-    l2 = TCP()  # on which protocol to invoke it
-    l3 = Raw(load=files)  # what imgs to send
-    pkt = l1 / l2 / l3
+    pkt = LIST_TYPE + '|files|' + files[0]
+    for name in files:
+        if files[0] == name:
+            continue
+        pkt += ',' + name
     return pkt
 
 
-def create_msg_packet(reciever_name: str, sender_name: str, msg: str):
-    """
-    This method creates a packet contains:
-    a text message and a name to send it to.
-    :param reciever_name:
-    :return:
-    """
-    pass
+# def get_msg_packet(receiver_name: str, sender_name: str, msg: str):
+#     """
+#     This method creates a packet contains:
+#     a text message and a name to send it to.
+#     :param receiver_name:
+#     :return:
+#     """
+#     pass
 
 
-def msg_packet(sender_name: str, msg: str):
+def msg_packet(sender_name: str, receiver_name: str, msg: str):
     """
     This method gets the sender name.
-    it imports the imgs to a packet which will be sent to the receiver ( other client )
+    it imports the images to a packet which will be sent to the receiver ( other client )
+    :param receiver_name:
     :param sender_name:
     :param msg:
     :return:
     """
-    l1 = IP(dst='')  # dest ip, where we want to send the pkt
-    l2 = TCP()  # on which protocol to invoke it
-    l3 = Raw(load=msg)  # what imgs to send
-    pkt = l1 / l2 / l3
+    pkt = MSG_TYPE + "|" + sender_name
+    if receiver_name == "":
+        pkt += '|broadcast'
+    else:
+        pkt += '|' + receiver_name
+    pkt += '|' + msg
     return pkt
 
-
-def encrypt_packet(dekan_pkt):
+def encrypt_packet(pkt):
     """
     This method encrypts our packet and sends it to the client as an encrypted,
     he will be able to decrypt it using the decrypt message in the server.
@@ -95,6 +114,4 @@ def decrypt_packet(encrypted_pkt):
 
 
 if __name__ == '__main__':
-    clients = ["Josh", "Mike", "Ron"]
-    print(active_clients_packet(clients).show())
-    print(clients)
+    print('bla')
