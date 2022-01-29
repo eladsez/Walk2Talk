@@ -1,26 +1,26 @@
 from tkinter import *
 from PIL import ImageTk, Image
-from Frontend.Controller import Controller
+from Client.Controller import Controller
 import os
 
 
 class Room():
 
     def __init__(self):
-        # This is the chat window, it will be hidden for new users to until they join the room.
+        # This is the chat window, it will be hidden for new users until they join the room.
         self.chat_window = Tk()
         # imgs abs paths:
         os.chdir(os.path.abspath(os.path.join(os.getcwd(), os.pardir)))
-        parent_path = Controller.resource_path(relative_path='View')
-        self.images_path = parent_path + "/imgs/"
+        parent_path = Controller.resource_path(relative_path='frontend')
+        self.images_path = parent_path + "\\imgs\\"
 
         self.chat_window_builder()
         self.chat_window.withdraw()
 
         # login window
-        # self.chat_login = Toplevel()
-        # self.chat_login_builder()
-        self.enter_chat()
+        self.chat_login = Toplevel()
+        self.chat_login_builder()
+        # self.enter_chat()
         self.chat_window.mainloop()
 
     def chat_login_builder(self):
@@ -43,7 +43,7 @@ class Room():
         # create background:
         self.generate_background()
 
-        # server msg box:
+        # Server msg box:
         self.creator(operator="Text", text="", command=0.974, relheight=0.6530,
                      relwidth=0.6980, relx=0.0080,
                      rely=0.19)
@@ -53,7 +53,7 @@ class Room():
                      relwidth=0.2680, relx=0.723,
                      rely=0.19)
 
-        # client msg box:
+        # Client msg box:
         self.creator(operator="Entry", text="", command=None, relheight=0.1050,
                      relwidth=0.6975, relx=0.01,
                      rely=0.8875)
@@ -106,14 +106,14 @@ class Room():
         :return: None
         """
         parts = None
-        if operator == "Button":
+        if operator == 'Button':
             parts = Button(self.chat_window, text=text, command=command)
-        elif operator == "Label":
+        if operator == 'Label':
             parts = Label(self.chat_window, text=text)
-        elif operator == "Entry":
+        if operator == 'Entry':
             parts = Entry(self.chat_window)
-        elif operator == "Text":
-            parts = Text(self.chat_window)
+        if operator == 'Text':
+            parts = Text(self.chat_window, font=("Helvetica", 32))
             parts.config(state=DISABLED)
             # scrollbar:
             scrollbar = Scrollbar(parts)
@@ -130,7 +130,7 @@ class Room():
         bg.pack(side='top', fill='both', expand='yes')
 
     def enter_chat(self):
-        # self.chat_login.destroy()
+        self.chat_login.destroy()
         self.chat_window.deiconify()  # TODO: MOVE TO CONTROLLER
 
 
@@ -139,12 +139,12 @@ if __name__ == '__main__':
 """
 THIS IS OLD CREATOR: 
 
- # client msg box:
+ # Client msg box:
         client_msg = Entry(self.chat_window)
-        client_msg.place(relheight=0.1050, relwidth=0.6975, relx=0.01, rely=0.8875)  # MEASURES FOR THE client msg box
+        client_msg.place(relheight=0.1050, relwidth=0.6975, relx=0.01, rely=0.8875)  # MEASURES FOR THE Client msg box
 
         # disconnect button:
-        # ELAD -> i want this command to make the client to return to the login menu again.
+        # ELAD -> i want this command to make the Client to return to the login menu again.
         exit_chat = Button(self.chat_window, text="Exit Chat",
                            command=Controller.disconnect)
         exit_chat.place(relheight=0.0570, relwidth=0.1190, relx=0.0080, rely=0.0075)

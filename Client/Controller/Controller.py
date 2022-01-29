@@ -4,7 +4,7 @@ import sys
 
 def disconnect():
     """
-    This method disconnets a client from the chat, and returns him to the menu
+    This method disconnect a Client from the chat, and returns him to the menu
     :return:
     """
     pass
@@ -37,7 +37,7 @@ def get_clients():
 
 def get_files():
     """
-    This method shows to the client the available files to download in the chat
+    This method shows to the Client the available files to download in the chat
     :return:
     """
     pass
@@ -57,6 +57,6 @@ def resource_path(relative_path):
         # PyInstaller creates a temp folder and stores path in _MEIPASS
         base_path = sys._MEIPASS
     except Exception:
-        base_path = os.path.abspath(".")
+        base_path = os.path.abspath("")
 
     return os.path.join(base_path, relative_path)

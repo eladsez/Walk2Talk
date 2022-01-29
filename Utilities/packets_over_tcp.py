@@ -6,7 +6,7 @@ LIST_TYPE = '3'
 
 
 """
-----------------------------massage packet template----------------------------
+---------------------------massage packet template----------------------------
  1 (massage type) | sender name | receiver name (could be 'broadcast')| massage
 -------------------------------------------------------------------------------
 
@@ -24,7 +24,7 @@ LIST_TYPE = '3'
 def get_active_clients_packet():
     """
     This method returns a single packet.
-    The client can send it to the server to get the active clients on the server
+    The Client can send it to the Server to get the active clients on the Server
     :return:
     """
     return REQ_TYPE + '|names'
@@ -32,8 +32,8 @@ def get_active_clients_packet():
 
 def active_clients_packet(client_names: List[str]):
     """
-    This method gets the client name list.
-    it imports the imgs to a packet which the server will send to the client the request came from.
+    This method gets the Client name list.
+    it imports the imgs to a packet which the Server will send to the Client the request came from.
     :param client_names:
     :return:
     """
@@ -48,7 +48,7 @@ def active_clients_packet(client_names: List[str]):
 def get_server_files_packet():
     """
     This method returns a single packet.
-    The client can send it to the server to get the file list available to download on the server.
+    The Client can send it to the Server to get the file list available to download on the Server.
     :return:
     """
     return REQ_TYPE + '|flies'
@@ -56,8 +56,8 @@ def get_server_files_packet():
 
 def server_files_packet(files: List[str]):
     """
-    This methods gets the server files list.
-    it imports the images to a packet which the server will send to the client.
+    This methods gets the Server files list.
+    it imports the images to a packet which the Server will send to the Client.
     :param files:
     :return:
     """
@@ -82,7 +82,7 @@ def server_files_packet(files: List[str]):
 def msg_packet(sender_name: str, receiver_name: str, msg: str):
     """
     This method gets the sender name.
-    it imports the images to a packet which will be sent to the receiver ( other client )
+    it imports the images to a packet which will be sent to the receiver ( other Client )
     :param receiver_name:
     :param sender_name:
     :param msg:
@@ -99,8 +99,8 @@ def msg_packet(sender_name: str, receiver_name: str, msg: str):
 
 def encrypt_packet(pkt):
     """
-    This method encrypts our packet and sends it to the client as an encrypted,
-    he will be able to decrypt it using the decrypt message in the server.
+    This method encrypts our packet and sends it to the Client as an encrypted,
+    he will be able to decrypt it using the decrypt message in the Server.
     :return:
     """
     pass

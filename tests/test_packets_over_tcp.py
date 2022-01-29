@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from Backend.Proto_Packets import packets_over_tcp
+from Utilities import packets_over_tcp
 
 
 class Test(TestCase):

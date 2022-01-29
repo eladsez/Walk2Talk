@@ -12,10 +12,10 @@ class Server:
         self.clients_sock = {}  # (socket:name)
         self.clients_threads = []
         try:
-            self.serverSock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  # socket for client to connect
+            self.serverSock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  # socket for Client to connect
             self.serverSock.bind(self.addr)
         except socket.error:
-            print("ERROR with server Socket creation or bind")
+            print("ERROR with Server Socket creation or bind")
 
     def listen_for_clients(self):
         self.serverSock.listen(5)

@@ -12,7 +12,7 @@ class Client:
         try:
             self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         except socket.error as err:
-            print("ERROR, failed to create client socket")
+            print("ERROR, failed to create Client socket")
             raise err
         self.recv_thread = None
         self.send_thread = None
@@ -21,7 +21,7 @@ class Client:
         try:
             self.sock.connect(addr)
         except socket.error as err:
-            print("ERROR, client failed to connect the server")
+            print("ERROR, Client failed to connect the Server")
             raise err
         self.recv_thread = threading.Thread(target=self.receive)
         self.send_thread = threading.Thread(target=self.send)
@@ -33,7 +33,7 @@ class Client:
 
     def disconnect(self):
         """
-        This method disconnects the client from the server
+        This method disconnects the Client from the Server
         :return:
         """
         pass
@@ -47,7 +47,7 @@ class Client:
                 if pkt == '|-bye-|':
                     break
             except socket.error:
-                print('ERROR client failed in receive')
+                print('ERROR Client failed in receive')
                 break
 
     def handle_pkt(self, pkt: str):
@@ -55,7 +55,6 @@ class Client:
         layers = pkt.split('|')
         match layers[0]:
             case MSG_TYPE:
-
                 pass
             case LIST_TYPE:
                 pass
@@ -70,19 +69,19 @@ class Client:
                 if msg == 'exit':
                     break
             except socket.error:
-                print('ERROR client failed trying to send')
+                print('ERROR Client failed trying to send')
                 break
 
     def recv_names(self) -> list:
         """
-        This method returns all the client names in the chat
+        This method returns all the Client names in the chat
         :return:
         """
         pass
 
     def recv_files(self) -> list:
         """
-        This method returns all the file names in the server.
+        This method returns all the file names in the Server.
         :return:
         """
         pass
