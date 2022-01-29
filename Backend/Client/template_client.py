@@ -1,59 +1,35 @@
-from abc import ABC
-
-"""
 import socket
 import threading
 
+MSG_TYPE = '1'
+REQ_TYPE = '2'
+LIST_TYPE = '3'
+
 
 class Client:
-    def _init_(self):
+
+    def __init__(self):
         try:
-            self.send_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            self.recv_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         except socket.error as err:
-            print('ERROR in socket creation')
-        self.listen_thread = None
+            print("ERROR, failed to create client socket")
+            raise err
+        self.recv_thread = None
         self.send_thread = None
 
-    def listen(self):
-        while True:
-            massage = self.recv_sock.recv(1024).decode('ascii')
-            print(f"from server: {massage}")
-            if massage == 'bye':
-                break
-
-    def send(self):
-        while True:
-            message = input("Enter a massage:")
-            # message sent to server
-            self.send_sock.send(message.encode('ascii'))
-            if message == "exit":
-                break
-        # close the connection
-        self.send_sock.close()
-
     def connect(self, addr: tuple):
-        self.sock.connect(addr)
-        self.listen_thread = threading.Thread(target=self.listen())
-        self.send_thread= threading.Thread(target=self.send())
-        self.send_thread.start()
+        try:
+            self.sock.connect(addr)
+        except socket.error as err:
+            print("ERROR, client failed to connect the server")
+            raise err
+        self.recv_thread = threading.Thread(target=self.receive)
+        self.send_thread = threading.Thread(target=self.send)
         self.recv_thread.start()
-
-
-if _name_ == '_main_':
-    client = Client()
-    client.connect()
-"""
-
-
-class Client(ABC):
-
-    def connect(self):
-        """
-        This method connects the client to the server, aka listener.
-        :return:
-        """
-        pass
+        self.send_thread.start()
+        self.recv_thread.join()
+        self.send_thread.join()
+        self.sock.close()
 
     def disconnect(self):
         """
@@ -62,19 +38,40 @@ class Client(ABC):
         """
         pass
 
-    def send(self):
-        """
-        This method sends a single message to a required person.
-        :return:
-        """
-        pass
+    def receive(self):
+        while True:
+            try:
+                pkt = self.sock.recv(4096).decode()
+                print(pkt)
+                # self.handle_pkt(pkt)
+                if pkt == '|-bye-|':
+                    break
+            except socket.error:
+                print('ERROR client failed in receive')
+                break
 
-    def send_all(self):
-        """
-        This method sends a single message to everyone in the room ( broadcast )
-        :return:
-        """
-        pass
+    def handle_pkt(self, pkt: str):
+
+        layers = pkt.split('|')
+        match layers[0]:
+            case MSG_TYPE:
+
+                pass
+            case LIST_TYPE:
+                pass
+            case REQ_TYPE:
+                pass
+
+    def send(self):
+        while True:
+            try:
+                msg = input("YOU:")
+                self.sock.send(msg.encode())
+                if msg == 'exit':
+                    break
+            except socket.error:
+                print('ERROR client failed trying to send')
+                break
 
     def recv_names(self) -> list:
         """
@@ -104,3 +101,8 @@ class Client(ABC):
         :return:
         """
         pass
+
+
+if __name__ == '__main__':
+    client = Client()
+    client.connect(('127.0.0.1', 12345))

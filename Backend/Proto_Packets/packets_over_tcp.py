@@ -4,6 +4,7 @@ MSG_TYPE = '1'
 REQ_TYPE = '2'
 LIST_TYPE = '3'
 
+
 """
 ----------------------------massage packet template----------------------------
  1 (massage type) | sender name | receiver name (could be 'broadcast')| massage
@@ -95,6 +96,7 @@ def msg_packet(sender_name: str, receiver_name: str, msg: str):
     pkt += '|' + msg
     return pkt
 
+
 def encrypt_packet(pkt):
     """
     This method encrypts our packet and sends it to the client as an encrypted,
@@ -114,4 +116,7 @@ def decrypt_packet(encrypted_pkt):
 
 
 if __name__ == '__main__':
-    print('bla')
+    names = ['shaked', 'elad', 'bla']
+    files = ['bla.txt', 'gg.txt']
+    pkt = server_files_packet(files)
+    print(pkt)
