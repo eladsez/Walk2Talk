@@ -82,11 +82,14 @@ we chose to pass on it for now because had hard time integrate inside the projec
 #     parts.place(relheight=relheight, relwidth=relwidth, relx=relx, rely=rely)
 
 # Import the tkinter library
-import socket
+# import socket
+#
+# sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+# sock.connect(('127.0.0.1', 12345))
+# sock.send('shked'.encode())
+# while True:
+#     print(sock.recv(4096).decode())
+from Client.frontend.client_gui import Room
 
-sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-sock.connect(('127.0.0.1', 12345))
-sock.send('shked'.encode())
-while True:
-    print(sock.recv(4096).decode())
-
+if __name__ == '__main__':
+    Room()

@@ -1,4 +1,5 @@
 import threading
+from time import sleep
 from tkinter import Text, END, DISABLED, NORMAL, Entry, Tk, Toplevel
 
 from Client.backend.template_client import Client
@@ -14,21 +15,19 @@ class Controller:
         self.lock = threading.Lock()
         self.client = Client()
         self.addr = addr
-        self.recv_thread = None
+        self.recv_thread = threading.Thread(target=self.recv, daemon=True)
 
     def recv(self):
-        self.lock.acquire()
-        pkt = self.client.receive(self.client.sock)
-        print(pkt)
-        self.lock.release()
+        while True:
+            pkt = self.client.receive(self.client.sock)
+            print(pkt)
 
     def connect(self, login: Toplevel, chat: Tk, client_name):
         self.client.connect(self.addr, client_name)
         self.client.send_name(client_name)
         login.withdraw()
         chat.deiconify()
-
-        # threading.Thread(target=self.recv()).start()
+        self.recv_thread.start()
 
     def exit_chat(self, login: Toplevel, chat: Tk):
         """
@@ -50,9 +49,10 @@ class Controller:
             return
         msg_box.delete(0, END)
         self.client.send_msg(msg)  # send the msg to the server
+        name = self.client.client_name
         # Display the msg:
         text_box.config(state=NORMAL)
-        text_box.insert(END, '\nME: ' + msg)
+        text_box.insert(END, '\n' + name + ": " + msg)
         text_box.config(state=DISABLED)
         text_box.update()
 
