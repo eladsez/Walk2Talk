@@ -42,7 +42,8 @@ class Room:
         txt_name = Entry(self.chat_login)
         txt_name.place(relheight=0.15, relwidth=0.5, relx=0.4, rely=0.15)
         # connect button:
-        connect = Button(self.chat_login, text="Connect", command=self.enter_chat)
+        connect = Button(self.chat_login, text="Connect", command=lambda: self.controller.connect(self.chat_login,
+                                                                                 self.chat_window, txt_name.get()))
         connect.place(relx=0.4, rely=0.55)
 
     def chat_window_builder(self):
@@ -82,9 +83,9 @@ class Room:
                           command=lambda: self.controller.send_msg(text_box=chat_box, msg_box=client_msg))
         send_msg.place(relheight=0.1050, relwidth=0.135, relx=0.7180, rely=0.8875)
 
-        # send all button:
-        send_msg = Button(self.chat_window, text="Send All", command=self.controller.send_all)
-        send_msg.place(relheight=0.1050, relwidth=0.135, relx=0.8580, rely=0.8875)
+        # # send all button:
+        # send_msg = Button(self.chat_window, text="Send All", command=self.controller.send_all)
+        # send_msg.place(relheight=0.1050, relwidth=0.135, relx=0.8580, rely=0.8875)
 
         # get clients button:
         get_clients = Button(self.chat_window, text="Show Connected",

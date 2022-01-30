@@ -1,7 +1,13 @@
 import threading
-from abc import ABC
 import socket
 from concurrent.futures import ThreadPoolExecutor
+
+from Utilities import packets_over_tcp
+
+MSG_TYPE = '1'
+REQ_TYPE = '2'
+LIST_TYPE = '3'
+NAME_TYPE = '4'
 
 
 class Server:
@@ -31,38 +37,45 @@ class Server:
         server.close()
 
     def handle_client(self, client_sock, client_addr):
-        client_sock.send('----------------------------------------------------'.encode())
-        client_sock.send('\n-----Welcome to chat room please enter you name-----'.encode())
-        client_sock.send('\n----------------------------------------------------'.encode())
-        client_sock.send('\nYOUR NAME:'.encode())
         client_name = client_sock.recv(4096).decode()
         self.clients_sock[client_sock] = client_name
         self.clients_addr[client_name] = client_addr
-        self.broadcast(f'***** {client_name} connected *****', client_sock)
+        print(f'***** {client_name} connected *****')
+        connected_msg = packets_over_tcp.msg_packet('server', 'broadcast', f'***** {client_name} connected *****')
+        self.broadcast(connected_msg, client_sock)
         while True:
             try:
                 pkt = client_sock.recv(4096).decode()
             except socket.error:
                 continue
             if pkt != '|-exit-|':
-                self.handle_pkt(pkt)
-                # msg = client_name + ': ' + msg
-                # self.broadcast(msg, client_sock)
+                self.handle_pkt(pkt, client_sock)
             else:
                 client_sock.send('|-bye-|'.encode())
                 self.remove_client(client_sock)
                 break
 
-    def handle_pkt(self, pkt: str):
+    def handle_pkt(self, pkt: str, client_sock):
         layers = pkt.split('|')
-        pass
+        if layers[0] == REQ_TYPE:
+            pass
+        elif layers[0] == MSG_TYPE:
+            if layers[2] != 'broadcast':
+                receiver_sock = socket.socket(
+                    list(self.clients_sock.keys())[list(self.clients_sock.values()).index(layers[2])])
+                try:
+                    receiver_sock.send(pkt.encode())
+                except socket.error as err:
+                    raise err
+            else:
+                self.broadcast(pkt, client_sock)
 
-    def broadcast(self, msg, conn=None):
+    def broadcast(self, pkt, conn=None):
         for client in self.clients_sock:
             if client == conn:
                 continue
             try:
-                client.send(msg.encode())
+                client.send(pkt.encode())
             except socket.error:
                 self.removeClient(client)
 
@@ -71,7 +84,7 @@ class Server:
             self.broadcast(f'***** {self.clients_sock[client_sock]} disconnected *****', client_sock)
             name = self.clients_sock[client_sock]
             del self.clients_sock[client_sock]
-            del self.clients_addr[client_sock]
+            del self.clients_addr[name]
 
 
 if __name__ == '__main__':
