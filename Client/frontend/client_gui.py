@@ -35,15 +35,17 @@ class Room:
         """
         self.chat_login.title("Login")
         self.chat_login.resizable(width=FALSE, height=FALSE)
-        self.chat_login.configure(width=400, height=300)
+        self.chat_login.configure(width=450, height=500)
+        # create background:
+        self.generate_background(name="Login.png", window=self.chat_login)
+
         # name label & entry:
-        name = Label(self.chat_login, text="Enter your name:", justify=CENTER)
-        name.place(relheight=0.15, relx=0.1, rely=0.15)
         txt_name = Entry(self.chat_login)
-        txt_name.place(relheight=0.15, relwidth=0.5, relx=0.4, rely=0.15)
+        txt_name.insert(0, "Username")
+        txt_name.place(relheight=0.0580, relwidth=0.3850, relx=0.308, rely=0.4885)
         # connect button:
         connect = Button(self.chat_login, text="Connect", command=self.enter_chat)
-        connect.place(relx=0.4, rely=0.55)
+        connect.place(relheight=0.0580, relwidth=0.3850, relx=0.308, rely=0.6080)
 
     def chat_window_builder(self):
         """
@@ -54,7 +56,7 @@ class Room:
         self.chat_window.resizable(width=TRUE, height=TRUE)
         self.chat_window.configure(width=700, height=600)
         # create background:
-        self.generate_background()
+        self.generate_background(name="Template.png", window=self.chat_window)
 
         # chat_box:
         chat_box = Text(self.chat_window, font=("Helvetica", 14))
@@ -115,16 +117,16 @@ class Room:
         scrollbar.place(relheight=1, relx=x)
         scrollbar.config(command=txt.yview)
 
-    def generate_background(self):
+    def generate_background(self, name: str, window):
         # TODO: make this resizable
         """
         This method generates the background for our chat box,
         :return:
         """
         # Background load:
-        template = Image.open(self.images_path + "Template.png")
+        template = Image.open(self.images_path + name)
         img = ImageTk.PhotoImage(template)
-        bg = Label(self.chat_window, image=img)
+        bg = Label(window, image=img)
         bg.image = img
         bg.pack(side='top', fill='both', expand='yes')
 
