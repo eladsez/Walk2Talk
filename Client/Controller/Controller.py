@@ -28,7 +28,7 @@ class Controller:
         login.withdraw()
         chat.deiconify()
 
-        threading.Thread(target=self.recv()).start()
+        # threading.Thread(target=self.recv()).start()
 
     def exit_chat(self, login: Toplevel, chat: Tk):
         """
