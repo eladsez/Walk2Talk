@@ -1,6 +1,6 @@
 from tkinter import *
 from PIL import ImageTk, Image
-from Client.Controller import Controller
+from Client.Controller.Controller import Controller
 import os
 
 
@@ -13,7 +13,6 @@ class Room():
         os.chdir(os.path.abspath(os.path.join(os.getcwd(), os.pardir)))
         parent_path = Controller.resource_path(relative_path='frontend')
         self.images_path = parent_path + "\\imgs\\"
-
         self.chat_window_builder()
         self.chat_window.withdraw()
 

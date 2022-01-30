@@ -10,7 +10,7 @@ LIST_TYPE = '3'
  1 (massage type) | sender name | receiver name (could be 'broadcast')| massage
 -------------------------------------------------------------------------------
 
--------------------------list/names request packet template--------------------
+-----------------------------list request packet template----------------------
  2 (request type) | files/names
 -------------------------------------------------------------------------------
 

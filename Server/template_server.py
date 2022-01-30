@@ -54,6 +54,7 @@ class Server:
                 break
 
     def handle_pkt(self, pkt: str):
+        layers = pkt.split('|')
         pass
 
     def broadcast(self, msg, conn=None):
