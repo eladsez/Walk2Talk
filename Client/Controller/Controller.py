@@ -22,7 +22,10 @@ class Controller:
             pkt = self.client.receive(self.client.sock)
             print(pkt)
 
-    def connect(self, login: Toplevel, chat: Tk, client_name):
+    def connect(self, login: Toplevel, chat: Tk, txt_name: Entry):
+        client_name = txt_name.get()
+        txt_name.delete(0, END)
+        txt_name.insert(0, "Username")
         self.client.connect(self.addr, client_name)
         self.client.send_name(client_name)
         login.withdraw()
@@ -38,12 +41,21 @@ class Controller:
         login.deiconify()
         chat.withdraw()  # TODO: fix this to make the chat "disappear" and to not show old contents after reestablishing connection
 
-    def send_msg(self, text_box: Text, msg_box: Entry):
+    def send_msg(self, text_box: Text, msg_box: Entry, receiver: Entry):
         """
         This method displays a message to certain person in the chat
         :return:
         """
-        # Extract data from client:
+        # Handle receiver:
+        receiver.delete(0, END)
+        dest = receiver.get()
+        if dest == "":
+            # TODO: broadcast
+            pass
+        else:
+            # TODO: using dest send the message to him.
+            pass
+        # Handle message:
         msg = msg_box.get()
         if msg == "":
             return

@@ -44,9 +44,9 @@ class Room:
         txt_name.insert(0, "Username")
         txt_name.place(relheight=0.0580, relwidth=0.3850, relx=0.308, rely=0.4885)
         # connect button:
-        connect = Button(self.chat_login, text="Connect", command=lambda :self.controller.connect(self.chat_login,
+        connect = Button(self.chat_login, text="Connect", command=lambda: self.controller.connect(self.chat_login,
                                                                                                   self.chat_window,
-                                                                                                  txt_name.get()))
+                                                                                                  txt_name))
         connect.place(relheight=0.0580, relwidth=0.3850, relx=0.308, rely=0.6080)
 
     def chat_window_builder(self):
@@ -81,14 +81,17 @@ class Room:
                            command=lambda: self.controller.exit_chat(self.chat_login, self.chat_window))
         exit_chat.place(relheight=0.0570, relwidth=0.1190, relx=0.0080, rely=0.0075)
 
-        # send msg button:
-        send_msg = Button(self.chat_window, text="Send",
-                          command=lambda: self.controller.send_msg(text_box=chat_box, msg_box=client_msg))
-        send_msg.place(relheight=0.1050, relwidth=0.135, relx=0.7180, rely=0.8875)
+        # client_name_chooser:
+        receiver = Entry(self.chat_window)
+        receiver.insert(0, "Receiver")
+        receiver.place(relheight=0.1050, relwidth=0.135, relx=0.7180, rely=0.8875)
 
-        # # send all button:
-        # send_msg = Button(self.chat_window, text="Send All", command=self.controller.send_all)
-        # send_msg.place(relheight=0.1050, relwidth=0.135, relx=0.8580, rely=0.8875)
+        # send msg button:
+        # TODO: make receiver viable
+        send_msg = Button(self.chat_window, text="Send",
+                          command=lambda: self.controller.send_msg(text_box=chat_box, msg_box=client_msg,receiver = receiver))
+        send_msg.place(relheight=0.1050, relwidth=0.135, relx=0.8580, rely=0.8875)
+
 
         # get clients button:
         get_clients = Button(self.chat_window, text="Show Connected",
