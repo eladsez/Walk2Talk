@@ -37,7 +37,7 @@ class Server:
         server.close()
 
     def handle_client(self, client_sock, client_addr):
-        client_name = client_sock.recv(4096).decode()
+        client_name = client_sock.recv(1024).decode()
         self.clients_sock[client_sock] = client_name
         self.clients_addr[client_name] = client_addr
         print(f'***** {client_name} connected *****')
@@ -55,14 +55,18 @@ class Server:
                 self.remove_client(client_sock)
                 break
 
+    def find_sock_by_name(self, name_to_find: str):
+        for sock, name in self.clients_sock.items():
+            if name == name_to_find:
+                return sock
+
     def handle_pkt(self, pkt: str, client_sock):
         layers = pkt.split('|')
         if layers[0] == REQ_TYPE:
             pass
         elif layers[0] == MSG_TYPE:
             if layers[2] != 'broadcast':
-                receiver_sock = socket.socket(
-                    list(self.clients_sock.keys())[list(self.clients_sock.values()).index(layers[2])])
+                receiver_sock = self.find_sock_by_name(layers[2])
                 try:
                     receiver_sock.send(pkt.encode())
                 except socket.error as err:

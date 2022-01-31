@@ -25,7 +25,6 @@ class Client:
             except socket.error as err:
                 print("ERROR, failed to create Client socket")
                 raise err
-
         self.client_name = client_name
         try:
             self.sock.connect(addr)
@@ -41,30 +40,22 @@ class Client:
         """
         self.sock.send('|-exit-|'.encode())
         self.sock.close()
-    @staticmethod
-    def receive(sock: socket.socket):
+
+    def receive(self):
         try:
-            pkt = sock.recv(1024).decode()
+            pkt = self.sock.recv(1024).decode()
             print(pkt)
-            # self.handle_pkt(pkt)
+            screen_view = self.handle_pkt(pkt)
             if pkt == '|-bye-|':
                 return
-            return pkt
+            return screen_view
         except socket.error:
             print('ERROR Client failed in receive')
 
     def handle_pkt(self, pkt: str):
-
         layers = pkt.split('|')
-        # match layers[0]:
-        #     case MSG_TYPE:
-        #         pass
-        #     case LIST_TYPE:
-        #         pass
-        #     case REQ_TYPE:
-
-    def send_name(self, client_name: str):
-        self.sock.send(client_name.encode())
+        if layers[0] == MSG_TYPE:
+            return '\n' + layers[1] + ': ' + layers[3]
 
     def send_msg(self, msg, receiver_name='broadcast'):
         msg = packets_over_tcp.msg_packet(self.client_name, receiver_name, msg)

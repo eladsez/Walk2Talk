@@ -19,6 +19,7 @@ class Room:
         os.chdir(os.path.abspath(os.path.join(os.getcwd(), os.pardir)))
         parent_path = Misc.resource_path(relative_path='frontend')
         self.images_path = parent_path + "/imgs/"
+        self.chat_box = None  # TODO: find better solution
         self.chat_window_builder()
         self.chat_window.withdraw()
         # login window
@@ -44,9 +45,11 @@ class Room:
         txt_name.insert(0, "Username")
         txt_name.place(relheight=0.0580, relwidth=0.3850, relx=0.308, rely=0.4885)
         # connect button:
+        # TODO: find better solution
         connect = Button(self.chat_login, text="Connect", command=lambda: self.controller.connect(self.chat_login,
                                                                                                   self.chat_window,
-                                                                                                  txt_name))
+                                                                                                  txt_name,
+                                                                                                  self.chat_box))
         connect.place(relheight=0.0580, relwidth=0.3850, relx=0.308, rely=0.6080)
 
     def chat_window_builder(self):
@@ -61,10 +64,10 @@ class Room:
         self.generate_background(name="Template.png", window=self.chat_window)
 
         # chat_box:
-        chat_box = Text(self.chat_window, font=("Helvetica", 14))
-        chat_box.config(state=DISABLED)
-        chat_box.place(relheight=0.6530, relwidth=0.6980, relx=0.0080, rely=0.19)
-        self.scrollbar(0.972, chat_box)
+        self.chat_box = Text(self.chat_window, font=("Helvetica", 14))
+        self.chat_box.config(state=DISABLED)
+        self.chat_box.place(relheight=0.6530, relwidth=0.6980, relx=0.0080, rely=0.19)
+        self.scrollbar(0.972, self.chat_box)
 
         # Data BOX:
         data_box = Text(self.chat_window, font=("Helvetica", 14))
@@ -89,9 +92,9 @@ class Room:
         # send msg button:
         # TODO: make receiver viable
         send_msg = Button(self.chat_window, text="Send",
-                          command=lambda: self.controller.send_msg(text_box=chat_box, msg_box=client_msg,receiver = receiver))
+                          command=lambda: self.controller.send_msg(chat_box=self.chat_box, msg_box=client_msg,
+                                                                   receiver=receiver))
         send_msg.place(relheight=0.1050, relwidth=0.135, relx=0.8580, rely=0.8875)
-
 
         # get clients button:
         get_clients = Button(self.chat_window, text="Show Connected",
@@ -108,7 +111,7 @@ class Room:
 
         # clear chat button:
         clear_chat = Button(self.chat_window, text="Clear Chat",
-                            command=lambda: self.controller.clear_chat(text_box=chat_box))
+                            command=lambda: self.controller.clear_chat(text_box=self.chat_box))
         clear_chat.place(relheight=0.0650, relwidth=0.27, relx=0.442, rely=0.0750)
 
     def scrollbar(self, x: float, txt: Text):
@@ -134,10 +137,6 @@ class Room:
         bg = Label(window, image=img)
         bg.image = img
         bg.pack(side='top', fill='both', expand='yes')
-
-    def enter_chat(self):
-        self.chat_login.withdraw()
-        self.chat_window.deiconify()  # TODO: MOVE TO CONTROLLER
 
 
 if __name__ == '__main__':

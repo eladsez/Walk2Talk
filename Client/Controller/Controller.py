@@ -1,7 +1,5 @@
 import threading
-from time import sleep
 from tkinter import Text, END, DISABLED, NORMAL, Entry, Tk, Toplevel
-
 from Client.backend.template_client import Client
 
 
@@ -16,18 +14,24 @@ class Controller:
         self.client = Client()
         self.addr = addr
         self.recv_thread = threading.Thread(target=self.recv, daemon=True)
+        self.chat_box = None
 
     def recv(self):
         while True:
-            pkt = self.client.receive(self.client.sock)
-            print(pkt)
+            chat_update = self.client.receive()
+            self.lock.acquire()
+            self.chat_box.config(state=NORMAL)
+            self.chat_box.insert(END, chat_update)
+            self.chat_box.config(state=DISABLED)
+            self.chat_box.update()
+            self.lock.release()
 
-    def connect(self, login: Toplevel, chat: Tk, txt_name: Entry):
+    def connect(self, login: Toplevel, chat: Tk, txt_name: Entry, chat_box: Text):
+        self.chat_box = chat_box
         client_name = txt_name.get()
         txt_name.delete(0, END)
         txt_name.insert(0, "Username")
         self.client.connect(self.addr, client_name)
-        self.client.send_name(client_name)
         login.withdraw()
         chat.deiconify()
         self.recv_thread.start()
@@ -41,32 +45,28 @@ class Controller:
         login.deiconify()
         chat.withdraw()  # TODO: fix this to make the chat "disappear" and to not show old contents after reestablishing connection
 
-    def send_msg(self, text_box: Text, msg_box: Entry, receiver: Entry):
+    def send_msg(self, chat_box: Text, msg_box: Entry, receiver: Entry):
         """
         This method displays a message to certain person in the chat
         :return:
         """
         # Handle receiver:
-        receiver.delete(0, END)
         dest = receiver.get()
-        if dest == "":
-            # TODO: broadcast
-            pass
-        else:
-            # TODO: using dest send the message to him.
-            pass
+        receiver.delete(0, END)
         # Handle message:
         msg = msg_box.get()
-        if msg == "":
+        if msg == "":  # nothing on the the message
             return
+        if dest == "":  # broadcast case
+            self.client.send_msg(msg=msg)
+        else:  # using dest send the message to him.
+            self.client.send_msg(msg=msg, receiver_name=dest)
         msg_box.delete(0, END)
-        self.client.send_msg(msg)  # send the msg to the server
-        name = self.client.client_name
         # Display the msg:
-        text_box.config(state=NORMAL)
-        text_box.insert(END, '\n' + name + ": " + msg)
-        text_box.config(state=DISABLED)
-        text_box.update()
+        chat_box.config(state=NORMAL)
+        chat_box.insert(END, '\n' + 'ME:' + ": " + msg)
+        chat_box.config(state=DISABLED)
+        chat_box.update()
 
     def get_clients(self):
         """
