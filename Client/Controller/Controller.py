@@ -64,7 +64,7 @@ class Controller:
         msg_box.delete(0, END)
         # Display the msg:
         chat_box.config(state=NORMAL)
-        chat_box.insert(END, '\n' + 'ME:' + ": " + msg)
+        chat_box.insert(END, '\n ME: ' + msg)
         chat_box.config(state=DISABLED)
         chat_box.update()
 

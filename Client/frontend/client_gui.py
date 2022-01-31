@@ -41,15 +41,16 @@ class Room:
         self.generate_background(name="Login.png", window=self.chat_login)
 
         # name label & entry:
-        txt_name = Entry(self.chat_login)
+        txt_name = Entry(self.chat_login, font=("Helvetica", 13))
         txt_name.insert(0, "Username")
         txt_name.place(relheight=0.0580, relwidth=0.3850, relx=0.308, rely=0.4885)
         # connect button:
         # TODO: find better solution
-        connect = Button(self.chat_login, text="Connect", command=lambda: self.controller.connect(self.chat_login,
-                                                                                                  self.chat_window,
-                                                                                                  txt_name,
-                                                                                                  self.chat_box))
+        connect = Button(self.chat_login, text="Connect", borderwidth=0, font=("Helvetica", 13),
+                         command=lambda: self.controller.connect(self.chat_login,
+                                                                 self.chat_window,
+                                                                 txt_name,
+                                                                 self.chat_box))
         connect.place(relheight=0.0580, relwidth=0.3850, relx=0.308, rely=0.6080)
 
     def chat_window_builder(self):
@@ -67,7 +68,8 @@ class Room:
         """
         This is the chat box where messages appear after sending 
         """
-        self.chat_box = Text(self.chat_window, font=("Helvetica", 14))
+        self.chat_box = Text(self.chat_window, font=("Helvetica", 14), bg="#17202A",
+                             fg="#EAECEE")
         self.chat_box.config(state=DISABLED)
         self.chat_box.place(relheight=0.7030, relwidth=0.6980, relx=0.0080, rely=0.1480)
         self.scrollbar(0.972, self.chat_box)
@@ -76,7 +78,8 @@ class Room:
         """
         This is the text box where all the clients will appear
         """
-        clients_box = Text(self.chat_window, font=("Helvetica", 14))
+        clients_box = Text(self.chat_window, font=("Helvetica", 14), bg="#17202A",
+                           fg="#EAECEE")
         clients_box.insert('1.0', "People: \n")
         clients_box.config(state=DISABLED)
         clients_box.place(relheight=0.3465, relwidth=0.2680, relx=0.723, rely=0.1480)
@@ -86,7 +89,8 @@ class Room:
         """
         This is the text box where the files of the server will appear
         """
-        files_box = Text(self.chat_window, font=("Helvetica", 14))
+        files_box = Text(self.chat_window, font=("Helvetica", 14), bg="#17202A",
+                         fg="#EAECEE")
         files_box.insert('1.0', "Server Files: \n")
         files_box.config(state=DISABLED)
         files_box.place(relheight=0.3465, relwidth=0.2680, relx=0.723, rely=0.5)
@@ -96,7 +100,7 @@ class Room:
         """
         This is the Entry for the client to send messages on.
         """
-        client_msg = Entry(self.chat_window)
+        client_msg = Entry(self.chat_window, font=("Helvetica", 13))
         client_msg.insert(0, "Enter Message")
         client_msg.place(relheight=0.0450, relwidth=0.6915, relx=0.014, rely=0.9480)
 
@@ -104,7 +108,7 @@ class Room:
         """
         This is the Entry for the client to choose who to send the message
         """
-        receiver = Entry(self.chat_window)
+        receiver = Entry(self.chat_window, font=("Helvetica", 13))
         receiver.insert(0, "Name")
         receiver.place(relheight=0.0450, relwidth=0.135, relx=0.7210, rely=0.9480)
 
@@ -113,7 +117,7 @@ class Room:
         This is the send message button which sends the message the client wrote inside the entry
         """
         # TODO: make receiver viable
-        send_msg = Button(self.chat_window, text="Send", borderwidth=0,
+        send_msg = Button(self.chat_window, text="Send", borderwidth=0, fg='navy', font=("Helvetica", 13),
                           command=lambda: self.controller.send_msg(chat_box=self.chat_box, msg_box=client_msg,
                                                                    receiver=receiver))
         send_msg.place(relheight=0.0450, relwidth=0.135, relx=0.8580, rely=0.9480)
@@ -122,7 +126,7 @@ class Room:
         """
         This is the Entry for the client to choose which file to download from the server
         """
-        file_chooser = Entry(self.chat_window)
+        file_chooser = Entry(self.chat_window, font=("Helvetica", 13))
         file_chooser.insert(0, "Insert File Name")
         file_chooser.place(relheight=0.0450, relwidth=0.6915, relx=0.014, rely=0.8983)
 
@@ -130,7 +134,7 @@ class Room:
         """
         This is the Download button, it will send the file to our client
         """
-        download = Button(self.chat_window, text="Download", borderwidth=0,
+        download = Button(self.chat_window, text="Download", borderwidth=0, fg='navy', font=("Helvetica", 13),
                           command=self.controller.download)
         download.place(relheight=0.0450, relwidth=0.270, relx=0.7210, rely=0.8983)
 
@@ -138,35 +142,36 @@ class Room:
         """
         This is the exit button
         """
-        close = Image.open(self.images_path + "close.png")
-        img = ImageTk.PhotoImage(close)
-        exit_chat = Button(self.chat_window, image=img,
+        # close = Image.open(self.images_path + "close.png")
+        # img = ImageTk.PhotoImage(close)
+        exit_chat = Button(self.chat_window, text="Exit", borderwidth=0, fg='navy', font=("Helvetica", 13),
                            command=lambda: self.controller.exit_chat(self.chat_login, self.chat_window))
         exit_chat.place(relheight=0.0440, relwidth=0.065, relx=0.0075, rely=0.0073)
-        exit_chat.image = img
+        # exit_chat.image = img
 
         # clear chat button:
         """
         This button clears the chat box messages 
         """
-        clear_chat = Button(self.chat_window, text="Clear Chat", borderwidth=0,
+        clear_chat = Button(self.chat_window, text="Clear Chat", borderwidth=0, fg='navy', font=("Helvetica", 13),
                             command=lambda: self.controller.clear_chat(text_box=self.chat_box))
-        clear_chat.place(relheight=0.03, relwidth=0.11, relx=0.0075, rely=0.06)
+        clear_chat.place(relheight=0.03, relwidth=0.12, relx=0.0075, rely=0.06)
 
         # get clients button:
         """
         This button shows the clients in the server
         """
-        get_clients = Button(self.chat_window, text="Show Connected", borderwidth=0,
+        get_clients = Button(self.chat_window, text="Show Connected", borderwidth=0, fg='navy', font=("Helvetica", 13),
                              command=lambda: self.controller.get_clients(data_box=clients_box))
-        get_clients.place(relheight=0.0340, relwidth=0.2650, relx=0.7255, rely=0.005)
+        get_clients.place(relheight=0.0440, relwidth=0.2650, relx=0.7255, rely=0.002)
 
         # get files button
         """
         This button shows the files in the server
         """
-        get_files = Button(self.chat_window, text="Show Files", borderwidth=0, command=self.controller.get_files)
-        get_files.place(relheight=0.0440, relwidth=0.2650, relx=0.7255, rely=0.0475)
+        get_files = Button(self.chat_window, text="Show Files", borderwidth=0, fg='navy', font=("Helvetica", 13),
+                           command=self.controller.get_files)
+        get_files.place(relheight=0.0440, relwidth=0.2650, relx=0.7255, rely=0.0485)
 
     def scrollbar(self, x: float, txt: Text):
         """
@@ -175,7 +180,7 @@ class Room:
         :param txt: a text box to place the scroll bar on
         :return:
         """
-        scrollbar = Scrollbar(txt)
+        scrollbar = Scrollbar(txt, cursor='dot', orient=VERTICAL)
         scrollbar.place(relheight=1, relx=x)
         scrollbar.config(command=txt.yview)
 
