@@ -1,4 +1,5 @@
 import socket
+from typing import List
 
 from Utilities import packets_over_tcp
 
@@ -58,13 +59,19 @@ class Client:
             return '\n' + layers[1] + ': ' + layers[3]
 
     def send_msg(self, msg, receiver_name='broadcast'):
+        """
+        This method sends the pkt message
+        :param msg:
+        :param receiver_name:
+        :return:
+        """
         msg = packets_over_tcp.msg_packet(self.client_name, receiver_name, msg)
         try:
             self.sock.send(msg.encode())
         except socket.error:
             print('ERROR Client failed trying to send')
 
-    def recv_names(self) -> list:
+    def recv_names(self, cli_names: List[str]):
         """
         This method returns all the Client names in the chat
         :return:

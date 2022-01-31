@@ -64,55 +64,109 @@ class Room:
         self.generate_background(name="Template.png", window=self.chat_window)
 
         # chat_box:
+        """
+        This is the chat box where messages appear after sending 
+        """
         self.chat_box = Text(self.chat_window, font=("Helvetica", 14))
         self.chat_box.config(state=DISABLED)
-        self.chat_box.place(relheight=0.6530, relwidth=0.6980, relx=0.0080, rely=0.19)
+        self.chat_box.place(relheight=0.7030, relwidth=0.6980, relx=0.0080, rely=0.1480)
         self.scrollbar(0.972, self.chat_box)
 
-        # Data BOX:
-        data_box = Text(self.chat_window, font=("Helvetica", 14))
-        data_box.config(state=DISABLED)
-        data_box.place(relheight=0.6530, relwidth=0.2680, relx=0.723, rely=0.19)
-        self.scrollbar(0.92, data_box)
+        # client box:
+        """
+        This is the text box where all the clients will appear
+        """
+        clients_box = Text(self.chat_window, font=("Helvetica", 14))
+        clients_box.insert('1.0', "People: \n")
+        clients_box.config(state=DISABLED)
+        clients_box.place(relheight=0.3465, relwidth=0.2680, relx=0.723, rely=0.1480)
+        self.scrollbar(0.92, clients_box)
+
+        # files BOX:
+        """
+        This is the text box where the files of the server will appear
+        """
+        files_box = Text(self.chat_window, font=("Helvetica", 14))
+        files_box.insert('1.0', "Server Files: \n")
+        files_box.config(state=DISABLED)
+        files_box.place(relheight=0.3465, relwidth=0.2680, relx=0.723, rely=0.5)
+        self.scrollbar(0.92, files_box)
 
         # Client msg box:
+        """
+        This is the Entry for the client to send messages on.
+        """
         client_msg = Entry(self.chat_window)
-        client_msg.place(relheight=0.1050, relwidth=0.6975, relx=0.01, rely=0.8875)
-
-        # disconnect button:
-        exit_chat = Button(self.chat_window, text="Exit Chat",
-                           command=lambda: self.controller.exit_chat(self.chat_login, self.chat_window))
-        exit_chat.place(relheight=0.0570, relwidth=0.1190, relx=0.0080, rely=0.0075)
+        client_msg.insert(0, "Enter Message")
+        client_msg.place(relheight=0.0450, relwidth=0.6915, relx=0.014, rely=0.9480)
 
         # client_name_chooser:
+        """
+        This is the Entry for the client to choose who to send the message
+        """
         receiver = Entry(self.chat_window)
-        receiver.insert(0, "Receiver")
-        receiver.place(relheight=0.1050, relwidth=0.135, relx=0.7180, rely=0.8875)
+        receiver.insert(0, "Name")
+        receiver.place(relheight=0.0450, relwidth=0.135, relx=0.7210, rely=0.9480)
 
         # send msg button:
+        """
+        This is the send message button which sends the message the client wrote inside the entry
+        """
         # TODO: make receiver viable
-        send_msg = Button(self.chat_window, text="Send",
+        send_msg = Button(self.chat_window, text="Send", borderwidth=0,
                           command=lambda: self.controller.send_msg(chat_box=self.chat_box, msg_box=client_msg,
                                                                    receiver=receiver))
-        send_msg.place(relheight=0.1050, relwidth=0.135, relx=0.8580, rely=0.8875)
+        send_msg.place(relheight=0.0450, relwidth=0.135, relx=0.8580, rely=0.9480)
 
-        # get clients button:
-        get_clients = Button(self.chat_window, text="Show Connected",
-                             command=self.controller.get_clients)
-        get_clients.place(relheight=0.0570, relwidth=0.2680, relx=0.7250, rely=0.0075)
+        # File_chooser:
+        """
+        This is the Entry for the client to choose which file to download from the server
+        """
+        file_chooser = Entry(self.chat_window)
+        file_chooser.insert(0, "Insert File Name")
+        file_chooser.place(relheight=0.0450, relwidth=0.6915, relx=0.014, rely=0.8983)
 
-        # files / clients label:
-        data = Label(self.chat_window, text="Files/Connected Clients")
-        data.place(relheight=0.0650, relwidth=0.27, relx=0.723, rely=0.0750)
+        # Download Button:
+        """
+        This is the Download button, it will send the file to our client
+        """
+        download = Button(self.chat_window, text="Download", borderwidth=0,
+                          command=self.controller.download)
+        download.place(relheight=0.0450, relwidth=0.270, relx=0.7210, rely=0.8983)
 
-        # get files button
-        get_files = Button(self.chat_window, text="Show Files", command=self.controller.get_files)
-        get_files.place(relheight=0.0570, relwidth=0.2680, relx=0.442, rely=0.0075)
+        # disconnect button:
+        """
+        This is the exit button
+        """
+        close = Image.open(self.images_path + "close.png")
+        img = ImageTk.PhotoImage(close)
+        exit_chat = Button(self.chat_window, image=img,
+                           command=lambda: self.controller.exit_chat(self.chat_login, self.chat_window))
+        exit_chat.place(relheight=0.0440, relwidth=0.065, relx=0.0075, rely=0.0073)
+        exit_chat.image = img
 
         # clear chat button:
-        clear_chat = Button(self.chat_window, text="Clear Chat",
+        """
+        This button clears the chat box messages 
+        """
+        clear_chat = Button(self.chat_window, text="Clear Chat", borderwidth=0,
                             command=lambda: self.controller.clear_chat(text_box=self.chat_box))
-        clear_chat.place(relheight=0.0650, relwidth=0.27, relx=0.442, rely=0.0750)
+        clear_chat.place(relheight=0.03, relwidth=0.11, relx=0.0075, rely=0.06)
+
+        # get clients button:
+        """
+        This button shows the clients in the server
+        """
+        get_clients = Button(self.chat_window, text="Show Connected", borderwidth=0,
+                             command=lambda: self.controller.get_clients(data_box=clients_box))
+        get_clients.place(relheight=0.0340, relwidth=0.2650, relx=0.7255, rely=0.005)
+
+        # get files button
+        """
+        This button shows the files in the server
+        """
+        get_files = Button(self.chat_window, text="Show Files", borderwidth=0, command=self.controller.get_files)
+        get_files.place(relheight=0.0440, relwidth=0.2650, relx=0.7255, rely=0.0475)
 
     def scrollbar(self, x: float, txt: Text):
         """

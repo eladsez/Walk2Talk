@@ -68,11 +68,12 @@ class Controller:
         chat_box.config(state=DISABLED)
         chat_box.update()
 
-    def get_clients(self):
+    def get_clients(self, data_box: Text):
         """
         This method displays the clients to the user in the right box
         :return:
         """
+        # names = self.client.recv_names(cli_names=)
         pass
 
     def get_files(self):
@@ -90,3 +91,10 @@ class Controller:
         text_box.config(state=NORMAL)
         text_box.delete('1.0', END)
         text_box.config(state=DISABLED)
+
+    def download(self):
+        """
+        This method gets the download file for the client.
+        :return:
+        """
+        pass
