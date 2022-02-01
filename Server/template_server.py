@@ -17,6 +17,7 @@ class Server:
         self.clients_addr = {}  # (name:addr)
         self.clients_sock = {}  # (socket:name)
         self.clients_threads = []
+        self.files = ['elad.txt', 'shaked.txt']
         try:
             self.serverSock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  # socket for Client to connect
             self.serverSock.bind(self.addr)
@@ -59,11 +60,23 @@ class Server:
             if name == name_to_find:
                 return sock
 
-    def handle_pkt(self, pkt: str, client_sock):
+    def handle_pkt(self, pkt: str, client_sock: socket.socket):
         layers = pkt.split('|')
         if layers[0] == REQ_TYPE:
-            pass
-        elif layers[0] == MSG_TYPE:
+            if layers[1] == 'names':
+                pkt = packets_over_tcp.active_clients_packet(list(self.clients_addr.keys()))
+                try:
+                    client_sock.send(pkt.encode())
+                except socket.error as err:
+                    raise err
+            if layers[1] == 'files':
+                pkt = packets_over_tcp.server_files_packet(self.files)
+                try:
+                    client_sock.send(pkt.encode())
+                except socket.error as err:
+                    raise err
+
+        if layers[0] == MSG_TYPE:
             if layers[2] != 'broadcast':
                 receiver_sock = self.find_sock_by_name(layers[2])
                 try:
@@ -74,17 +87,19 @@ class Server:
                 self.broadcast(pkt, client_sock)
 
     def broadcast(self, pkt, conn=None):
-        for client in self.clients_sock:
+        copy_client_sock = self.clients_sock.copy()  # important
+        for client in copy_client_sock:
             if client == conn:
                 continue
             try:
                 client.send(pkt.encode())
             except socket.error:
-                self.removeClient(client)
+                self.remove_client(client)
 
     def remove_client(self, client_sock):
         if client_sock in self.clients_sock:
-            self.broadcast(f'***** {self.clients_sock[client_sock]} disconnected *****', client_sock)
+            disconnected_msg = packets_over_tcp.msg_packet('server', 'broadcast', f'***** {self.clients_sock[client_sock]} disconnected *****')
+            self.broadcast(disconnected_msg, client_sock)
             name = self.clients_sock[client_sock]
             del self.clients_sock[client_sock]
             del self.clients_addr[name]

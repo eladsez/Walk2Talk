@@ -48,7 +48,7 @@ class Client:
             print(pkt)
             screen_view = self.handle_pkt(pkt)
             if pkt == '|-bye-|':
-                return
+                return None
             return screen_view
         except socket.error:
             print('ERROR Client failed in receive')

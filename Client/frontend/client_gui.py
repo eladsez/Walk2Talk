@@ -154,7 +154,7 @@ class Room:
         This button clears the chat box messages 
         """
         clear_chat = Button(self.chat_window, text="Clear Chat", borderwidth=0, fg='navy', font=("Helvetica", 13),
-                            command=lambda: self.controller.clear_chat(text_box=self.chat_box))
+                            command=lambda: self.controller.clear_chat())
         clear_chat.place(relheight=0.03, relwidth=0.12, relx=0.0075, rely=0.06)
 
         # get clients button:

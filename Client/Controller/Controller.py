@@ -19,12 +19,12 @@ class Controller:
 
     def recv(self):
         while self.recv_runner:
-            chat_update = self.client.receive()
-            if chat_update is None:
+            chat_box_update = self.client.receive()
+            if chat_box_update is None:
                 return
             self.lock.acquire()
             self.chat_box.config(state=NORMAL)
-            self.chat_box.insert(END, chat_update)
+            self.chat_box.insert(END, chat_box_update)
             self.chat_box.config(state=DISABLED)
             self.chat_box.update()
             self.lock.release()
@@ -39,6 +39,7 @@ class Controller:
         self.client.connect(self.addr, client_name)
         login.withdraw()
         chat.deiconify()
+        self.recv_runner = True
         self.recv_thread.start()
 
     def exit_chat(self, login: Toplevel, chat: Tk):
@@ -89,14 +90,14 @@ class Controller:
         """
         pass
 
-    def clear_chat(self, text_box: Text):
+    def clear_chat(self):
         """
         This method removes all the data from the chat.
         :return:
         """
-        text_box.config(state=NORMAL)
-        text_box.delete('1.0', END)
-        text_box.config(state=DISABLED)
+        self.chat_box.config(state=NORMAL)
+        self.chat_box.delete('1.0', END)
+        self.chat_box.config(state=DISABLED)
 
     def download(self):
         """
