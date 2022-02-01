@@ -14,11 +14,14 @@ class Controller:
         self.client = Client()
         self.addr = addr
         self.recv_thread = threading.Thread(target=self.recv, daemon=True)
+        self.recv_runner = True
         self.chat_box = None
 
     def recv(self):
-        while True:
+        while self.recv_runner:
             chat_update = self.client.receive()
+            if chat_update is None:
+                return
             self.lock.acquire()
             self.chat_box.config(state=NORMAL)
             self.chat_box.insert(END, chat_update)
@@ -27,6 +30,8 @@ class Controller:
             self.lock.release()
 
     def connect(self, login: Toplevel, chat: Tk, txt_name: Entry, chat_box: Text):
+        if self.client.client_name is not None:
+            self.recv_thread = threading.Thread(target=self.recv, daemon=True)
         self.chat_box = chat_box
         client_name = txt_name.get()
         txt_name.delete(0, END)
@@ -41,6 +46,7 @@ class Controller:
         This method disconnect a Client from the chat, and returns him to the menu
         :return:
         """
+        self.recv_runner = False
         self.client.disconnect()
         login.deiconify()
         chat.withdraw()  # TODO: fix this to make the chat "disappear" and to not show old contents after reestablishing connection

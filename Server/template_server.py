@@ -51,7 +51,6 @@ class Server:
             if pkt != '|-exit-|':
                 self.handle_pkt(pkt, client_sock)
             else:
-                client_sock.send('|-bye-|'.encode())
                 self.remove_client(client_sock)
                 break
 
