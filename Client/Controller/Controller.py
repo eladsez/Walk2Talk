@@ -20,6 +20,8 @@ class Controller:
     def recv(self, chat_box: Text, names_box: Text, files_box: Text):
         while self.recv_runner:
             box_update, which_box = self.client.receive()
+            print(box_update)
+            print(which_box)
             if box_update is None:
                 return
             if which_box == 'chat_box':
@@ -79,25 +81,28 @@ class Controller:
             self.client.send_msg(msg=msg, receiver_name=dest)
         msg_box.delete(0, END)
         # Display the msg:
+        print('blabla')
+        print(type(chat_box))
         chat_box.config(state=NORMAL)
         chat_box.insert(END, '\n ME: ' + msg)
         chat_box.config(state=DISABLED)
         chat_box.update()
+        print(chat_box.get('1.0', END))
+        print('blabla')
 
-    def get_clients(self, data_box: Text):
+    def get_clients(self):
         """
         This method displays the clients to the user in the right box
         :return:
         """
-        # names = self.client.recv_names(cli_names=)
-        pass
+        self.client.send_names_req()
 
     def get_files(self):
         """
         This method shows to the Client the available files to download in the chat
         :return:
         """
-        pass
+        self.client.send_files_req()
 
     def clear_chat(self, chat_box: Text):
         """

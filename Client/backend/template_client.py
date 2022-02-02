@@ -60,7 +60,6 @@ class Client:
         if layers[0] == LIST_TYPE:
             return packets_over_tcp.display_list(layers[2].split(',')), layers[1]
 
-
     def send_msg(self, msg, receiver_name='broadcast'):
         """
         This method sends the pkt message
@@ -74,19 +73,25 @@ class Client:
         except socket.error:
             print('ERROR Client failed trying to send')
 
-    def recv_names(self, cli_names: List[str]):
+    def send_names_req(self):
         """
         This method returns all the Client names in the chat
         :return:
         """
-        pass
+        try:
+            self.sock.send(packets_over_tcp.get_active_clients_packet().encode())
+        except socket.error as err:
+            raise err
 
-    def recv_files(self) -> list:
+    def send_files_req(self):
         """
         This method returns all the file names in the Server.
         :return:
         """
-        pass
+        try:
+            self.sock.send(packets_over_tcp.get_server_files_packet().encode())
+        except socket.error as err:
+            raise err
 
     def request_download(self, file_name: str) -> bool:
         """

@@ -104,7 +104,7 @@ class Room:
         :return:
         """
         self.chat_window.title("Walk2Talk")
-        self.chat_window.resizable(width=TRUE, height=TRUE)
+        self.chat_window.resizable(width=FALSE, height=FALSE)
         self.chat_window.configure(width=700, height=600)
         # create background:
         self.generate_background(name="Template.png", window=self.chat_window)
@@ -167,7 +167,7 @@ class Room:
         This button clears the chat box messages 
         """
         clear_chat = Button(self.chat_window, text="Clear Chat", borderwidth=0, fg='navy', font=("Helvetica", 13),
-                            command=lambda: self.controller.clear_chat())
+                            command=lambda: self.controller.clear_chat(self.chat_box))
         clear_chat.place(relheight=0.03, relwidth=0.12, relx=0.0075, rely=0.06)
 
         # get clients button:
@@ -175,7 +175,7 @@ class Room:
         This button shows the clients in the server
         """
         get_clients = Button(self.chat_window, text="Show Connected", borderwidth=0, fg='navy', font=("Helvetica", 13),
-                             command=lambda: self.controller.get_clients(data_box=self.names_box))
+                             command=lambda: self.controller.get_clients())
         get_clients.place(relheight=0.0440, relwidth=0.2650, relx=0.7255, rely=0.002)
 
         # get files button
