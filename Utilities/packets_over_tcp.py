@@ -4,7 +4,6 @@ MSG_TYPE = '1'
 REQ_TYPE = '2'
 LIST_TYPE = '3'
 
-
 """
 ---------------------------massage packet template----------------------------
  1 (massage type) | sender name | receiver name (could be 'broadcast')| massage
@@ -95,6 +94,14 @@ def msg_packet(sender_name: str, receiver_name: str, msg: str):
         pkt += '|' + receiver_name
     pkt += '|' + msg
     return pkt
+
+
+def display_list(to_display: List[str]):
+    dis = ''
+    for i, val in enumerate(to_display):
+        dis += str(i) + ': ' + val + '\n'
+
+    return dis
 
 
 def encrypt_packet(pkt):

@@ -9,29 +9,38 @@ class Controller:
     as requested by the client.
     """
 
-    def __init__(self, addr):
+    def __init__(self, addr, chat_box, names_box, files_box):
         self.lock = threading.Lock()
         self.client = Client()
         self.addr = addr
-        self.recv_thread = threading.Thread(target=self.recv, daemon=True)
+        self.recv_thread = threading.Thread(target=self.recv, args=(chat_box, names_box, files_box,), daemon=True)
         self.recv_runner = True
         self.chat_box = None
 
-    def recv(self):
+    def recv(self, chat_box: Text, names_box: Text, files_box: Text):
         while self.recv_runner:
-            chat_box_update = self.client.receive()
-            if chat_box_update is None:
+            box_update, which_box = self.client.receive()
+            if box_update is None:
                 return
-            self.lock.acquire()
-            self.chat_box.config(state=NORMAL)
-            self.chat_box.insert(END, chat_box_update)
-            self.chat_box.config(state=DISABLED)
-            self.chat_box.update()
-            self.lock.release()
+            if which_box == 'chat_box':
+                chat_box.config(state=NORMAL)
+                chat_box.insert(END, box_update)
+                chat_box.config(state=DISABLED)
+                chat_box.update()
+            if which_box == 'files_box':
+                files_box.config(state=NORMAL)
+                files_box.insert(END, box_update)
+                files_box.config(state=DISABLED)
+                files_box.update()
+            if which_box == 'names_box':
+                names_box.config(state=NORMAL)
+                names_box.insert(END, box_update)
+                names_box.config(state=DISABLED)
+                names_box.update()
 
-    def connect(self, login: Toplevel, chat: Tk, txt_name: Entry, chat_box: Text):
+    def connect(self, login: Toplevel, chat: Tk, txt_name: Entry, chat_box: Text, files_box, names_box):
         if self.client.client_name is not None:
-            self.recv_thread = threading.Thread(target=self.recv, daemon=True)
+            self.recv_thread = threading.Thread(target=self.recv, args=(chat_box, names_box, files_box,), daemon=True)
         self.chat_box = chat_box
         client_name = txt_name.get()
         txt_name.delete(0, END)
@@ -90,14 +99,14 @@ class Controller:
         """
         pass
 
-    def clear_chat(self):
+    def clear_chat(self, chat_box: Text):
         """
         This method removes all the data from the chat.
         :return:
         """
-        self.chat_box.config(state=NORMAL)
-        self.chat_box.delete('1.0', END)
-        self.chat_box.config(state=DISABLED)
+        chat_box.config(state=NORMAL)  # TODO: update in client gui
+        chat_box.delete('1.0', END)
+        chat_box.config(state=DISABLED)
 
     def download(self):
         """

@@ -56,7 +56,10 @@ class Client:
     def handle_pkt(self, pkt: str):
         layers = pkt.split('|')
         if layers[0] == MSG_TYPE:
-            return '\n' + layers[1] + ': ' + layers[3]
+            return '\n' + layers[1] + ': ' + layers[3], 'chat_box'
+        if layers[0] == LIST_TYPE:
+            return packets_over_tcp.display_list(layers[2].split(',')), layers[1]
+
 
     def send_msg(self, msg, receiver_name='broadcast'):
         """
