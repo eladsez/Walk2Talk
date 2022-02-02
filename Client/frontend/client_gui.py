@@ -14,13 +14,19 @@ class Room:
     def __init__(self):
         # This is the chat window, it will be hidden for new users until they join the room.
         self.chat_window = Tk()
-        self.controller = Controller(("127.0.0.1", 12345))
         # imgs abs paths:
         os.chdir(os.path.abspath(os.path.join(os.getcwd(), os.pardir)))
         parent_path = Misc.resource_path(relative_path='frontend')
         self.images_path = parent_path + "/imgs/"
+        # TXT BOXES:
         self.chat_box = None  # TODO: find better solution
-        self.chat_window_builder()
+        self.names_box = None
+        self.files_box = None
+        # char room window
+        self.chat_window_textbox_builder()
+        # controller:
+        self.controller = Controller(("127.0.0.1", 12345), self.chat_box, self.names_box, self.files_box)
+        self.chat_window_button_builder()
         self.chat_window.withdraw()
         # login window
         self.chat_login = Toplevel()
@@ -50,20 +56,16 @@ class Room:
                          command=lambda: self.controller.connect(self.chat_login,
                                                                  self.chat_window,
                                                                  txt_name,
-                                                                 self.chat_box))
+                                                                 self.chat_box,
+                                                                 self.files_box,
+                                                                 self.names_box))
         connect.place(relheight=0.0580, relwidth=0.3850, relx=0.308, rely=0.6080)
 
-    def chat_window_builder(self):
+    def chat_window_textbox_builder(self):
         """
-        This method creates the chat window, basic gui usage - buttons,labels,text boxes..
+        This method creates the text boxes.
         :return:
         """
-        self.chat_window.title("Walk2Talk")
-        self.chat_window.resizable(width=TRUE, height=TRUE)
-        self.chat_window.configure(width=700, height=600)
-        # create background:
-        self.generate_background(name="Template.png", window=self.chat_window)
-
         # chat_box:
         """
         This is the chat box where messages appear after sending 
@@ -78,23 +80,34 @@ class Room:
         """
         This is the text box where all the clients will appear
         """
-        clients_box = Text(self.chat_window, font=("Helvetica", 14), bg="#17202A",
-                           fg="#EAECEE")
-        clients_box.insert('1.0', "People: \n")
-        clients_box.config(state=DISABLED)
-        clients_box.place(relheight=0.3465, relwidth=0.2680, relx=0.723, rely=0.1480)
-        self.scrollbar(0.92, clients_box)
+        self.names_box = Text(self.chat_window, font=("Helvetica", 14), bg="#17202A",
+                              fg="#EAECEE")
+        self.names_box.insert('1.0', "People: \n")
+        self.names_box.config(state=DISABLED)
+        self.names_box.place(relheight=0.3465, relwidth=0.2680, relx=0.723, rely=0.1480)
+        self.scrollbar(0.92, self.names_box)
 
         # files BOX:
         """
         This is the text box where the files of the server will appear
         """
-        files_box = Text(self.chat_window, font=("Helvetica", 14), bg="#17202A",
-                         fg="#EAECEE")
-        files_box.insert('1.0', "Server Files: \n")
-        files_box.config(state=DISABLED)
-        files_box.place(relheight=0.3465, relwidth=0.2680, relx=0.723, rely=0.5)
-        self.scrollbar(0.92, files_box)
+        self.files_box = Text(self.chat_window, font=("Helvetica", 14), bg="#17202A",
+                              fg="#EAECEE")
+        self.files_box.insert('1.0', "Server Files: \n")
+        self.files_box.config(state=DISABLED)
+        self.files_box.place(relheight=0.3465, relwidth=0.2680, relx=0.723, rely=0.5)
+        self.scrollbar(0.92, self.files_box)
+
+    def chat_window_button_builder(self):
+        """
+        This method creates all the other widgets inside the chat room
+        :return:
+        """
+        self.chat_window.title("Walk2Talk")
+        self.chat_window.resizable(width=TRUE, height=TRUE)
+        self.chat_window.configure(width=700, height=600)
+        # create background:
+        self.generate_background(name="Template.png", window=self.chat_window)
 
         # Client msg box:
         """
@@ -162,7 +175,7 @@ class Room:
         This button shows the clients in the server
         """
         get_clients = Button(self.chat_window, text="Show Connected", borderwidth=0, fg='navy', font=("Helvetica", 13),
-                             command=lambda: self.controller.get_clients(data_box=clients_box))
+                             command=lambda: self.controller.get_clients(data_box=self.names_box))
         get_clients.place(relheight=0.0440, relwidth=0.2650, relx=0.7255, rely=0.002)
 
         # get files button
