@@ -25,10 +25,10 @@ class Controller:
             if box_update is None:
                 return
             if which_box == 'chat_box':
-                chat_box.config(state=NORMAL)
-                chat_box.insert(END, box_update)
-                chat_box.config(state=DISABLED)
-                chat_box.update()
+                self.chat_box.config(state=NORMAL)
+                self.chat_box.insert(END, box_update)
+                self.chat_box.config(state=DISABLED)
+                self.chat_box.update()
             if which_box == 'files_box':
                 files_box.config(state=NORMAL)
                 files_box.insert(END, box_update)
@@ -83,10 +83,10 @@ class Controller:
         # Display the msg:
         print('blabla')
         print(type(chat_box))
-        chat_box.config(state=NORMAL)
-        chat_box.insert(END, '\n ME: ' + msg)
-        chat_box.config(state=DISABLED)
-        chat_box.update()
+        self.chat_box.config(state=NORMAL)
+        self.chat_box.insert(END, '\n ME: ' + msg)
+        self.chat_box.config(state=DISABLED)
+        self.chat_box.update()
         print(chat_box.get('1.0', END))
         print('blabla')
 
@@ -109,9 +109,9 @@ class Controller:
         This method removes all the data from the chat.
         :return:
         """
-        chat_box.config(state=NORMAL)  # TODO: update in client gui
-        chat_box.delete('1.0', END)
-        chat_box.config(state=DISABLED)
+        self.chat_box.config(state=NORMAL)  # TODO: update in client gui
+        self.chat_box.delete('1.0', END)
+        self.chat_box.config(state=DISABLED)
 
     def download(self):
         """

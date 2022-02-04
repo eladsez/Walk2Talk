@@ -23,6 +23,8 @@ class Room:
         self.names_box = None
         self.files_box = None
         # char room window
+        # create background:
+        self.generate_background(name="Template.png", window=self.chat_window)
         self.chat_window_textbox_builder()
         # controller:
         self.controller = Controller(("127.0.0.1", 12345), self.chat_box, self.names_box, self.files_box)
@@ -106,9 +108,6 @@ class Room:
         self.chat_window.title("Walk2Talk")
         self.chat_window.resizable(width=FALSE, height=FALSE)
         self.chat_window.configure(width=700, height=600)
-        # create background:
-        self.generate_background(name="Template.png", window=self.chat_window)
-
         # Client msg box:
         """
         This is the Entry for the client to send messages on.
@@ -155,12 +154,9 @@ class Room:
         """
         This is the exit button
         """
-        # close = Image.open(self.images_path + "close.png")
-        # img = ImageTk.PhotoImage(close)
         exit_chat = Button(self.chat_window, text="Exit", borderwidth=0, fg='navy', font=("Helvetica", 13),
                            command=lambda: self.controller.exit_chat(self.chat_login, self.chat_window))
         exit_chat.place(relheight=0.0440, relwidth=0.065, relx=0.0075, rely=0.0073)
-        # exit_chat.image = img
 
         # clear chat button:
         """
