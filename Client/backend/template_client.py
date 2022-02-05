@@ -45,7 +45,6 @@ class Client:
     def receive(self):
         try:
             pkt = self.sock.recv(1024).decode()
-            print(pkt)
             screen_view = self.handle_pkt(pkt)
             if pkt == '|-bye-|':
                 return None
@@ -58,7 +57,7 @@ class Client:
         if layers[0] == MSG_TYPE:
             return '\n' + layers[1] + ': ' + layers[3], 'chat_box'
         if layers[0] == LIST_TYPE:
-            return packets_over_tcp.display_list(layers[2].split(',')), layers[1]
+            return packets_over_tcp.display_list(layers[2].split(',')), layers[1] + '_box'
 
     def send_msg(self, msg, receiver_name='broadcast'):
         """

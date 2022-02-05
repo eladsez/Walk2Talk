@@ -73,6 +73,7 @@ class Server:
                 pkt = packets_over_tcp.server_files_packet(self.files)
                 try:
                     client_sock.send(pkt.encode())
+                    print('blabla')
                 except socket.error as err:
                     raise err
 

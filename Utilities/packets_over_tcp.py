@@ -50,7 +50,7 @@ def get_server_files_packet():
     The Client can send it to the Server to get the file list available to download on the Server.
     :return:
     """
-    return REQ_TYPE + '|flies'
+    return REQ_TYPE + '|files'
 
 
 def server_files_packet(files: List[str]):
@@ -99,7 +99,7 @@ def msg_packet(sender_name: str, receiver_name: str, msg: str):
 def display_list(to_display: List[str]):
     dis = ''
     for i, val in enumerate(to_display):
-        dis += str(i) + ': ' + val + '\n'
+        dis += '   ' + str(i + 1) + ': ' + val + '\n'
 
     return dis
 

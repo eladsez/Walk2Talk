@@ -19,16 +19,20 @@ class Controller:
 
     def recv(self, chat_box: Text, names_box: Text, files_box: Text):
         while self.recv_runner:
-            box_update, which_box = self.client.receive()
+            try:
+                box_update, which_box = self.client.receive()
+            except TypeError:
+                print('The client exit the room')
+                return
             print(box_update)
             print(which_box)
             if box_update is None:
                 return
             if which_box == 'chat_box':
-                self.chat_box.config(state=NORMAL)
-                self.chat_box.insert(END, box_update)
-                self.chat_box.config(state=DISABLED)
-                self.chat_box.update()
+                chat_box.config(state=NORMAL)
+                chat_box.insert(END, box_update)
+                chat_box.config(state=DISABLED)
+                chat_box.update()
             if which_box == 'files_box':
                 files_box.config(state=NORMAL)
                 files_box.insert(END, box_update)
@@ -43,7 +47,7 @@ class Controller:
     def connect(self, login: Toplevel, chat: Tk, txt_name: Entry, chat_box: Text, files_box, names_box):
         if self.client.client_name is not None:
             self.recv_thread = threading.Thread(target=self.recv, args=(chat_box, names_box, files_box,), daemon=True)
-        self.chat_box = chat_box
+        # self.chat_box = chat_box
         client_name = txt_name.get()
         txt_name.delete(0, END)
         txt_name.insert(0, "Username")
@@ -81,14 +85,10 @@ class Controller:
             self.client.send_msg(msg=msg, receiver_name=dest)
         msg_box.delete(0, END)
         # Display the msg:
-        print('blabla')
-        print(type(chat_box))
-        self.chat_box.config(state=NORMAL)
-        self.chat_box.insert(END, '\n ME: ' + msg)
-        self.chat_box.config(state=DISABLED)
-        self.chat_box.update()
-        print(chat_box.get('1.0', END))
-        print('blabla')
+        chat_box.config(state=NORMAL)
+        chat_box.insert(END, '\n ME: ' + msg)
+        chat_box.config(state=DISABLED)
+        chat_box.update()
 
     def get_clients(self):
         """
@@ -109,9 +109,9 @@ class Controller:
         This method removes all the data from the chat.
         :return:
         """
-        self.chat_box.config(state=NORMAL)  # TODO: update in client gui
-        self.chat_box.delete('1.0', END)
-        self.chat_box.config(state=DISABLED)
+        chat_box.config(state=NORMAL)  # TODO: update in client gui
+        chat_box.delete('1.0', END)
+        chat_box.config(state=DISABLED)
 
     def download(self):
         """
