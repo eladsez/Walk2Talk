@@ -93,12 +93,21 @@ class Room:
         """
         This is the text box where the files of the server will appear
         """
+        options = [
+            "bla.txt",
+            "bli.txt"
+        ]
+        clicked = StringVar()
+        clicked.set(" ")
+
         self.files_box = Text(self.chat_window, font=("Helvetica", 14), bg="#17202A",
                               fg="#EAECEE")
         self.files_box.insert('1.0', "Server Files: \n")
         self.files_box.config(state=DISABLED)
         self.files_box.place(relheight=0.3465, relwidth=0.2680, relx=0.723, rely=0.5)
-        self.scrollbar(0.92, self.files_box)
+        # self.scrollbar(0.92, self.files_box)
+        drop = OptionMenu(self.chat_window, clicked, *options)
+        drop.place(relheight=0.030, relwidth=0.2605, relx=0.726, rely=0.54)
 
     def chat_window_button_builder(self):
         """
