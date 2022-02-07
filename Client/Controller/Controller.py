@@ -1,6 +1,7 @@
 import threading
-from tkinter import Text, END, DISABLED, NORMAL, Entry, Tk, Toplevel
+from tkinter import Text, END, DISABLED, NORMAL, Entry, Tk, Toplevel, Listbox
 from Client.backend.template_client import Client
+from Utilities import Misc
 
 
 class Controller:
@@ -17,15 +18,14 @@ class Controller:
         self.recv_runner = True
         self.chat_box = None
 
-    def recv(self, chat_box: Text, names_box: Text, files_box: Text):
+    def recv(self, chat_box: Text, names_box: Text, files_box: Listbox):
         while self.recv_runner:
             try:
                 box_update, which_box = self.client.receive()
             except TypeError:
                 print('The client exit the room')
                 return
-            print(box_update)
-            print(which_box)
+            tmp_update = box_update.split(" ")
             if box_update is None:
                 return
             if which_box == 'chat_box':
@@ -34,20 +34,21 @@ class Controller:
                 chat_box.config(state=DISABLED)
                 chat_box.update()
             if which_box == 'files_box':
-                files_box.config(state=NORMAL)
-                files_box.insert(END, box_update)
-                files_box.config(state=DISABLED)
+                files_box.delete(1, END)
+                for file in tmp_update:
+                    if file != '':
+                        files_box.insert(END, file)
                 files_box.update()
             if which_box == 'names_box':
-                names_box.config(state=NORMAL)
-                names_box.insert(END, box_update)
-                names_box.config(state=DISABLED)
+                names_box.delete(2, END)
+                for name in tmp_update:
+                    if name != '':
+                        names_box.insert(END, name)
                 names_box.update()
 
     def connect(self, login: Toplevel, chat: Tk, txt_name: Entry, chat_box: Text, files_box, names_box):
         if self.client.client_name is not None:
             self.recv_thread = threading.Thread(target=self.recv, args=(chat_box, names_box, files_box,), daemon=True)
-        # self.chat_box = chat_box
         client_name = txt_name.get()
         txt_name.delete(0, END)
         txt_name.insert(0, "Username")
@@ -67,21 +68,27 @@ class Controller:
         login.deiconify()
         chat.withdraw()  # TODO: fix this to make the chat "disappear" and to not show old contents after reestablishing connection
 
-    def send_msg(self, chat_box: Text, msg_box: Entry, receiver: Entry):
+    def send_msg(self, chat_box: Text, msg_box: Entry, msg_details: Text, names_box: Listbox):
         """
         This method displays a message to certain person in the chat
         :return:
         """
-        # Handle receiver:
-        dest = receiver.get()
-        receiver.delete(0, END)
         # Handle message:
+        dest = names_box.get(names_box.curselection())
         msg = msg_box.get()
         if msg == "":  # nothing on the the message
             return
-        if dest == "":  # broadcast case
+        if dest == "everyone":  # broadcast case
+            msg_details.config(state=NORMAL)
+            msg_details.delete('1.0', END)
+            msg_details.insert('1.0', "To: Everyone")
+            msg_details.config(state=DISABLED)
             self.client.send_msg(msg=msg)
-        else:  # using dest send the message to him.
+        elif dest != self.client.client_name:  # using dest send the message to him.
+            msg_details.config(state=NORMAL)
+            msg_details.delete('1.0', END)
+            msg_details.insert('1.0', "To: " + f'{dest} ' + "(Directed Message)")
+            msg_details.config(state=DISABLED)
             self.client.send_msg(msg=msg, receiver_name=dest)
         msg_box.delete(0, END)
         # Display the msg:

@@ -99,7 +99,8 @@ class Server:
 
     def remove_client(self, client_sock):
         if client_sock in self.clients_sock:
-            disconnected_msg = packets_over_tcp.msg_packet('server', 'broadcast', f'***** {self.clients_sock[client_sock]} disconnected *****')
+            disconnected_msg = packets_over_tcp.msg_packet('server', 'broadcast',
+                                                           f'***** {self.clients_sock[client_sock]} disconnected *****')
             self.broadcast(disconnected_msg, client_sock)
             name = self.clients_sock[client_sock]
             del self.clients_sock[client_sock]

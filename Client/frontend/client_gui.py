@@ -1,4 +1,6 @@
 from tkinter import *
+from typing import List
+
 from PIL import ImageTk, Image
 from Client.Controller.Controller import Controller
 import os
@@ -80,34 +82,31 @@ class Room:
 
         # client box:
         """
-        This is the text box where all the clients will appear
+        This is the list box where all the clients will appear
         """
-        self.names_box = Text(self.chat_window, font=("Helvetica", 14), bg="#17202A",
-                              fg="#EAECEE")
-        self.names_box.insert('1.0', "People: \n")
-        self.names_box.config(state=DISABLED)
+        self.names_box = Listbox(self.chat_window, font=("Helvetica", 14), bg="#17202A",
+                                 fg="#EAECEE", selectmode=SINGLE)
+        l2 = Label(self.chat_window, font=("Helvetica", 14), text="People:", bg="#17202A",
+                   fg="#EAECEE", borderwidth=0, anchor='w')
+        l2.place(relheight=0.030, relwidth=0.2450, relx=0.723, rely=0.1480)
+        self.names_box.insert(0, "\n")
+        self.names_box.insert(1, "everyone")
         self.names_box.place(relheight=0.3465, relwidth=0.2680, relx=0.723, rely=0.1480)
         self.scrollbar(0.92, self.names_box)
 
         # files BOX:
         """
-        This is the text box where the files of the server will appear
+        This is the list box where the files of the server will appear
         """
-        options = [
-            "bla.txt",
-            "bli.txt"
-        ]
-        clicked = StringVar()
-        clicked.set(" ")
 
-        self.files_box = Text(self.chat_window, font=("Helvetica", 14), bg="#17202A",
-                              fg="#EAECEE")
-        self.files_box.insert('1.0', "Server Files: \n")
-        self.files_box.config(state=DISABLED)
+        self.files_box = Listbox(self.chat_window, font=("Helvetica", 14), bg="#17202A",
+                                 fg="#EAECEE")
+        l1 = Label(self.chat_window, font=("Helvetica", 14), text="Files:", bg="#17202A",
+                   fg="#EAECEE", borderwidth=0, anchor='w')
+        l1.place(relheight=0.030, relwidth=0.2450, relx=0.723, rely=0.5)
+        self.files_box.insert(0, "\n")
         self.files_box.place(relheight=0.3465, relwidth=0.2680, relx=0.723, rely=0.5)
-        # self.scrollbar(0.92, self.files_box)
-        drop = OptionMenu(self.chat_window, clicked, *options)
-        drop.place(relheight=0.030, relwidth=0.2605, relx=0.726, rely=0.54)
+        self.scrollbar(0.92, self.files_box)
 
     def chat_window_button_builder(self):
         """
@@ -122,7 +121,7 @@ class Room:
         This is the Entry for the client to send messages on.
         """
         client_msg = Entry(self.chat_window, font=("Helvetica", 13))
-        client_msg.insert(0, "Enter Message")
+        client_msg.insert(0, "Type message here...")
         client_msg.place(relheight=0.0450, relwidth=0.6915, relx=0.014, rely=0.9480)
 
         # client_name_chooser:
@@ -130,8 +129,18 @@ class Room:
         This is the Entry for the client to choose who to send the message
         """
         receiver = Entry(self.chat_window, font=("Helvetica", 13))
-        receiver.insert(0, "Name")
+        # name = str(self.names_box.get(self.names_box.curselection()))
+        receiver.insert(0, "Unused RN")
         receiver.place(relheight=0.0450, relwidth=0.135, relx=0.7210, rely=0.9480)
+
+        # msg_details:
+        """
+        This is an updating text box that will display the person you're talking to and which chat is it (private/broadcast)
+        """
+        msg_details = Text(self.chat_window, font=("Helvetica", 13))
+        msg_details.insert('1.0', "To: Everyone")
+        msg_details.config(state=DISABLED)
+        msg_details.place(relheight=0.0450, relwidth=0.6915, relx=0.014, rely=0.8983)
 
         # send msg button:
         """
@@ -140,16 +149,9 @@ class Room:
         # TODO: make receiver viable
         send_msg = Button(self.chat_window, text="Send", borderwidth=0, fg='navy', font=("Helvetica", 13),
                           command=lambda: self.controller.send_msg(chat_box=self.chat_box, msg_box=client_msg,
-                                                                   receiver=receiver))
+                                                                   names_box=self.names_box,
+                                                                   msg_details=msg_details))
         send_msg.place(relheight=0.0450, relwidth=0.135, relx=0.8580, rely=0.9480)
-
-        # File_chooser:
-        """
-        This is the Entry for the client to choose which file to download from the server
-        """
-        file_chooser = Entry(self.chat_window, font=("Helvetica", 13))
-        file_chooser.insert(0, "Insert File Name")
-        file_chooser.place(relheight=0.0450, relwidth=0.6915, relx=0.014, rely=0.8983)
 
         # Download Button:
         """
@@ -191,7 +193,7 @@ class Room:
                            command=self.controller.get_files)
         get_files.place(relheight=0.0440, relwidth=0.2650, relx=0.7255, rely=0.0485)
 
-    def scrollbar(self, x: float, txt: Text):
+    def scrollbar(self, x: float, txt):
         """
         This method creates the scroll bar for the chat boxes
         :param x: representing float number for locating the bar
@@ -200,6 +202,7 @@ class Room:
         """
         scrollbar = Scrollbar(txt, cursor='dot', orient=VERTICAL)
         scrollbar.place(relheight=1, relx=x)
+        txt.config(yscrollcommand=scrollbar.set)
         scrollbar.config(command=txt.yview)
 
     def generate_background(self, name: str, window):
