@@ -4,6 +4,8 @@ from typing import List
 from PIL import ImageTk, Image
 from Client.Controller.Controller import Controller
 import os
+
+from Emoji import *
 from Utilities import Misc
 
 
@@ -24,6 +26,8 @@ class Room:
         self.chat_box = None  # TODO: find better solution
         self.names_box = None
         self.files_box = None
+        self.txt_name = None
+        self.client_msg = None
         # char room window
         # create background:
         self.generate_background(name="Template.png", window=self.chat_window)
@@ -36,8 +40,21 @@ class Room:
         self.chat_login = Toplevel()
         self.chat_login.protocol("WM_DELETE_WINDOW", self.chat_window.destroy)  # terminates program
         self.chat_login_builder()
-        # self.enter_chat()
+
         self.chat_window.mainloop()
+
+    def default_text(self, event):
+        """
+        This method makes the text go vrom vrom disppaer when pressing the box ( it only occurs once for some reason)
+        :param event:
+        :return:
+        """
+        name = self.txt_name.get()
+        msg = self.client_msg.get()
+        if name == "Username":
+            self.txt_name.delete(0, END)
+        if msg == "Type message here...":
+            self.client_msg.delete(0, END)
 
     def chat_login_builder(self):
         """
@@ -51,15 +68,18 @@ class Room:
         self.generate_background(name="Login.png", window=self.chat_login)
 
         # name label & entry:
-        txt_name = Entry(self.chat_login, font=("Helvetica", 13))
-        txt_name.insert(0, "Username")
-        txt_name.place(relheight=0.0580, relwidth=0.3850, relx=0.308, rely=0.4885)
+        self.txt_name = Entry(self.chat_login, font=("Helvetica", 13))
+        self.txt_name.insert(0, "Username")
+        self.txt_name.place(relheight=0.0580, relwidth=0.3850, relx=0.308, rely=0.4885)
+        # Appearing and reappearing text:
+        self.txt_name.bind("<FocusIn>", self.default_text)
+        self.txt_name.bind("<FocusOut>", self.default_text)
         # connect button:
         # TODO: find better solution
         connect = Button(self.chat_login, text="Connect", borderwidth=0, font=("Helvetica", 13),
                          command=lambda: self.controller.connect(self.chat_login,
                                                                  self.chat_window,
-                                                                 txt_name,
+                                                                 self.txt_name,
                                                                  self.chat_box,
                                                                  self.files_box,
                                                                  self.names_box))
@@ -90,7 +110,7 @@ class Room:
                    fg="#EAECEE", borderwidth=0, anchor='w')
         l2.place(relheight=0.030, relwidth=0.2450, relx=0.723, rely=0.1480)
         self.names_box.insert(0, "\n")
-        self.names_box.insert(1, "everyone")
+        self.names_box.insert(1, "Everyone")
         self.names_box.place(relheight=0.3465, relwidth=0.2680, relx=0.723, rely=0.1480)
         self.scrollbar(0.92, self.names_box)
 
@@ -116,22 +136,28 @@ class Room:
         self.chat_window.title("Walk2Talk")
         self.chat_window.resizable(width=FALSE, height=FALSE)
         self.chat_window.configure(width=700, height=600)
+
         # Client msg box:
         """
         This is the Entry for the client to send messages on.
         """
-        client_msg = Entry(self.chat_window, font=("Helvetica", 13))
-        client_msg.insert(0, "Type message here...")
-        client_msg.place(relheight=0.0450, relwidth=0.6915, relx=0.014, rely=0.9480)
+        self.client_msg = Entry(self.chat_window, font=("Helvetica", 13))
+        self.client_msg.insert(0, "Type message here...")
+        self.client_msg.place(relheight=0.0450, relwidth=0.6915, relx=0.014, rely=0.9480)
+        self.client_msg.bind("<FocusIn>", self.default_text)
+        self.client_msg.bind("<FocusOut>", self.default_text)
 
-        # client_name_chooser:
+        # emoji box:
         """
-        This is the Entry for the client to choose who to send the message
+        This is the Optionmenu for the client to choose emojis from
         """
-        receiver = Entry(self.chat_window, font=("Helvetica", 13))
-        # name = str(self.names_box.get(self.names_box.curselection()))
-        receiver.insert(0, "Unused RN")
-        receiver.place(relheight=0.0450, relwidth=0.135, relx=0.7210, rely=0.9480)
+        value_inside = StringVar(self.chat_window)
+        options_list = [HAPPY, LAUGH, WINK, SMILE, LOVE, SMIRK, OOF, KISS, ANGRY, CRY, CORONA]
+        value_inside.set("Emojis")
+        question_menu = OptionMenu(self.chat_window, value_inside, *options_list,
+                                   command=lambda event: self.controller.send_emoji(msg=self.client_msg,
+                                                                                    Emoji=value_inside.get()))
+        question_menu.place(relheight=0.0450, relwidth=0.135, relx=0.8580, rely=0.9480)
 
         # msg_details:
         """
@@ -149,10 +175,10 @@ class Room:
         """
         # TODO: make receiver viable
         send_msg = Button(self.chat_window, text="Send", borderwidth=0, fg='navy', font=("Helvetica", 13),
-                          command=lambda: self.controller.send_msg(chat_box=self.chat_box, msg_box=client_msg,
+                          command=lambda: self.controller.send_msg(chat_box=self.chat_box, msg_box=self.client_msg,
                                                                    names_box=self.names_box,
                                                                    msg_details=msg_details))
-        send_msg.place(relheight=0.0450, relwidth=0.135, relx=0.8580, rely=0.9480)
+        send_msg.place(relheight=0.0450, relwidth=0.135, relx=0.7210, rely=0.9480)
 
         # Download Button:
         """

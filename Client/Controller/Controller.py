@@ -78,17 +78,9 @@ class Controller:
         msg = msg_box.get()
         if msg == "":  # nothing on the the message
             return
-        if dest == "everyone":  # broadcast case
-            msg_details.config(state=NORMAL)
-            msg_details.delete('1.0', END)
-            msg_details.insert('1.0', "To: Everyone")
-            msg_details.config(state=DISABLED)
+        if dest == "Everyone":  # broadcast case
             self.client.send_msg(msg=msg)
         elif dest != self.client.client_name:  # using dest send the message to him.
-            msg_details.config(state=NORMAL)
-            msg_details.delete('1.0', END)
-            msg_details.insert('1.0', "To: " + f'{dest} ' + "(Directed Message)")
-            msg_details.config(state=DISABLED)
             self.client.send_msg(msg=msg, receiver_name=dest)
         msg_box.delete(0, END)
         # Display the msg:
@@ -126,9 +118,18 @@ class Controller:
         name = w.get(index)
         msg_details.config(state=NORMAL)
         msg_details.delete('1.0', END)
-        msg_details.insert(END, f'To: {name}')
+        if name != "Everyone":
+            msg_details.insert(END, f'To: {name} (Direct Message)')
+        else:
+            msg_details.insert(END, f'To: Everyone')
         msg_details.config(state=DISABLED)
 
+    def send_emoji(self, msg: Entry, Emoji):
+        if msg == "Type message here..." or Emoji == "Emojis":
+            msg.delete(0, END)
+            msg.insert(0, Emoji)
+        elif Emoji != "Emojis":
+            msg.insert(END, Emoji)
 
     def download(self):
         """
