@@ -120,6 +120,16 @@ class Controller:
         chat_box.delete('1.0', END)
         chat_box.config(state=DISABLED)
 
+    def update_send_to(self, event, msg_details: Text):
+        w = event.widget
+        index = int(w.curselection()[0])
+        name = w.get(index)
+        msg_details.config(state=NORMAL)
+        msg_details.delete('1.0', END)
+        msg_details.insert(END, f'To: {name}')
+        msg_details.config(state=DISABLED)
+
+
     def download(self):
         """
         This method gets the download file for the client.

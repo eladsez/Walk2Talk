@@ -141,6 +141,7 @@ class Room:
         msg_details.insert('1.0', "To: Everyone")
         msg_details.config(state=DISABLED)
         msg_details.place(relheight=0.0450, relwidth=0.6915, relx=0.014, rely=0.8983)
+        self.names_box.bind("<<ListboxSelect>>", lambda event: self.controller.update_send_to(event, msg_details))
 
         # send msg button:
         """
