@@ -1,7 +1,6 @@
 import threading
 from tkinter import Text, END, DISABLED, NORMAL, Entry, Tk, Toplevel, Listbox
 from Client.backend.template_client import Client
-from Utilities import Misc
 
 
 class Controller:
@@ -18,7 +17,7 @@ class Controller:
         self.recv_runner = True
         self.chat_box = None
 
-    def recv(self, chat_box: Text, names_box: Text, files_box: Listbox):
+    def recv(self, chat_box: Text, names_box: Listbox, files_box: Listbox):
         while self.recv_runner:
             try:
                 box_update, which_box = self.client.receive()
@@ -68,13 +67,14 @@ class Controller:
         login.deiconify()
         chat.withdraw()  # TODO: fix this to make the chat "disappear" and to not show old contents after reestablishing connection
 
-    def send_msg(self, chat_box: Text, msg_box: Entry, msg_details: Text, names_box: Listbox):
+    def send_msg(self, chat_box: Text, msg_box: Entry, msg_details: Text):
         """
         This method displays a message to certain person in the chat
         :return:
         """
         # Handle message:
-        dest = names_box.get(names_box.curselection())
+        dest = str(msg_details.get('1.0', END).removeprefix('To: ')).removesuffix(' (Direct Message)\n').removesuffix('\n')
+        print('-'+dest+'-')
         msg = msg_box.get()
         if msg == "":  # nothing on the the message
             return
@@ -114,7 +114,10 @@ class Controller:
 
     def update_send_to(self, event, msg_details: Text):
         w = event.widget
-        index = int(w.curselection()[0])
+        try:
+            index = int(w.curselection()[0])
+        except IndexError:
+            return
         name = w.get(index)
         msg_details.config(state=NORMAL)
         msg_details.delete('1.0', END)

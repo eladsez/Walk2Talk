@@ -45,16 +45,24 @@ class Room:
 
     def default_text(self, event):
         """
-        This method makes the text go vrom vrom disppaer when pressing the box ( it only occurs once for some reason)
+        This method makes the text go vrom vrom disappear when pressing the box ( it only occurs once for some reason)
         :param event:
         :return:
         """
         name = self.txt_name.get()
         msg = self.client_msg.get()
         if name == "Username":
+            self.txt_name.config(fg='black')
             self.txt_name.delete(0, END)
-        if msg == "Type message here...":
+        elif name == '':
+            self.txt_name.config(fg='gray')
+            self.txt_name.insert(END, 'Username')
+        if msg == 'Type message here...':
+            self.client_msg.config(fg='black')
             self.client_msg.delete(0, END)
+        elif msg == '':
+            self.client_msg.config(fg='gray')
+            self.client_msg.insert(END, 'Type message here...')
 
     def chat_login_builder(self):
         """
@@ -69,11 +77,12 @@ class Room:
 
         # name label & entry:
         self.txt_name = Entry(self.chat_login, font=("Helvetica", 13))
+        self.txt_name.config(fg='gray')
         self.txt_name.insert(0, "Username")
         self.txt_name.place(relheight=0.0580, relwidth=0.3850, relx=0.308, rely=0.4885)
         # Appearing and reappearing text:
-        self.txt_name.bind("<FocusIn>", self.default_text)
-        self.txt_name.bind("<FocusOut>", self.default_text)
+        self.txt_name.bind("<FocusIn>", self.default_text_disappear)
+        self.txt_name.bind("<FocusOut>", self.default_text_disappear)
         # connect button:
         # TODO: find better solution
         connect = Button(self.chat_login, text="Connect", borderwidth=0, font=("Helvetica", 13),
@@ -84,6 +93,13 @@ class Room:
                                                                  self.files_box,
                                                                  self.names_box))
         connect.place(relheight=0.0580, relwidth=0.3850, relx=0.308, rely=0.6080)
+        # Bind the Enter Key to connect the server
+        self.chat_login.bind('<Return>', lambda event: self.controller.connect(self.chat_login,
+                                                                               self.chat_window,
+                                                                               self.txt_name,
+                                                                               self.chat_box,
+                                                                               self.files_box,
+                                                                               self.names_box))
 
     def chat_window_textbox_builder(self):
         """
@@ -142,10 +158,11 @@ class Room:
         This is the Entry for the client to send messages on.
         """
         self.client_msg = Entry(self.chat_window, font=("Helvetica", 13))
+        self.client_msg.config(fg='gray')
         self.client_msg.insert(0, "Type message here...")
         self.client_msg.place(relheight=0.0450, relwidth=0.6915, relx=0.014, rely=0.9480)
-        self.client_msg.bind("<FocusIn>", self.default_text)
-        self.client_msg.bind("<FocusOut>", self.default_text)
+        self.client_msg.bind("<FocusIn>", self.default_text_disappear)
+        self.client_msg.bind("<FocusOut>", self.default_text_disappear)
 
         # emoji box:
         """
@@ -176,9 +193,12 @@ class Room:
         # TODO: make receiver viable
         send_msg = Button(self.chat_window, text="Send", borderwidth=0, fg='navy', font=("Helvetica", 13),
                           command=lambda: self.controller.send_msg(chat_box=self.chat_box, msg_box=self.client_msg,
-                                                                   names_box=self.names_box,
                                                                    msg_details=msg_details))
         send_msg.place(relheight=0.0450, relwidth=0.135, relx=0.7210, rely=0.9480)
+        # Bind the Enter Key to send a massage
+        self.chat_window.bind('<Return>', lambda event: self.controller.send_msg(chat_box=self.chat_box,
+                                                                                 msg_box=self.client_msg,
+                                                                                 msg_details=msg_details))
 
         # Download Button:
         """
