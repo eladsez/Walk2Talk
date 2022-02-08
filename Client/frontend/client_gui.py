@@ -81,8 +81,8 @@ class Room:
         self.txt_name.insert(0, "Username")
         self.txt_name.place(relheight=0.0580, relwidth=0.3850, relx=0.308, rely=0.4885)
         # Appearing and reappearing text:
-        self.txt_name.bind("<FocusIn>", self.default_text_disappear)
-        self.txt_name.bind("<FocusOut>", self.default_text_disappear)
+        self.txt_name.bind("<FocusIn>", self.default_text)
+        self.txt_name.bind("<FocusOut>", self.default_text)
         # connect button:
         # TODO: find better solution
         connect = Button(self.chat_login, text="Connect", borderwidth=0, font=("Helvetica", 13),
@@ -161,8 +161,8 @@ class Room:
         self.client_msg.config(fg='gray')
         self.client_msg.insert(0, "Type message here...")
         self.client_msg.place(relheight=0.0450, relwidth=0.6915, relx=0.014, rely=0.9480)
-        self.client_msg.bind("<FocusIn>", self.default_text_disappear)
-        self.client_msg.bind("<FocusOut>", self.default_text_disappear)
+        self.client_msg.bind("<FocusIn>", self.default_text)
+        self.client_msg.bind("<FocusOut>", self.default_text)
 
         # emoji box:
         """
