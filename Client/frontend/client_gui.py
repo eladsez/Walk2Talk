@@ -1,6 +1,5 @@
 from tkinter import *
 from typing import List
-
 from PIL import ImageTk, Image
 from Client.Controller.Controller import Controller
 import os
@@ -70,7 +69,7 @@ class Room:
         :return:
         """
         self.chat_login.title("Login")
-        self.chat_login.resizable(width=FALSE, height=FALSE)
+        # self.chat_login.resizable(width=FALSE, height=FALSE)
         self.chat_login.configure(width=450, height=500)
         # create background:
         self.generate_background(name="Login.png", window=self.chat_login)
@@ -150,7 +149,7 @@ class Room:
         :return:
         """
         self.chat_window.title("Walk2Talk")
-        self.chat_window.resizable(width=FALSE, height=FALSE)
+        # self.chat_window.resizable(width=FALSE, height=FALSE)
         self.chat_window.configure(width=700, height=600)
 
         # Client msg box:
@@ -263,8 +262,16 @@ class Room:
         img = ImageTk.PhotoImage(template)
         bg = Label(window, image=img)
         bg.image = img
-        bg.pack(side='top', fill='both', expand='yes')
+        bg.pack(fill=BOTH, expand=YES)
+        bg.bind('<Configure>', lambda event: self.resize_image(event, template.copy(), bg))
 
+    def resize_image(self, event, template_copy, bg):
+        new_width = event.width - 4
+        new_height = event.height - 4
+        template = template_copy.resize((new_width, new_height))
+        img = ImageTk.PhotoImage(template)
+        bg.config(image=img)
+        bg.image = img  # avoid garbage collection
 
 if __name__ == '__main__':
     Room()
