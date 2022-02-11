@@ -25,8 +25,9 @@ class Room:
         self.chat_box = None  # TODO: find better solution
         self.names_box = None
         self.files_box = None
-        self.txt_name = None
+        self.username_entry = None
         self.client_msg = None
+        self.password_entry = None
         # char room window
         # create background:
         self.generate_background(name="Template.png", window=self.chat_window)
@@ -48,20 +49,33 @@ class Room:
         :param event:
         :return:
         """
-        name = self.txt_name.get()
-        msg = self.client_msg.get()
-        if name == "Username":
-            self.txt_name.config(fg='black')
-            self.txt_name.delete(0, END)
-        elif name == '':
-            self.txt_name.config(fg='gray')
-            self.txt_name.insert(END, 'Username')
-        if msg == 'Type message here...':
+        widget = event.widget
+        text = widget.get()
+        hint_color = '#315B6A'
+        if text == "Password":
+            self.password_entry.config(fg='black')
+            self.password_entry.delete(0, END)
+            return
+        elif text == '' and widget is self.password_entry:
+            self.password_entry.config(fg=hint_color)
+            self.password_entry.insert(END, 'Password')
+            return
+        if text == "Username":
+            self.username_entry.config(fg='black')
+            self.username_entry.delete(0, END)
+            return
+        elif text == '' and widget is self.username_entry:
+            self.username_entry.config(fg=hint_color)
+            self.username_entry.insert(END, 'Username')
+            return
+        if text == 'Type message here...':
             self.client_msg.config(fg='black')
             self.client_msg.delete(0, END)
-        elif msg == '':
-            self.client_msg.config(fg='gray')
+            return
+        elif text == '' and widget is self.client_msg:
+            self.client_msg.config(fg=hint_color)
             self.client_msg.insert(END, 'Type message here...')
+            return
 
     def chat_login_builder(self):
         """
@@ -72,30 +86,36 @@ class Room:
         # self.chat_login.resizable(width=FALSE, height=FALSE)
         self.chat_login.configure(width=450, height=500)
         # create background:
-        self.generate_background(name="Login.png", window=self.chat_login)
+        self.generate_background(name="Login_temlate.png", window=self.chat_login)
 
         # name label & entry:
-        self.txt_name = Entry(self.chat_login, font=("Helvetica", 13))
-        self.txt_name.config(fg='gray')
-        self.txt_name.insert(0, "Username")
-        self.txt_name.place(relheight=0.0580, relwidth=0.3850, relx=0.308, rely=0.4885)
+        self.username_entry = Entry(self.chat_login, font=("Helvetica", 13), bg="#224957", fg='#315B6A', borderwidth=0)
+        self.username_entry.place(relheight=0.0580, relwidth=0.36, relx=0.32, rely=0.42)
+        self.username_entry.insert(0, "Username")
+        self.password_entry = Entry(self.chat_login, font=("Helvetica", 13), bg="#224957", fg='#315B6A', borderwidth=0)
+        self.password_entry.place(relheight=0.0580, relwidth=0.36, relx=0.32, rely=0.56)
+        self.password_entry.insert(0, "Password")
         # Appearing and reappearing text:
-        self.txt_name.bind("<FocusIn>", self.default_text)
-        self.txt_name.bind("<FocusOut>", self.default_text)
+        self.username_entry.bind("<FocusIn>", self.default_text)
+        self.username_entry.bind("<FocusOut>", self.default_text)
+        self.password_entry.bind("<FocusIn>", self.default_text)
+        self.password_entry.bind("<FocusOut>", self.default_text)
         # connect button:
         # TODO: find better solution
-        connect = Button(self.chat_login, text="Connect", borderwidth=0, font=("Helvetica", 13),
-                         command=lambda: self.controller.connect(self.chat_login,
-                                                                 self.chat_window,
-                                                                 self.txt_name,
-                                                                 self.chat_box,
-                                                                 self.files_box,
-                                                                 self.names_box))
-        connect.place(relheight=0.0580, relwidth=0.3850, relx=0.308, rely=0.6080)
+        button_img = ImageTk.PhotoImage(Image.open(self.images_path + 'Login_btn.png'))
+        login_button = Button(self.chat_login, borderwidth=0, image=button_img, bg='#093545'
+                              , command=lambda: self.controller.connect(self.chat_login,
+                                                                        self.chat_window,
+                                                                        self.username_entry,
+                                                                        self.chat_box,
+                                                                        self.files_box,
+                                                                        self.names_box))
+        login_button.place(relx=0.315, rely=0.745, relheight=0.082, relwidth=0.37)
+        login_button.image = button_img
         # Bind the Enter Key to connect the server
         self.chat_login.bind('<Return>', lambda event: self.controller.connect(self.chat_login,
                                                                                self.chat_window,
-                                                                               self.txt_name,
+                                                                               self.username_entry,
                                                                                self.chat_box,
                                                                                self.files_box,
                                                                                self.names_box))
@@ -272,6 +292,7 @@ class Room:
         img = ImageTk.PhotoImage(template)
         bg.config(image=img)
         bg.image = img  # avoid garbage collection
+
 
 if __name__ == '__main__':
     Room()
