@@ -17,6 +17,7 @@ class Room:
     def __init__(self):
         # This is the chat window, it will be hidden for new users until they join the room.
         self.chat_window = Tk()
+        self.chat_window.configure(bg="#093545")
         # imgs abs paths:
         os.chdir(os.path.abspath(os.path.join(os.getcwd(), os.pardir)))
         parent_path = Misc.resource_path(relative_path='frontend')
@@ -30,7 +31,7 @@ class Room:
         self.password_entry = None
         # char room window
         # create background:
-        self.generate_background(name="Template.png", window=self.chat_window)
+        # self.generate_background(name="Template.png", window=self.chat_window)
         self.chat_window_textbox_builder()
         # controller:
         self.controller = Controller(("127.0.0.1", 12345), self.chat_box, self.names_box, self.files_box)
@@ -87,7 +88,6 @@ class Room:
         font_box = tkinter.font.Font(family="Lexend Deca", size=10)
         font_text = tkinter.font.Font(family="Montserrat", size=11)
         self.chat_login.title("Login")
-        # self.chat_login.resizable(width=FALSE, height=FALSE)
         self.chat_login.configure(width=450, height=500)
         # create background:
         self.generate_background(name="Login_temlate.png", window=self.chat_login)
@@ -220,10 +220,14 @@ class Room:
         This is the send message button which sends the message the client wrote inside the entry
         """
         # TODO: make receiver viable
-        send_msg = Button(self.chat_window, text="Send", borderwidth=0, fg='navy', font=("Helvetica", 13),
+        open_send = Image.open((self.images_path + 'button_send.png'))
+        send_img = ImageTk.PhotoImage(open_send)
+        send_msg = Button(self.chat_window, image=send_img, bg='#57D0FF' , borderwidth=50,
                           command=lambda: self.controller.send_msg(chat_box=self.chat_box, msg_box=self.client_msg,
                                                                    msg_details=msg_details))
-        send_msg.place(relheight=0.0450, relwidth=0.135, relx=0.7210, rely=0.9480)
+        send_msg.image = send_img
+        # send_msg.bind('<Configure>', lambda event: self.resize_image(event, open_send, send_msg))
+        send_msg.place(relheight=0.0460, relwidth=0.135, relx=0.7210, rely=0.9480)
         # Bind the Enter Key to send a massage
         self.chat_window.bind('<Return>', lambda event: self.controller.send_msg(chat_box=self.chat_box,
                                                                                  msg_box=self.client_msg,
