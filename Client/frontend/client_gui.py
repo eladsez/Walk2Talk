@@ -1,9 +1,9 @@
+import tkinter.font
 from tkinter import *
-from typing import List
 from PIL import ImageTk, Image
 from Client.Controller.Controller import Controller
 import os
-
+import webbrowser
 from Emoji import *
 from Utilities import Misc
 
@@ -55,9 +55,11 @@ class Room:
         if text == "Password":
             self.password_entry.config(fg='black')
             self.password_entry.delete(0, END)
+            self.password_entry.config(show="*");
             return
         elif text == '' and widget is self.password_entry:
             self.password_entry.config(fg=hint_color)
+            self.password_entry.config(show="");
             self.password_entry.insert(END, 'Password')
             return
         if text == "Username":
@@ -82,6 +84,8 @@ class Room:
         This method creates the login window
         :return:
         """
+        font_box = tkinter.font.Font(family="Lexend Deca", size=10)
+        font_text = tkinter.font.Font(family="Montserrat", size=11)
         self.chat_login.title("Login")
         # self.chat_login.resizable(width=FALSE, height=FALSE)
         self.chat_login.configure(width=450, height=500)
@@ -89,10 +93,10 @@ class Room:
         self.generate_background(name="Login_temlate.png", window=self.chat_login)
 
         # name label & entry:
-        self.username_entry = Entry(self.chat_login, font=("Helvetica", 13), bg="#224957", fg='#315B6A', borderwidth=0)
+        self.username_entry = Entry(self.chat_login, font=font_box, bg="#224957", fg='#315B6A', borderwidth=0)
         self.username_entry.place(relheight=0.0580, relwidth=0.36, relx=0.32, rely=0.42)
         self.username_entry.insert(0, "Username")
-        self.password_entry = Entry(self.chat_login, font=("Helvetica", 13), bg="#224957", fg='#315B6A', borderwidth=0)
+        self.password_entry = Entry(self.chat_login, font=font_box, bg="#224957", fg='#315B6A', borderwidth=0)
         self.password_entry.place(relheight=0.0580, relwidth=0.36, relx=0.32, rely=0.56)
         self.password_entry.insert(0, "Password")
         # Appearing and reappearing text:
@@ -100,18 +104,24 @@ class Room:
         self.username_entry.bind("<FocusOut>", self.default_text)
         self.password_entry.bind("<FocusIn>", self.default_text)
         self.password_entry.bind("<FocusOut>", self.default_text)
+
+        # Checkbutton(root, text=""
+
+        forgot_password = Label(self.chat_login, font=font_text, text='Forgot password?', fg='#20DF7F', bg='#093545')
+        forgot_password.place(relx=0.55, rely=0.66, relheight=0.035, relwidth=0.15)
+        forgot_password.bind('<Button-1>', lambda event: webbrowser.open_new_tab(
+                                                                                 'https://previews.123rf.com/images/channarongsds/channarongsds1806/channarongsds180600192/102871142-hand-drawing-vintage-style-middle-finger-show.jpg?fj=1'))
         # connect button:
-        # TODO: find better solution
         button_img = ImageTk.PhotoImage(Image.open(self.images_path + 'Login_btn.png'))
-        login_button = Button(self.chat_login, borderwidth=0, image=button_img, bg='#093545'
-                              , command=lambda: self.controller.connect(self.chat_login,
+        login_button = Label(self.chat_login, borderwidth=0, image=button_img, bg='#093545')
+        login_button.place(relx=0.3051, rely=0.727, relheight=0.1, relwidth=0.39)
+        login_button.image = button_img
+        login_button.bind('<Button-1>', lambda event: self.controller.connect(self.chat_login,
                                                                         self.chat_window,
                                                                         self.username_entry,
                                                                         self.chat_box,
                                                                         self.files_box,
                                                                         self.names_box))
-        login_button.place(relx=0.315, rely=0.745, relheight=0.082, relwidth=0.37)
-        login_button.image = button_img
         # Bind the Enter Key to connect the server
         self.chat_login.bind('<Return>', lambda event: self.controller.connect(self.chat_login,
                                                                                self.chat_window,
