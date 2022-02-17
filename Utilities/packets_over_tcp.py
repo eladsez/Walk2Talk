@@ -5,18 +5,17 @@ REQ_TYPE = '2'
 LIST_TYPE = '3'
 
 """
----------------------------massage packet template----------------------------
+-----------------------------massage packet template---------------------------
  1 (massage type) | sender name | receiver name (could be 'broadcast')| massage
 -------------------------------------------------------------------------------
 
------------------------------list request packet template----------------------
+---------------------------list request packet template------------------------
  2 (request type) | files/names
 -------------------------------------------------------------------------------
 
---------------------------list response packet template------------------------
+---------------------------list response packet template-----------------------
  3 (list type) | files/names | the list in str format separate with ','
 -------------------------------------------------------------------------------
-
 """
 
 

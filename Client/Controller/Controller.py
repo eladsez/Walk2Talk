@@ -1,6 +1,6 @@
 import threading
 from tkinter import Text, END, DISABLED, NORMAL, Entry, Tk, Toplevel, Listbox
-from Client.backend.template_client import Client
+from Client.backend.client import Client
 
 
 class Controller:

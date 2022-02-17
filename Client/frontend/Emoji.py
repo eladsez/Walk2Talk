@@ -1,3 +1,6 @@
+"""
+Emoji
+"""
 HAPPY = "\U0001F601"
 LAUGH = "\U0001F602"
 WINK = "\U0001F609"

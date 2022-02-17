@@ -1,6 +1,4 @@
 import socket
-from typing import List
-
 from Utilities import packets_over_tcp
 
 MSG_TYPE = '1'
@@ -58,6 +56,7 @@ class Client:
             return '\n' + layers[1] + ': ' + layers[3], 'chat_box'
         if layers[0] == LIST_TYPE:
             return packets_over_tcp.display_list(layers[2].split(',')), layers[1] + '_box'
+
 
     def send_msg(self, msg, receiver_name='broadcast'):
         """

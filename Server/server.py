@@ -1,5 +1,5 @@
 import threading
-import socket
+from socket import socket, AF_INET, SOCK_STREAM
 from concurrent.futures import ThreadPoolExecutor
 
 from Utilities import packets_over_tcp
@@ -19,7 +19,7 @@ class Server:
         self.clients_threads = []
         self.files = ['elad.txt', 'shaked.txt']
         try:
-            self.serverSock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  # socket for Client to connect
+            self.serverSock = socket(AF_INET, SOCK_STREAM)  # socket for Client to connect
             self.serverSock.bind(self.addr)
         except socket.error:
             print("ERROR with Server Socket creation or bind")
@@ -60,7 +60,7 @@ class Server:
             if name == name_to_find:
                 return sock
 
-    def handle_pkt(self, pkt: str, client_sock: socket.socket):
+    def handle_pkt(self, pkt: str, client_sock: socket):
         layers = pkt.split('|')
         if layers[0] == REQ_TYPE:
             if layers[1] == 'names':

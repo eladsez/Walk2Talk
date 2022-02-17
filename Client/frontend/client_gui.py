@@ -105,23 +105,25 @@ class Room:
         self.password_entry.bind("<FocusIn>", self.default_text)
         self.password_entry.bind("<FocusOut>", self.default_text)
 
-        # Checkbutton(root, text=""
+        # checkbutton_img = ImageTk.PhotoImage(Image.open((self.images_path + 'Remember me.png')))
+        # Label(self.chat_login, image=checkbutton_img, borderwidth=0).\
+        #     place(relx=0.1, rely=0.5)
 
         forgot_password = Label(self.chat_login, font=font_text, text='Forgot password?', fg='#20DF7F', bg='#093545')
         forgot_password.place(relx=0.55, rely=0.66, relheight=0.035, relwidth=0.15)
         forgot_password.bind('<Button-1>', lambda event: webbrowser.open_new_tab(
-                                                                                 'https://previews.123rf.com/images/channarongsds/channarongsds1806/channarongsds180600192/102871142-hand-drawing-vintage-style-middle-finger-show.jpg?fj=1'))
+            'https://previews.123rf.com/images/channarongsds/channarongsds1806/channarongsds180600192/102871142-hand-drawing-vintage-style-middle-finger-show.jpg?fj=1'))
         # connect button:
         button_img = ImageTk.PhotoImage(Image.open(self.images_path + 'Login_btn.png'))
         login_button = Label(self.chat_login, borderwidth=0, image=button_img, bg='#093545')
         login_button.place(relx=0.3051, rely=0.727, relheight=0.1, relwidth=0.39)
         login_button.image = button_img
         login_button.bind('<Button-1>', lambda event: self.controller.connect(self.chat_login,
-                                                                        self.chat_window,
-                                                                        self.username_entry,
-                                                                        self.chat_box,
-                                                                        self.files_box,
-                                                                        self.names_box))
+                                                                              self.chat_window,
+                                                                              self.username_entry,
+                                                                              self.chat_box,
+                                                                              self.files_box,
+                                                                              self.names_box))
         # Bind the Enter Key to connect the server
         self.chat_login.bind('<Return>', lambda event: self.controller.connect(self.chat_login,
                                                                                self.chat_window,
@@ -222,7 +224,7 @@ class Room:
         # TODO: make receiver viable
         open_send = Image.open((self.images_path + 'button_send.png'))
         send_img = ImageTk.PhotoImage(open_send)
-        send_msg = Button(self.chat_window, image=send_img, bg='#57D0FF' , borderwidth=50,
+        send_msg = Button(self.chat_window, image=send_img, bg='#57D0FF', borderwidth=50,
                           command=lambda: self.controller.send_msg(chat_box=self.chat_box, msg_box=self.client_msg,
                                                                    msg_details=msg_details))
         send_msg.image = send_img
@@ -285,8 +287,17 @@ class Room:
         txt.config(yscrollcommand=scrollbar.set)
         scrollbar.config(command=txt.yview)
 
+    staticmethod
+
+    def resize_image(event, template_copy, bg):
+        new_width = event.width - 4
+        new_height = event.height - 4
+        template = template_copy.resize((new_width, new_height))
+        img = ImageTk.PhotoImage(template)
+        bg.config(image=img)
+        bg.image = img  # avoid garbage collection
+
     def generate_background(self, name: str, window):
-        # TODO: make this resizable
         """
         This method generates the background for our chat box,
         :return:
@@ -297,15 +308,7 @@ class Room:
         bg = Label(window, image=img)
         bg.image = img
         bg.pack(fill=BOTH, expand=YES)
-        bg.bind('<Configure>', lambda event: self.resize_image(event, template.copy(), bg))
-
-    def resize_image(self, event, template_copy, bg):
-        new_width = event.width - 4
-        new_height = event.height - 4
-        template = template_copy.resize((new_width, new_height))
-        img = ImageTk.PhotoImage(template)
-        bg.config(image=img)
-        bg.image = img  # avoid garbage collection
+        bg.bind('<Configure>', lambda event: Room.resize_image(event, template.copy(), bg))
 
 
 if __name__ == '__main__':
