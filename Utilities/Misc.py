@@ -22,3 +22,6 @@ def paint_txt(style, txt_color, back_ground, text: str):
     This method colors a string
     """
     return f'\033[{style};{txt_color};{back_ground}m {text}\n'
+
+
+

@@ -17,7 +17,7 @@ class Room:
     def __init__(self):
         # This is the chat window, it will be hidden for new users until they join the room.
         self.chat_window = Tk()
-        self.chat_window.configure(bg="#093545")
+        # self.chat_window.configure(bg="#093545")
         # imgs abs paths:
         os.chdir(os.path.abspath(os.path.join(os.getcwd(), os.pardir)))
         parent_path = Misc.resource_path(relative_path='frontend')
@@ -31,7 +31,7 @@ class Room:
         self.password_entry = None
         # char room window
         # create background:
-        # self.generate_background(name="Template.png", window=self.chat_window)
+        self.generate_background(name="Template.png", window=self.chat_window)
         self.chat_window_textbox_builder()
         # controller:
         self.controller = Controller(("127.0.0.1", 12345), self.chat_box, self.names_box, self.files_box)
@@ -88,7 +88,7 @@ class Room:
         font_box = tkinter.font.Font(family="Lexend Deca", size=10)
         font_text = tkinter.font.Font(family="Montserrat", size=11)
         self.chat_login.title("Login")
-        self.chat_login.configure(width=450, height=500)
+        self.chat_login.configure(width=600, height=800)
         # create background:
         self.generate_background(name="Login_temlate.png", window=self.chat_login)
 
@@ -287,8 +287,7 @@ class Room:
         txt.config(yscrollcommand=scrollbar.set)
         scrollbar.config(command=txt.yview)
 
-    staticmethod
-
+    @staticmethod
     def resize_image(event, template_copy, bg):
         new_width = event.width - 4
         new_height = event.height - 4

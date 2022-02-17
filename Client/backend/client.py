@@ -99,7 +99,7 @@ class Client:
         """
         pass
 
-    def download(self) -> object:
+    def download(self):
         """
         A simple download file method
         :return:

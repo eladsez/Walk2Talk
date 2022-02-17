@@ -50,7 +50,7 @@ class Server:
             except socket.error:
                 continue
             if pkt != '|-exit-|':
-                self.handle_pkt(pkt, client_sock)
+                self.handle_tcp_pkt(pkt, client_sock)
             else:
                 self.remove_client(client_sock)
                 break
@@ -60,7 +60,7 @@ class Server:
             if name == name_to_find:
                 return sock
 
-    def handle_pkt(self, pkt: str, client_sock: socket):
+    def handle_tcp_pkt(self, pkt: str, client_sock: socket):
         layers = pkt.split('|')
         if layers[0] == REQ_TYPE:
             if layers[1] == 'names':
@@ -104,6 +104,8 @@ class Server:
             name = self.clients_sock[client_sock]
             del self.clients_sock[client_sock]
             del self.clients_addr[name]
+
+
 
 
 if __name__ == '__main__':
