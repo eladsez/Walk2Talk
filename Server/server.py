@@ -1,8 +1,7 @@
 import threading
 from socket import socket, AF_INET, SOCK_STREAM
 from concurrent.futures import ThreadPoolExecutor
-
-from Utilities import packets_over_tcp
+from Utilities import tcp_packets
 
 MSG_TYPE = '1'
 REQ_TYPE = '2'
@@ -104,8 +103,6 @@ class Server:
             name = self.clients_sock[client_sock]
             del self.clients_sock[client_sock]
             del self.clients_addr[name]
-
-
 
 
 if __name__ == '__main__':

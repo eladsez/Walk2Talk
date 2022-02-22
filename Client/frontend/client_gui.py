@@ -4,7 +4,7 @@ from PIL import ImageTk, Image
 from Client.Controller.Controller import Controller
 import os
 import webbrowser
-from Emoji import *
+from Client.frontend.Emoji import *
 from Utilities import Misc
 
 

@@ -104,6 +104,24 @@ def display_list(to_display: List[str]):
     return dis
 
 
+def download_request(file_name: str):
+    """
+    This method creates a download request packet
+    :param file_name: file name.
+    :return:
+    """
+    pass
+
+
+def download_details():
+    """
+    This method will be sent by the server to the client, and will contain all the details about the file.
+    i.e - size,which file...
+    :return:
+    """
+    pass
+
+
 def encrypt_packet(pkt):
     """
     This method encrypts our packet and sends it to the Client as an encrypted,
@@ -122,8 +140,4 @@ def decrypt_packet(encrypted_pkt):
     pass
 
 
-if __name__ == '__main__':
-    names = ['shaked', 'elad', 'bla']
-    files = ['bla.txt', 'gg.txt']
-    pkt = server_files_packet(files)
-    print(pkt)
+

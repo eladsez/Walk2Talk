@@ -1,5 +1,5 @@
 import socket
-from Utilities import packets_over_tcp
+from Utilities import tcp_packets
 
 MSG_TYPE = '1'
 REQ_TYPE = '2'
