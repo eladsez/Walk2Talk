@@ -23,5 +23,3 @@ def paint_txt(style, txt_color, back_ground, text: str):
     """
     return f'\033[{style};{txt_color};{back_ground}m {text}\n'
 
-
-

@@ -1,4 +1,8 @@
 import socket
+import sys
+
+from Server.CC_server_try import CCServer
+from Client.backend.CC_client_try import CClient
 from Utilities import tcp_packets
 
 MSG_TYPE = '1'
@@ -55,8 +59,7 @@ class Client:
         if layers[0] == MSG_TYPE:
             return '\n' + layers[1] + ': ' + layers[3], 'chat_box'
         if layers[0] == LIST_TYPE:
-            return packets_over_tcp.display_list(layers[2].split(',')), layers[1] + '_box'
-
+            return tcp_packets.display_list(layers[2].split(',')), layers[1] + '_box'
 
     def send_msg(self, msg, receiver_name='broadcast'):
         """
@@ -65,7 +68,7 @@ class Client:
         :param receiver_name:
         :return:
         """
-        msg = packets_over_tcp.msg_packet(self.client_name, receiver_name, msg)
+        msg = tcp_packets.msg_packet(self.client_name, receiver_name, msg)
         try:
             self.sock.send(msg.encode())
         except socket.error:
@@ -77,7 +80,7 @@ class Client:
         :return:
         """
         try:
-            self.sock.send(packets_over_tcp.get_active_clients_packet().encode())
+            self.sock.send(tcp_packets.get_active_clients_packet().encode())
         except socket.error as err:
             raise err
 
@@ -87,24 +90,27 @@ class Client:
         :return:
         """
         try:
-            self.sock.send(packets_over_tcp.get_server_files_packet().encode())
+            self.sock.send(tcp_packets.get_server_files_packet().encode())
         except socket.error as err:
             raise err
 
-    def request_download(self, file_name: str) -> bool:
+    def request_download(self, file_name: str):
         """
         This method checks if the request is viable to download
         :param file_name: a name of file.
         :return:
         """
-        pass
+        self.sock.send(tcp_packets.download_request(file_name).encode())
+        self.download(file_name)
 
-    def download(self):
+    def download(self, file_name: str):
         """
         A simple download file method
         :return:
         """
-        pass
+        c_client = CClient(addr=('127.0.0.1', 5550))
+        c_client.connect((file_name, sys.getsizeof(file_name)))
+        c_client.recv_file()
 
 
 if __name__ == '__main__':

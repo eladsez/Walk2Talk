@@ -56,11 +56,11 @@ class Room:
         if text == "Password":
             self.password_entry.config(fg='black')
             self.password_entry.delete(0, END)
-            self.password_entry.config(show="*");
+            self.password_entry.config(show="*")
             return
         elif text == '' and widget is self.password_entry:
             self.password_entry.config(fg=hint_color)
-            self.password_entry.config(show="");
+            self.password_entry.config(show="")
             self.password_entry.insert(END, 'Password')
             return
         if text == "Username":
@@ -88,7 +88,7 @@ class Room:
         font_box = tkinter.font.Font(family="Lexend Deca", size=10)
         font_text = tkinter.font.Font(family="Montserrat", size=11)
         self.chat_login.title("Login")
-        self.chat_login.configure(width=600, height=800)
+        self.chat_login.configure(width=550, height=600)
         # create background:
         self.generate_background(name="Login_temlate.png", window=self.chat_login)
 
@@ -240,7 +240,7 @@ class Room:
         This is the Download button, it will send the file to our client
         """
         download = Button(self.chat_window, text="Download", borderwidth=0, fg='navy', font=("Helvetica", 13),
-                          command=self.controller.download)
+                          command=lambda: self.controller.download(self.files_box))
         download.place(relheight=0.0450, relwidth=0.270, relx=0.7210, rely=0.8983)
 
         # disconnect button:

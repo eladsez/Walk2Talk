@@ -1,6 +1,8 @@
+import os
 import threading
 from tkinter import Text, END, DISABLED, NORMAL, Entry, Tk, Toplevel, Listbox
 from Client.backend.client import Client
+from Utilities import Misc
 
 
 class Controller:
@@ -135,9 +137,15 @@ class Controller:
         elif Emoji != "Emojis":
             msg.insert(END, Emoji)
 
-    def download(self):
+    def download(self, files_box: Listbox):
         """
         This method gets the download file for the client.
         :return:
         """
-        pass
+        try:
+            file_number = int(files_box.curselection()[0])
+        except IndexError:
+            return
+        # Getting name file.
+        file_name = files_box.get(file_number)
+        self.client.request_download(file_name)

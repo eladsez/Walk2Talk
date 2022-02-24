@@ -1,4 +1,4 @@
-from tkinter import Label, Tk, BOTH, YES, ttk, Frame, Entry, Scrollbar, VERTICAL, Canvas
+from tkinter import Label, Tk, BOTH, YES, ttk, Frame, Entry, Scrollbar, VERTICAL, Canvas, LEFT, RIGHT
 from PIL import ImageTk, Image
 from scroll_frame import VerticalScrolledFrame
 
@@ -35,20 +35,21 @@ class ChatBox(VerticalScrolledFrame):
         VerticalScrolledFrame.__init__(parent, *args, **kw)
         self.level_index = 0
         self.canvas = Canvas(self.interior)
-
     # def update_box(self, sender):
 
 
-def enter(frame, canvas):
+def enter(frame):
     global boole, index
     if boole:
         b = BubbleMsg(frame.interior, sender='bla')
         b.place(relx=0.68, rely=0.1 + index)
-        b.pack()
+        b.pack(side = RIGHT)
+        b.update()
     else:
         b = BubbleMsg(frame.interior)
-        # b.place(relx=0, rely=0.1 + index)
-        b.pack()
+        b.place(relx=0, rely=0.1 + index)
+        b.pack(side = LEFT,)
+        b.update()
     boole = not boole
     index += 0.1
 
@@ -56,10 +57,9 @@ def enter(frame, canvas):
 if __name__ == '__main__':
     root = Tk()
     frame = VerticalScrolledFrame(root)
+    root.config(width=800, height=500)
     boole = False
     index = 0.1
     frame.place(relx=0, rely=0, relheight=0.5, relwidth=0.5)
-    canvas = Canvas(frame.interior)
-    # canvas.place(relx=0, rely=0)
-    root.bind('<Return>', lambda event: enter(frame, canvas))
+    root.bind('<Return>', lambda event: enter(frame))
     root.mainloop()

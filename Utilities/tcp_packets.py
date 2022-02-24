@@ -3,6 +3,7 @@ from typing import List
 MSG_TYPE = '1'
 REQ_TYPE = '2'
 LIST_TYPE = '3'
+DOWNLOAD_REQ = '4'
 
 """
 -----------------------------massage packet template---------------------------
@@ -16,6 +17,11 @@ LIST_TYPE = '3'
 ---------------------------list response packet template-----------------------
  3 (list type) | files/names | the list in str format separate with ','
 -------------------------------------------------------------------------------
+
+---------------------------download request packet template--------------------
+ 4 (request type) | file name
+-------------------------------------------------------------------------------
+
 """
 
 
@@ -100,7 +106,7 @@ def download_request(file_name: str):
     :param file_name: file name.
     :return:
     """
-    pass
+    return DOWNLOAD_REQ + "|" + file_name
 
 
 def download_details():
@@ -128,6 +134,3 @@ def decrypt_packet(encrypted_pkt):
     :return:
     """
     pass
-
-
-
