@@ -67,16 +67,6 @@ def server_files_packet(files: List[str]):
     return pkt
 
 
-# def get_msg_packet(receiver_name: str, sender_name: str, msg: str):
-#     """
-#     This method creates a packet contains:
-#     a text message and a name to send it to.
-#     :param receiver_name:
-#     :return:
-#     """
-#     pass
-
-
 def msg_packet(sender_name: str, receiver_name: str, msg: str):
     """
     This method gets the sender name.

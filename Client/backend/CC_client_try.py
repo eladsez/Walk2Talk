@@ -1,7 +1,6 @@
 import sys
 from socket import socket, AF_INET, SOCK_DGRAM, timeout, error
 from Utilities import udp_packets
-import pickle
 
 
 class CClient:
@@ -43,7 +42,6 @@ class CClient:
         buff = 8192  # this is the max size we allow the client to receive
         file = open(self.file_name, 'wb')
         last_seq = 0
-
         while last_seq <= self.file_size:
             try:
                 pkt, addr = self.sock.recvfrom(buff)
@@ -51,11 +49,12 @@ class CClient:
                 seq, data = udp_packets.pkt_to_file(pkt)
                 data_size = sys.getsizeof(data)
                 if seq == last_seq + data_size:
+                    print(seq)
                     file.write(data)
                     last_seq = seq
                     self.sock.sendto(udp_packets.ack_from_client(last_seq), self.server_addr)
-                else:
-                    self.sock.sendto(udp_packets.ack_from_client(last_seq), self.server_addr)
+                # else:
+                #     self.sock.sendto(udp_packets.ack_from_client(last_seq), self.server_addr)
 
             except InterruptedError as e:
                 print(e)
@@ -66,9 +65,12 @@ class CClient:
                 print('error occurred while writing to the file')
                 return False
 
+        if last_seq >= self.file_size:
+            print(last_seq)
+            print('file downloaded!')
+
 
 if __name__ == '__main__':
     client = CClient(('127.0.0.1', 5550))
     client.connect(('DSC02199.jpg', 13235758))
     client.recv_file()
-
