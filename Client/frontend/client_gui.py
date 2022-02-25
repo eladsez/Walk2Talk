@@ -44,42 +44,6 @@ class Room:
 
         self.chat_window.mainloop()
 
-    def default_text(self, event):
-        """
-        This method makes the text go vrom vrom disappear when pressing the box ( it only occurs once for some reason)
-        :param event:
-        :return:
-        """
-        widget = event.widget
-        text = widget.get()
-        hint_color = '#315B6A'
-        if text == "Password":
-            self.password_entry.config(fg='black')
-            self.password_entry.delete(0, END)
-            self.password_entry.config(show="*")
-            return
-        elif text == '' and widget is self.password_entry:
-            self.password_entry.config(fg=hint_color)
-            self.password_entry.config(show="")
-            self.password_entry.insert(END, 'Password')
-            return
-        if text == "Username":
-            self.username_entry.config(fg='black')
-            self.username_entry.delete(0, END)
-            return
-        elif text == '' and widget is self.username_entry:
-            self.username_entry.config(fg=hint_color)
-            self.username_entry.insert(END, 'Username')
-            return
-        if text == 'Type message here...':
-            self.client_msg.config(fg='black')
-            self.client_msg.delete(0, END)
-            return
-        elif text == '' and widget is self.client_msg:
-            self.client_msg.config(fg=hint_color)
-            self.client_msg.insert(END, 'Type message here...')
-            return
-
     def chat_login_builder(self):
         """
         This method creates the login window
@@ -286,6 +250,42 @@ class Room:
         scrollbar.place(relheight=1, relx=x)
         txt.config(yscrollcommand=scrollbar.set)
         scrollbar.config(command=txt.yview)
+
+    def default_text(self, event):
+        """
+        This method makes the text go vrom vrom disappear when pressing the box ( it only occurs once for some reason)
+        :param event:
+        :return:
+        """
+        widget = event.widget
+        text = widget.get()
+        hint_color = '#315B6A'
+        if text == "Password":
+            self.password_entry.config(fg='black')
+            self.password_entry.delete(0, END)
+            self.password_entry.config(show="*")
+            return
+        elif text == '' and widget is self.password_entry:
+            self.password_entry.config(fg=hint_color)
+            self.password_entry.config(show="")
+            self.password_entry.insert(END, 'Password')
+            return
+        if text == "Username":
+            self.username_entry.config(fg='black')
+            self.username_entry.delete(0, END)
+            return
+        elif text == '' and widget is self.username_entry:
+            self.username_entry.config(fg=hint_color)
+            self.username_entry.insert(END, 'Username')
+            return
+        if text == 'Type message here...':
+            self.client_msg.config(fg='black')
+            self.client_msg.delete(0, END)
+            return
+        elif text == '' and widget is self.client_msg:
+            self.client_msg.config(fg=hint_color)
+            self.client_msg.insert(END, 'Type message here...')
+            return
 
     @staticmethod
     def resize_image(event, template_copy, bg):

@@ -55,14 +55,18 @@ class CCServer:
 
     def ack_listener(self):
         ack = ''.encode()
-        while ack.decode() != 'FINAL_ACK':  # TODO: replace with something nicer
+        while ack.decode() != udp_packets.ack_from_client(None, final=True).decode():
             try:
                 ack, addr = self.sock.recvfrom(1024)
                 if addr != self.client_addr: continue
             except timeout:
                 print('server didnt recv data ack from the client (timeout)')
 
-            threading.Thread(target=self.cwnd.handle_ack, args=(ack,)).start()
+            threading.Thread(target=self.cwnd.handle_ack, args=(ack,), daemon=True).start()
+
+        self.sock.close()
+        print('file send successfully!')
+
 
     # def send_file(self):
     #     file = open(self.filename, 'rb')
@@ -80,5 +84,5 @@ class CCServer:
 
 if __name__ == '__main__':
     server = CCServer()
-    server.connect(('127.0.0.1', 5550), './DSC02199.jpg')
+    server.connect(('127.0.0.1', 5550), './files/elad.txt')
     server.send_file()

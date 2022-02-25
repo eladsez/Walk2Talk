@@ -77,7 +77,6 @@ class Controller:
         # Handle message:
         dest = str(msg_details.get('1.0', END).removeprefix('To: ')).removesuffix(' (Direct Message)\n').removesuffix(
             '\n')
-        print('-' + dest + '-')
         msg = msg_box.get()
         if msg == "":  # nothing on the the message
             return

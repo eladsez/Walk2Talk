@@ -20,7 +20,8 @@ class SlidingWindow:
         self.init_win()
 
     def init_win(self):
-        for i in range(0, self.max_win_size):
+        max_win = min(self.max_win_size, len(self.datagrams))
+        for i in range(0, max_win):
             self.curr_window[self.datagrams[i][0]] = self.datagrams[i][1]
 
         self.next_index = self.max_win_size
@@ -33,12 +34,15 @@ class SlidingWindow:
                 self.next_seq_to_send = seq
 
     def handle_ack(self, ack):
+        if self.next_index > len(self.datagrams): return
+
         self.lock.acquire()
         seq_of_ack = udp_packets.seq_from_client_ack(ack)
         del self.curr_window[seq_of_ack]
         self.acked.append(seq_of_ack)
         self.curr_window[self.datagrams[self.next_index][0]] = self.datagrams[self.next_index][1]
         self.next_index += 1  # advance to the next index in the datagrams list
+        print(f'window size = {len(self.curr_window)}')
         print(f'received ack of seq: {seq_of_ack}')
         if seq_of_ack == self.expected_ack:
             self.send_window()  # send the new datagram that added to the window above and then return

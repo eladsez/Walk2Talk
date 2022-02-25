@@ -100,7 +100,11 @@ class Client:
         :param file_name: a name of file.
         :return:
         """
-        self.sock.send(tcp_packets.download_request(file_name).encode())
+        try:
+            self.sock.send(tcp_packets.download_request(file_name).encode())
+        except socket.error as err:
+            print('client failed to send file name to the server')
+
         self.download(file_name)
 
     def download(self, file_name: str):

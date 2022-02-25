@@ -11,11 +11,13 @@ def client_handshake():
     return 'SYN_ACK-CLIENT'
 
 
-def ack_from_client(seq: int):
+def ack_from_client(seq: int, final: bool = False):
     """
     This method gets an acknowledgment response pkt from the client
     :return:
     """
+    if final:
+        return '-FINAL-ACK-FILE-RECEIVED-'.encode()
     return f'ACK-DATA-SEQ-{seq}'.encode()
 
 
