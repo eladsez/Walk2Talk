@@ -94,10 +94,10 @@ class Room:
 
         # name label & entry:
         self.username_entry = Entry(self.chat_login, font=font_box, bg="#224957", fg='#315B6A', borderwidth=0)
-        self.username_entry.place(relheight=0.0580, relwidth=0.36, relx=0.32, rely=0.42)
+        self.username_entry.place(relheight=0.06, relwidth=0.6, relx=0.2, rely=0.395)
         self.username_entry.insert(0, "Username")
         self.password_entry = Entry(self.chat_login, font=font_box, bg="#224957", fg='#315B6A', borderwidth=0)
-        self.password_entry.place(relheight=0.0580, relwidth=0.36, relx=0.32, rely=0.56)
+        self.password_entry.place(relheight=0.06, relwidth=0.6, relx=0.2, rely=0.514)
         self.password_entry.insert(0, "Password")
         # Appearing and reappearing text:
         self.username_entry.bind("<FocusIn>", self.default_text)
@@ -110,13 +110,13 @@ class Room:
         #     place(relx=0.1, rely=0.5)
 
         forgot_password = Label(self.chat_login, font=font_text, text='Forgot password?', fg='#20DF7F', bg='#093545')
-        forgot_password.place(relx=0.55, rely=0.66, relheight=0.035, relwidth=0.15)
+        forgot_password.place(relx=0.58, rely=0.611, relheight=0.035, relwidth=0.23)
         forgot_password.bind('<Button-1>', lambda event: webbrowser.open_new_tab(
             'https://previews.123rf.com/images/channarongsds/channarongsds1806/channarongsds180600192/102871142-hand-drawing-vintage-style-middle-finger-show.jpg?fj=1'))
         # connect button:
         button_img = ImageTk.PhotoImage(Image.open(self.images_path + 'Login_btn.png'))
         login_button = Label(self.chat_login, borderwidth=0, image=button_img, bg='#093545')
-        login_button.place(relx=0.3051, rely=0.727, relheight=0.1, relwidth=0.39)
+        login_button.place(relx=0.1893, rely=0.69, relheight=0.09, relwidth=0.61)
         login_button.image = button_img
         login_button.bind('<Button-1>', lambda event: self.controller.connect(self.chat_login,
                                                                               self.chat_window,

@@ -1,7 +1,6 @@
 import os
 import threading
 from socket import socket, AF_INET, SOCK_STREAM, error
-
 from Server.CC_server_try import CCServer
 from Utilities import tcp_packets, Misc
 
@@ -18,7 +17,7 @@ class Server:
         self.clients_addr = {}  # (name:addr)
         self.clients_sock = {}  # (socket:name)
         self.clients_threads = []
-        self.files = ['elad.txt', 'shaked.txt']
+        self.files = [file for file in os.listdir('./files') if os.path.isfile(os.path.join('./files', file))]
         try:
             self.serverSock = socket(AF_INET, SOCK_STREAM)  # socket for Client to connect
             self.serverSock.bind(self.addr)

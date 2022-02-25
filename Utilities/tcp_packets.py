@@ -94,7 +94,6 @@ def msg_packet(sender_name: str, receiver_name: str, msg: str):
 def display_list(to_display: List[str]):
     dis = ''
     for i, val in enumerate(to_display):
-        # dis += '   ' + str(i + 1) + '.' + val + '\n'
         dis += ' ' + val
 
     return dis
