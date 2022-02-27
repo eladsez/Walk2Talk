@@ -152,7 +152,7 @@ class Room:
         This is the Entry for the client to send messages on.
         """
         self.client_msg = Entry(self.chat_window, font=("Helvetica", 13), bg='#224957', borderwidth=0)
-        self.client_msg.config(fg='gray')
+        self.client_msg.config(fg='#315B6A')
         self.client_msg.insert(0, "Type message here...")
         self.client_msg.place(relheight=0.0450, relwidth=0.701, relx=0.025, rely=0.861)
         self.client_msg.bind("<FocusIn>", self.default_text)
@@ -213,9 +213,12 @@ class Room:
         """
         This button clears the chat box messages 
         """
-        clear_chat = Button(self.chat_window, text="Clear Chat", borderwidth=0, fg='navy', font=("Helvetica", 13),
-                            command=lambda: self.controller.clear_chat(self.chat_box))
-        clear_chat.place(relheight=0.03, relwidth=0.12, relx=0.5, rely=0.5)
+        open_clear = Image.open((self.images_path + 'clear_btn.png'))
+        clear_img = ImageTk.PhotoImage(open_clear)
+        clear_chat = Label(self.chat_window, text="Clear Chat", borderwidth=0, image=clear_img, bg='#224957')
+        clear_chat.image = clear_img
+        clear_chat.bind('<Button-1>', lambda event: self.controller.clear_chat(self.chat_box))
+        clear_chat.place(relx=0.64, rely=0.64)
 
         # get clients button:
         """
@@ -257,9 +260,8 @@ class Room:
         :return:
         """
         style = ttk.Style()
-        # style.theme_use('classic')
-        # style.configure("Vertical.TScrollbar", background="green", bordercolor="red", arrowcolor="white")
-        style.configure("arrowless.Vertical.TScrollbar", troughcolor="blue")
+        style.theme_use('classic')
+        style.configure("Vertical.TScrollbar", background="green", bordercolor="red", arrowcolor="white")
         scrollbar = ttk.Scrollbar(txt, cursor='dot', orient=VERTICAL)
         scrollbar.place(relheight=1, relx=x)
         txt.config(yscrollcommand=scrollbar.set)
@@ -267,7 +269,7 @@ class Room:
 
     def default_text(self, event):
         """
-        This method makes the text go vrom vrom disappear when pressing the box ( it only occurs once for some reason)
+        This method makes the text go vrom vrom disappear when pressing the box (it only occurs once for some reason)
         :param event:
         :return:
         """
@@ -293,7 +295,7 @@ class Room:
             self.username_entry.insert(END, 'Username')
             return
         if text == 'Type message here...':
-            self.client_msg.config(fg='black')
+            self.client_msg.config(fg='white')
             self.client_msg.delete(0, END)
             return
         elif text == '' and widget is self.client_msg:
