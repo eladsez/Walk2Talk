@@ -92,9 +92,10 @@ class Client:
         except socket.error as err:
             raise err
 
-    def request_download(self, file_name: str):
+    def request_download(self, file_name: str, file_path: str):
         """
         This method checks if the request is viable to download
+        :param file_path:
         :param file_name: a name of file.
         :return:
         """
@@ -104,9 +105,9 @@ class Client:
             print(err)
             print('client failed to send file name to the server')
 
-        threading.Thread(target=self.download, args=(file_name,)).start()
+        threading.Thread(target=self.download, args=(file_name, file_path)).start()
 
-    def download(self, file_name: str):
+    def download(self, file_name: str, file_path):
         """
         A simple download file method
         :return:
@@ -115,7 +116,7 @@ class Client:
         connect = False
         while not connect:
             connect = c_client.connect(file_name)
-        c_client.recv_file()
+        c_client.recv_file(file_path)
 
 
 if __name__ == '__main__':

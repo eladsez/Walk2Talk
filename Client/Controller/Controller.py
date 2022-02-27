@@ -1,6 +1,6 @@
 import os
 import threading
-from tkinter import Text, END, DISABLED, NORMAL, Entry, Tk, Toplevel, Listbox
+from tkinter import Text, END, DISABLED, NORMAL, Entry, Tk, Toplevel, Listbox, filedialog
 from Client.backend.client import Client
 from Utilities import Misc
 
@@ -47,7 +47,8 @@ class Controller:
                         names_box.insert(END, name)
                 names_box.update()
 
-    def connect(self, login: Toplevel, chat: Tk, txt_name: Entry, chat_box: Text, files_box, names_box):
+    def connect(self, login: Toplevel, chat: Tk, txt_name: Entry, chat_box: Text, files_box, names_box, event):
+        event.widget.config(image=event.widget.image_press)
         if self.client.client_name is not None:
             self.recv_thread = threading.Thread(target=self.recv, args=(chat_box, names_box, files_box,), daemon=True)
         client_name = txt_name.get()
@@ -69,11 +70,12 @@ class Controller:
         login.deiconify()
         chat.withdraw()  # TODO: fix this to make the chat "disappear" and to not show old contents after reestablishing connection
 
-    def send_msg(self, chat_box: Text, msg_box: Entry, msg_details: Text):
+    def send_msg(self, chat_box: Text, msg_box: Entry, msg_details: Text, event):
         """
         This method displays a message to certain person in the chat
         :return:
         """
+        event.widget.config(image=event.widget.image_press)
         # Handle message:
         dest = str(msg_details.get('1.0', END).removeprefix('To: ')).removesuffix(' (Direct Message)\n').removesuffix(
             '\n')
@@ -91,25 +93,29 @@ class Controller:
         chat_box.config(state=DISABLED)
         chat_box.update()
 
-    def get_clients(self):
+    def get_clients(self, event):
         """
         This method displays the clients to the user in the right box
         :return:
         """
+        event.widget.config(image=event.widget.image_press)
+        event.widget.place(relx=0.935, rely=0.35)
         self.client.send_names_req()
 
-    def get_files(self):
+    def get_files(self, event):
         """
         This method shows to the Client the available files to download in the chat
         :return:
         """
+        event.widget.config(image=event.widget.image_press)
         self.client.send_files_req()
 
-    def clear_chat(self, chat_box: Text):
+    def clear_chat(self, chat_box: Text, event):
         """
         This method removes all the data from the chat.
         :return:
         """
+        event.widget.config(image=event.widget.image_press)
         chat_box.config(state=NORMAL)  # TODO: update in client gui
         chat_box.delete('1.0', END)
         chat_box.config(state=DISABLED)
@@ -136,15 +142,19 @@ class Controller:
         elif Emoji != "Emojis":
             msg.insert(END, Emoji)
 
-    def download(self, files_box: Listbox):
+    def download(self, files_box: Listbox, event):
         """
         This method gets the download file for the client.
         :return:
         """
+        event.widget.config(image=event.widget.image_press)
         try:
             file_number = int(files_box.curselection()[0])
         except IndexError:
             return
         # Getting name file.
         file_name = files_box.get(file_number)
-        self.client.request_download(file_name)
+        file_path = filedialog.asksaveasfilename(defaultextension=file_name)
+        if file_path == '':
+            return
+        self.client.request_download(file_name, file_path)

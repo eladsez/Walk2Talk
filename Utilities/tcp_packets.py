@@ -21,7 +21,6 @@ DOWNLOAD_REQ = '4'
 ---------------------------download request packet template--------------------
  4 (download request type) | file name
 -------------------------------------------------------------------------------
-
 """
 
 

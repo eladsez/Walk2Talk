@@ -37,7 +37,7 @@ class CClient:
             print('error occurred while opening or binding client udp socket')
             return False
 
-    def recv_file(self):
+    def recv_file(self, file_path):
         buff = 8192  # this is the max size we allow the client to receive
         last_seq = 0
         pkts = []  # list of tuples (seq, pkt)
@@ -63,13 +63,13 @@ class CClient:
         if last_seq >= self.file_size:
             self.sock.sendto(udp_packets.ack_from_client(None, final=True), self.server_addr)
             self.sock.close()
-            self.write_file(pkts)
+            self.write_file(pkts, file_path)
             print('file downloaded!')
 
-    def write_file(self, pkts: list):
+    def write_file(self, pkts: list, file_path):
         pkts.sort(key=lambda pkt: pkt[0])
         try:
-            file = open(self.file_name, 'wb')
+            file = open(file_path, 'wb')
             for pkt in pkts:
                 file.write(pkt[1])
             file.close()

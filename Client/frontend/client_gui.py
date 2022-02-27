@@ -7,6 +7,7 @@ import webbrowser
 from Client.frontend.Emoji import *
 from Utilities import Misc
 from tkinter import ttk
+from ttkthemes.themed_style import ThemedStyle
 
 
 class Room:
@@ -58,10 +59,12 @@ class Room:
         self.generate_background(name="Login_temlate.png", window=self.chat_login)
 
         # name label & entry:
-        self.username_entry = Entry(self.chat_login, font=font_box, bg="#224957", fg='#315B6A', borderwidth=0)
+        self.username_entry = Entry(self.chat_login, font=font_box, bg="#224957", fg='#315B6A', borderwidth=0
+                                    , highlightthickness=0)
         self.username_entry.place(relheight=0.06, relwidth=0.6, relx=0.2, rely=0.395)
         self.username_entry.insert(0, "Username")
-        self.password_entry = Entry(self.chat_login, font=font_box, bg="#224957", fg='#315B6A', borderwidth=0)
+        self.password_entry = Entry(self.chat_login, font=font_box, bg="#224957", fg='#315B6A', borderwidth=0
+                                    , highlightthickness=0)
         self.password_entry.place(relheight=0.06, relwidth=0.6, relx=0.2, rely=0.514)
         self.password_entry.insert(0, "Password")
         # Appearing and reappearing text:
@@ -80,15 +83,20 @@ class Room:
             'https://previews.123rf.com/images/channarongsds/channarongsds1806/channarongsds180600192/102871142-hand-drawing-vintage-style-middle-finger-show.jpg?fj=1'))
         # connect button:
         button_img = ImageTk.PhotoImage(Image.open(self.images_path + 'Login_btn.png'))
+        button_press_img = ImageTk.PhotoImage(Image.open(self.images_path + 'Login_press_btn.png'))
         login_button = Label(self.chat_login, borderwidth=0, image=button_img, bg='#093545')
         login_button.place(relx=0.1893, rely=0.69, relheight=0.09, relwidth=0.61)
         login_button.image = button_img
+        login_button.image_press = button_press_img
         login_button.bind('<Button-1>', lambda event: self.controller.connect(self.chat_login,
                                                                               self.chat_window,
                                                                               self.username_entry,
                                                                               self.chat_box,
                                                                               self.files_box,
-                                                                              self.names_box))
+                                                                              self.names_box,
+                                                                              event))
+        login_button.bind('<ButtonRelease-1>', lambda event: login_button.config(image=button_img))
+
         # Bind the Enter Key to user name and password entry in order to connect the server
         self.username_entry.bind('<Return>', lambda event: self.controller.connect(self.chat_login,
                                                                                    self.chat_window,
@@ -113,7 +121,7 @@ class Room:
         This is the chat box where messages appear after sending 
         """
         self.chat_box = Text(self.chat_window, font=("Helvetica", 14), bg="#224957",
-                             fg="#EAECEE", borderwidth=0)
+                             fg="#EAECEE", borderwidth=0, highlightthickness=0)
         self.chat_box.config(state=DISABLED)
         self.chat_box.place(relheight=0.54, relwidth=0.71, relx=0.022, rely=0.159)
         self.scrollbar(0.972, self.chat_box)
@@ -151,7 +159,8 @@ class Room:
         """
         This is the Entry for the client to send messages on.
         """
-        self.client_msg = Entry(self.chat_window, font=("Helvetica", 13), bg='#224957', borderwidth=0)
+        self.client_msg = Entry(self.chat_window, font=("Helvetica", 13), bg='#224957', borderwidth=0
+                                , highlightthickness=0)
         self.client_msg.config(fg='#315B6A')
         self.client_msg.insert(0, "Type message here...")
         self.client_msg.place(relheight=0.0450, relwidth=0.701, relx=0.025, rely=0.861)
@@ -167,7 +176,8 @@ class Room:
         """
         This is an updating text box that will display the person you're talking to and which chat is it (private/broadcast)
         """
-        msg_details = Text(self.chat_window, font=("Helvetica", 13), bg='#224957', fg='white', borderwidth=0)
+        msg_details = Text(self.chat_window, font=("Helvetica", 13), bg='#224957', fg='white', borderwidth=0
+                           , highlightthickness=0)
         msg_details.insert('1.0', "To: Everyone")
         msg_details.config(state=DISABLED)
         msg_details.place(relheight=0.0450, relwidth=0.701, relx=0.025, rely=0.782)
@@ -177,14 +187,18 @@ class Room:
         """
         This is the send message button which sends the message the client wrote inside the entry
         """
-        # TODO: make receiver viable
         open_send = Image.open((self.images_path + 'send btn.png'))
         send_img = ImageTk.PhotoImage(open_send)
+        open_send_press = Image.open((self.images_path + 'send_btn_press.png'))
+        send_press_img = ImageTk.PhotoImage(open_send_press)
         send_msg = Label(self.chat_window, image=send_img, borderwidth=0, bg='#093545')
         send_msg.image = send_img
+        send_msg.image_press = send_press_img
         send_msg.bind('<Button-1>', lambda event: self.controller.send_msg(chat_box=self.chat_box,
                                                                            msg_box=self.client_msg,
-                                                                           msg_details=msg_details))
+                                                                           msg_details=msg_details,
+                                                                           event=event))
+        send_msg.bind('<ButtonRelease-1>', lambda event: send_msg.config(image=send_img))
         send_msg.place(relx=0.7535, rely=0.855)
 
         # Download Button:
@@ -195,7 +209,11 @@ class Room:
         download_img = ImageTk.PhotoImage(open_download)
         download = Label(self.chat_window, image=download_img, borderwidth=0, bg='#093545')
         download.image = download_img
-        download.bind('<Button-1>', lambda event: self.controller.download(self.files_box))
+        open_download_press = Image.open((self.images_path + 'download_btn_press.png'))
+        download_press_image = ImageTk.PhotoImage(open_download_press)
+        download.image_press = download_press_image
+        download.bind('<Button-1>', lambda event: self.controller.download(self.files_box, event))
+        download.bind('<ButtonRelease-1>', lambda event: download.config(image=download_img))
         download.place(relx=0.7535, rely=0.772)
 
         # disconnect button:
@@ -215,10 +233,15 @@ class Room:
         """
         open_clear = Image.open((self.images_path + 'clear_btn.png'))
         clear_img = ImageTk.PhotoImage(open_clear)
+        clear_press_open = Image.open((self.images_path + 'clear_btn_press.png'))
+        clear_press_image = ImageTk.PhotoImage(clear_press_open)
         clear_chat = Label(self.chat_window, text="Clear Chat", borderwidth=0, image=clear_img, bg='#224957')
         clear_chat.image = clear_img
-        clear_chat.bind('<Button-1>', lambda event: self.controller.clear_chat(self.chat_box))
-        clear_chat.place(relx=0.64, rely=0.64)
+        clear_chat.image_press = clear_press_image
+        clear_chat.bind('<Button-1>', lambda event: self.controller.clear_chat(self.chat_box, event))
+        clear_chat.bind('<ButtonRelease-1>', lambda event: clear_chat.config(image=clear_img))
+
+        clear_chat.place(relx=0.655, rely=0.642)
 
         # get clients button:
         """
@@ -228,27 +251,35 @@ class Room:
         get_img = ImageTk.PhotoImage(open_get)
         get_clients = Label(self.chat_window, borderwidth=0, image=get_img, bg='#224957')
         get_clients.image = get_img
-        get_clients.bind('<Button-1>', lambda event: self.controller.get_clients())
-        get_clients.place(relx=0.92, rely=0.35)
+        open_get_press = Image.open((self.images_path + 'refresh_btn_press.png'))
+        get_img_press = ImageTk.PhotoImage(open_get_press)
+        get_clients.image_press = get_img_press
+        get_clients.bind('<Button-1>', lambda event: self.controller.get_clients(event))
+        get_clients.bind('<ButtonRelease-1>', lambda event: get_clients.config(image=get_img))
+        get_clients.place(relx=0.935, rely=0.35)
 
         # get files button
         """
         This button shows the files in the server
         """
         get_files = Label(self.chat_window, borderwidth=0, image=get_img, bg='#224957')
-        get_files.bind('<Button-1>', lambda event: self.controller.get_files())
-        get_files.place(relx=0.92, rely=0.649)
+        get_files.image_press = get_img_press
+        get_files.bind('<Button-1>', lambda event: self.controller.get_files(event))
+        get_files.bind('<ButtonRelease-1>', lambda event: get_files.config(image=get_img))
+        get_files.place(relx=0.935, rely=0.649)
 
         # emoji box:
         """
         This is the Optionmenu for the client to choose emojis from
         """
+        style = ThemedStyle()
+        style.configure("TMenubutton", background="#224957", borderwidth=0)
         value_inside = StringVar(self.chat_window)
         options_list = [HAPPY, LAUGH, WINK, SMILE, LOVE, SMIRK, OOF, KISS, ANGRY, CRY, CORONA]
         value_inside.set(HAPPY)
-        question_menu = OptionMenu(self.chat_window, value_inside, *options_list,
-                                   command=lambda event: self.controller.send_emoji(msg=self.client_msg,
-                                                                                    Emoji=value_inside.get()))
+        question_menu = ttk.OptionMenu(self.chat_window, value_inside, *options_list,
+                                       command=lambda event: self.controller.send_emoji(msg=self.client_msg,
+                                                                                        Emoji=value_inside.get()))
         question_menu.place(relheight=0.0450, relwidth=0.05, relx=0.68, rely=0.86)
         question_menu["menu"].config(bg="#20DF7F", fg="#224957", borderwidth=0)
 
@@ -259,10 +290,10 @@ class Room:
         :param txt: a text box to place the scroll bar on
         :return:
         """
-        style = ttk.Style()
-        style.theme_use('classic')
-        style.configure("Vertical.TScrollbar", background="green", bordercolor="red", arrowcolor="white")
-        scrollbar = ttk.Scrollbar(txt, cursor='dot', orient=VERTICAL)
+        style = ThemedStyle()
+        style.theme_use('breeze')
+        style.configure("Vertical.TScrollbar", background="#224957")
+        scrollbar = ttk.Scrollbar(txt, orient=VERTICAL, cursor='dot')
         scrollbar.place(relheight=1, relx=x)
         txt.config(yscrollcommand=scrollbar.set)
         scrollbar.config(command=txt.yview)
