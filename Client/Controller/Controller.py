@@ -1,4 +1,3 @@
-import os
 import threading
 from tkinter import Text, END, DISABLED, NORMAL, Entry, Tk, Toplevel, Listbox, filedialog
 from Client.backend.client import Client
@@ -47,8 +46,9 @@ class Controller:
                         names_box.insert(END, name)
                 names_box.update()
 
-    def connect(self, login: Toplevel, chat: Tk, txt_name: Entry, chat_box: Text, files_box, names_box, event):
-        event.widget.config(image=event.widget.image_press)
+    def connect(self, login: Toplevel, chat: Tk, txt_name: Entry, chat_box: Text, files_box, names_box, event = None):
+        if event:
+            event.widget.config(image=event.widget.image_press)
         if self.client.client_name is not None:
             self.recv_thread = threading.Thread(target=self.recv, args=(chat_box, names_box, files_box,), daemon=True)
         client_name = txt_name.get()
@@ -70,12 +70,13 @@ class Controller:
         login.deiconify()
         chat.withdraw()  # TODO: fix this to make the chat "disappear" and to not show old contents after reestablishing connection
 
-    def send_msg(self, chat_box: Text, msg_box: Entry, msg_details: Text, event):
+    def send_msg(self, chat_box: Text, msg_box: Entry, msg_details: Text, event = None):
         """
         This method displays a message to certain person in the chat
         :return:
         """
-        event.widget.config(image=event.widget.image_press)
+        if event:
+            event.widget.config(image=event.widget.image_press)
         # Handle message:
         dest = str(msg_details.get('1.0', END).removeprefix('To: ')).removesuffix(' (Direct Message)\n').removesuffix(
             '\n')
