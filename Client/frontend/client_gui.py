@@ -131,6 +131,9 @@ class Room:
         """
         This is the list box where all the clients will appear
         """
+        conn_label = Label(self.chat_window, text="Connected: ", font=("Helvetica", 14), bg="#224957", fg='white',
+                           anchor='w')
+        conn_label.place(relheight=0.023, relwidth=0.2, relx=0.761, rely=0.16)
         self.names_box = Listbox(self.chat_window, font=("Helvetica", 14), bg="#224957",
                                  fg="#EAECEE", selectmode=SINGLE, borderwidth=0, highlightthickness=0)
         self.names_box.insert(1, "Everyone")
@@ -141,7 +144,9 @@ class Room:
         """
         This is the list box where the files of the server will appear
         """
-
+        files_label = Label(self.chat_window, text="Files: ", font=("Helvetica", 14), bg="#224957", fg='white',
+                            anchor='w')
+        files_label.place(relheight=0.023, relwidth=0.2, relx=0.761, rely=0.46)
         self.files_box = Listbox(self.chat_window, font=("Helvetica", 14), bg="#224957",
                                  fg="#EAECEE", borderwidth=0, highlightthickness=0)
         self.files_box.place(relheight=0.21, relwidth=0.22, relx=0.761, rely=0.49)

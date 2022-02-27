@@ -15,12 +15,19 @@ class CCServer:
         self.dup_ack_count = 0  # 3 top
 
     def connect(self, client_addr, filepath: str):
+        """
+        This method connects to the client requesting the file in a three way handshake.
+        it occurs over udp with RDT.
+        :param client_addr:
+        :param filepath:
+        :return:
+        """
         self.filepath = filepath
         self.client_addr = client_addr
-        datagrams = self.file_to_datagrams()
+        datagrams = self.file_to_datagrams()  # Separates the file size into datagrams in order to send the client how many datagrams.
         try:
             print(len(datagrams))
-            self.sock = socket(AF_INET, SOCK_DGRAM)
+            self.sock = socket(AF_INET, SOCK_DGRAM)  # UDP SOCK
             self.sock.sendto(udp_packets.server_handshake('syn', len(datagrams)).encode(),
                              self.client_addr)
             self.sock.settimeout(2)
@@ -41,6 +48,10 @@ class CCServer:
         return True
 
     def file_to_datagrams(self):  # TODO: take care of the extra size while reading
+        """
+        This method separates the file into list of datagrams for us to process and send to the client.
+        :return:
+        """
         file = open(self.filepath, 'rb')
         datagrams = []  # The datagrams list represent the pkts file ordered by seq
         tup = udp_packets.file_to_pkt(file, 0)  # tup is a tuple represent by (seq, pkt)
@@ -51,10 +62,20 @@ class CCServer:
         return datagrams
 
     def send_file(self):
+        """
+        Send file method while activating the ack listener method which listens to acks constantly.
+        it is used to make sure the client receives the datagrams everytime, and to see if there was a missing packet.
+        if was, it will be retransmissioned.
+        :return:
+        """
         self.cwnd.send_window()
         self.ack_listener()
 
     def ack_listener(self):
+        """
+        Method used for listening for acks sent by the client for each packet received by him from the file datagrams.
+        :return:
+        """
         ack = ''.encode()
         while ack.decode() != udp_packets.ack_from_client(None, final=True).decode():
             try:

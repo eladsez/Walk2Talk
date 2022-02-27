@@ -75,7 +75,7 @@ class Controller:
         txt_name.delete(0, END)
         txt_name.insert(0, "Username")
         if not self.client.connect(self.addr, client_name):
-            messagebox.showinfo("ERROR",  "INVALID NAME OR PASSWORD please try again")
+            messagebox.showinfo("ERROR", "INVALID NAME OR PASSWORD please try again")
             return
         login.withdraw()
         chat.deiconify()
@@ -191,7 +191,12 @@ class Controller:
             return
         # Getting name file.
         file_name = files_box.get(file_number)
-        file_path = filedialog.asksaveasfilename(defaultextension=file_name)  # JFILECHOOSER
+        # file_path = filedialog.asksaveasfilename(defaultextension=file_name)  # JFILECHOOSER
+        file = filedialog.asksaveasfile(title='download file')
+        if not file:
+            return
+        file_path = file.name
+        file.close()
         if file_path == '':
             return
         self.client.request_download(file_name, file_path)
