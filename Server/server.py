@@ -39,6 +39,17 @@ class Server:
 
     def handle_client(self, client_sock, client_addr):
         client_name = client_sock.recv(1024).decode()
+        try:  # valid check for the client name
+            if client_name in list(self.clients_sock.values()):
+                client_sock.send('-|NOT VALID|-'.encode())
+                client_sock.close()
+                return
+            else:
+                client_sock.send('-|VALID|-'.encode())
+        except error:
+            print(error)
+            return
+
         self.clients_sock[client_sock] = client_name
         self.clients_addr[client_name] = client_addr
         print(f'***** {client_name} connected *****')
@@ -119,7 +130,6 @@ class Server:
         # extract the addr for the current client :
         client_name = self.clients_sock[client_sock]
         client_addr = self.clients_addr[client_name]
-
         connect = cc_server.connect((client_addr[0], 5550), file_path)
         while not connect:
             connect = cc_server.connect((client_addr[0], 5550), file_path)

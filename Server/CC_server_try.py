@@ -71,5 +71,5 @@ class CCServer:
 
 if __name__ == '__main__':
     server = CCServer()
-    server.connect(('127.0.0.1', 5550), './files/DSC02199.jpg')
+    server.connect(('10.9.6.146', 5550), './files/DSC02199.jpg')
     server.send_file()

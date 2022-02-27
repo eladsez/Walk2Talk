@@ -19,7 +19,6 @@ class Room:
     def __init__(self):
         # This is the chat window, it will be hidden for new users until they join the room.
         self.chat_window = Tk()
-        # self.chat_window.configure(bg="#093545")
         # imgs abs paths:
         os.chdir(os.path.abspath(os.path.join(os.getcwd(), os.pardir)))
         parent_path = Misc.resource_path(relative_path='frontend')

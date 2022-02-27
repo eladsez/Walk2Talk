@@ -22,7 +22,8 @@ class CClient:
         try:
             self.sock = socket(AF_INET, SOCK_DGRAM)  # UDP
             self.sock.bind(self.client_addr)
-            # self.sock.settimeout(2)
+            # self.sock.settimeout(1)
+            print('blabla')
             syn, addr = self.sock.recvfrom(1024)
             self.file_size = int(syn.decode().split('-')[-1])
             if syn.decode() == udp_packets.server_handshake('syn', self.file_size):  # First syn

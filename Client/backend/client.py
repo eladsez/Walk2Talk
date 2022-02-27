@@ -35,14 +35,20 @@ class Client:
                 self.client_name = None
             except socket.error as err:
                 print("ERROR, failed to create Client socket")
-                raise err
-        self.client_name = client_name  # saving the client name.
+                print(err)
+        self.client_name = client_name
         try:
             self.sock.connect(addr)
-            self.sock.send(client_name.encode())  # sending the name to the server
+            self.sock.send(client_name.encode())
+            valid = self.sock.recv(1024).decode()
         except socket.error as err:
             print("ERROR, Client failed to connect the Server")
             raise err
+
+        if valid != '-|VALID|-':  # check weather the client name is valid or not
+            self.sock.close()
+            return False
+        return True
 
     def disconnect(self):
         """

@@ -1,5 +1,5 @@
 import threading
-from tkinter import Text, END, DISABLED, NORMAL, Entry, Tk, Toplevel, Listbox, filedialog
+from tkinter import Text, END, DISABLED, NORMAL, Entry, Tk, Toplevel, Listbox, filedialog, messagebox
 from Client.backend.client import Client
 
 
@@ -15,7 +15,7 @@ class Controller:
         self.addr = addr
         self.recv_thread = threading.Thread(target=self.recv, args=(chat_box, names_box, files_box,), daemon=True)
         self.recv_runner = True
-        self.chat_box = None
+        self.chat_box = chat_box
 
     def recv(self, chat_box: Text, names_box: Listbox, files_box: Listbox):
         """
@@ -74,7 +74,9 @@ class Controller:
         client_name = txt_name.get()
         txt_name.delete(0, END)
         txt_name.insert(0, "Username")
-        self.client.connect(self.addr, client_name)
+        if not self.client.connect(self.addr, client_name):
+            messagebox.showinfo("ERROR",  "INVALID NAME OR PASSWORD please try again")
+            return
         login.withdraw()
         chat.deiconify()
         self.recv_runner = True
@@ -88,7 +90,8 @@ class Controller:
         self.recv_runner = False
         self.client.disconnect()
         login.deiconify()
-        chat.withdraw()  # TODO: fix this to make the chat "disappear" and to not show old contents after reestablishing connection
+        chat.withdraw()
+        self.clear_chat(self.chat_box)
 
     def send_msg(self, chat_box: Text, msg_box: Entry, msg_details: Text, event=None):
         """
@@ -131,12 +134,13 @@ class Controller:
         event.widget.config(image=event.widget.image_press)
         self.client.send_files_req()
 
-    def clear_chat(self, chat_box: Text, event):
+    def clear_chat(self, chat_box: Text, event=None):
         """
         This method removes all the data from the chat.
         :return:
         """
-        event.widget.config(image=event.widget.image_press)
+        if event:
+            event.widget.config(image=event.widget.image_press)
         chat_box.config(state=NORMAL)  # TODO: update in client gui
         chat_box.delete('1.0', END)
         chat_box.config(state=DISABLED)
