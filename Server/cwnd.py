@@ -10,6 +10,7 @@ class SlidingWindow:
         self.sock = sock
         self.client_addr = client_addr
         self.datagrams = datagrams
+        self.datagrams.sort(key=lambda pkt: pkt[0])
         self.curr_window = OrderedDict()  # ordered dict of frames represent by (seq:pkt)
         self.max_win_size = 4  # The initial window size is 4
         self.next_seq_to_send = 0  # stores the last seq of the pkt we send
@@ -30,25 +31,25 @@ class SlidingWindow:
     def send_window(self):
         for seq, pkt in self.curr_window.items():
             if seq > self.next_seq_to_send:
+                print(f'server sending pkt seq: {seq}')
                 self.sock.sendto(pkt, self.client_addr)
                 self.next_seq_to_send = seq
 
     def handle_ack(self, ack):
-        if self.next_index > len(self.datagrams): return
-
         self.lock.acquire()
+        if self.next_index >= len(self.datagrams):
+            self.lock.release()
+            return
         seq_of_ack = udp_packets.seq_from_client_ack(ack)
         del self.curr_window[seq_of_ack]
         self.acked.append(seq_of_ack)
         self.curr_window[self.datagrams[self.next_index][0]] = self.datagrams[self.next_index][1]
         self.next_index += 1  # advance to the next index in the datagrams list
-        print(f'window size = {len(self.curr_window)}')
-        print(f'received ack of seq: {seq_of_ack}')
+        print(f'---------received ack of seq: {seq_of_ack} - moving the window!------------')
         if seq_of_ack == self.expected_ack:
             self.send_window()  # send the new datagram that added to the window above and then return
 
         else:
-            print('bla')
             self.retransmission(seq_of_ack)
         self.expected_ack = list(self.curr_window.keys())[0]  # getting the first seq in the window
         self.lock.release()
@@ -57,13 +58,9 @@ class SlidingWindow:
         for seq, pkt in self.curr_window.items():
             if self.expected_ack <= seq < skipped_ack:
                 try:
+                    print(f'server retransmission pkt seq: {seq}')
                     self.sock.sendto(pkt, self.client_addr)
                 except error as e:
                     print(e)
             if seq >= skipped_ack:
                 return
-
-
-
-
-

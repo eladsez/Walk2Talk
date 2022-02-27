@@ -1,7 +1,5 @@
 import socket
-import sys
-
-from Server.CC_server_try import CCServer
+import threading
 from Client.backend.CC_client_try import CClient
 from Utilities import tcp_packets
 
@@ -103,9 +101,10 @@ class Client:
         try:
             self.sock.send(tcp_packets.download_request(file_name).encode())
         except socket.error as err:
+            print(err)
             print('client failed to send file name to the server')
 
-        self.download(file_name)
+        threading.Thread(target=self.download, args=(file_name,)).start()
 
     def download(self, file_name: str):
         """
@@ -113,7 +112,9 @@ class Client:
         :return:
         """
         c_client = CClient(addr=('127.0.0.1', 5550))
-        c_client.connect((file_name, sys.getsizeof(file_name)))
+        connect = False
+        while not connect:
+            connect = c_client.connect(file_name)
         c_client.recv_file()
 
 

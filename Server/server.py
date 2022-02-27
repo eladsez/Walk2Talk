@@ -87,7 +87,7 @@ class Server:
                 self.broadcast(pkt, client_sock)
 
         if layers[0] == DOWNLOAD_REQ:
-            self.download(layers[1], client_sock)
+            threading.Thread(target=self.download, args=(layers[1], client_sock,)).start()
 
     def broadcast(self, pkt, conn=None):
         copy_client_sock = self.clients_sock.copy()  # important
@@ -110,16 +110,19 @@ class Server:
 
     def download(self, file_name: str, client_sock: socket):
         # Getting the absolute path for the file to download
-        os.chdir(os.path.abspath(os.path.join(os.getcwd(), os.pardir)))
-        parent_path = Misc.resource_path(relative_path='Server')
-        file_path = parent_path + "/files/" + file_name
-        print(file_path)
+        # os.chdir(os.path.abspath(os.path.join(os.getcwd(), os.pardir)))
+        # parent_path = Misc.resource_path(relative_path='Server')
+        # file_path = parent_path + "\\files\\" + file_name
+        file_path = './files/' + file_name
 
         cc_server = CCServer()
         # extract the addr for the current client :
-        name = self.clients_sock[client_sock]
-        addr = self.clients_addr[name]
-        cc_server.connect((addr[0],5550), file_path)
+        client_name = self.clients_sock[client_sock]
+        client_addr = self.clients_addr[client_name]
+
+        connect = cc_server.connect((client_addr[0], 5550), file_path)
+        while not connect:
+            connect = cc_server.connect((client_addr[0], 5550), file_path)
         cc_server.send_file()
 
 

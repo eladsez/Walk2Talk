@@ -3,8 +3,8 @@ from pickle import loads, dumps
 from typing import BinaryIO
 
 
-def server_handshake(syn_or_ack: str):
-    return 'SYN-SERVER' if syn_or_ack == 'syn' else 'ACK-SERVER'
+def server_handshake(syn_or_ack: str, file_size: int = None):
+    return f'SYN-SERVER-FILE-SIZE-{file_size}' if syn_or_ack == 'syn' else 'ACK-SERVER'
 
 
 def client_handshake():
@@ -44,9 +44,11 @@ def file_to_pkt(file: BinaryIO, seq: int):
     """
     data = None
     try:
-        data = file.read(1024)
+        data = file.read(4096)
     except Exception as e:
         print(e)
+    if not data:
+        return None
     seq = seq + sys.getsizeof(data)
     return seq, dumps([seq, data])
 
