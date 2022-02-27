@@ -19,6 +19,7 @@ class CCServer:
         self.client_addr = client_addr
         datagrams = self.file_to_datagrams()
         try:
+            print(len(datagrams))
             self.sock = socket(AF_INET, SOCK_DGRAM)
             self.sock.sendto(udp_packets.server_handshake('syn', len(datagrams)).encode(),
                              self.client_addr)

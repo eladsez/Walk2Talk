@@ -9,6 +9,10 @@ LIST_TYPE = '3'
 
 
 class Client:
+    """
+    This class handles all the client operation methods:
+    from connecting to sending messages, downloading files, and disconnecting requests.
+    """
 
     def __init__(self):
         try:
@@ -19,17 +23,23 @@ class Client:
             raise err
 
     def connect(self, addr: tuple, client_name: str):
+        """
+        This method connects the client to the server over tcp.
+        :param addr:
+        :param client_name:
+        :return:
+        """
         if self.client_name is not None:
             try:
-                self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  # TCP connection
                 self.client_name = None
             except socket.error as err:
                 print("ERROR, failed to create Client socket")
                 raise err
-        self.client_name = client_name
+        self.client_name = client_name  # saving the client name.
         try:
             self.sock.connect(addr)
-            self.sock.send(client_name.encode())
+            self.sock.send(client_name.encode())  # sending the name to the server
         except socket.error as err:
             print("ERROR, Client failed to connect the Server")
             raise err
@@ -53,6 +63,12 @@ class Client:
             print('ERROR Client failed in receive')
 
     def handle_pkt(self, pkt: str):
+        """
+        This method is used to handle the packets sent over tcp from the client/
+        if its a msg type or a list type request.
+        :param pkt:
+        :return:
+        """
         layers = pkt.split('|')
         if layers[0] == MSG_TYPE:
             return '\n' + layers[1] + ': ' + layers[3], 'chat_box'
@@ -112,7 +128,7 @@ class Client:
         A simple download file method
         :return:
         """
-        c_client = CClient(addr=('127.0.0.1', 5550))
+        c_client = CClient(addr=('0.0.0.0', 5550))
         connect = False
         while not connect:
             connect = c_client.connect(file_name)

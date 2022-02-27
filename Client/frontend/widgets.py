@@ -42,16 +42,18 @@ def enter(frame):
     global boole, index
     if boole:
         b = BubbleMsg(frame.interior, sender='bla')
-        b.place(relx=0.68, rely=0.1 + index)
-        b.pack(side = RIGHT)
+        b.place(y=0 + index)
+        b.update()
+        b.pack()
         b.update()
     else:
         b = BubbleMsg(frame.interior)
-        b.place(relx=0, rely=0.1 + index)
-        b.pack(side = LEFT,)
+        b.pack()
+        b.update()
+        b.place(x=-30, y=30 + index)
         b.update()
     boole = not boole
-    index += 0.1
+    index += 30
 
 
 if __name__ == '__main__':
@@ -60,6 +62,6 @@ if __name__ == '__main__':
     root.config(width=800, height=500)
     boole = False
     index = 0.1
-    frame.place(relx=0, rely=0, relheight=0.5, relwidth=0.5)
+    frame.place(relx=0, rely=0, relheight=1, relwidth=1)
     root.bind('<Return>', lambda event: enter(frame))
     root.mainloop()

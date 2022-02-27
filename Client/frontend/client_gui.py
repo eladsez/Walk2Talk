@@ -12,7 +12,7 @@ from ttkthemes.themed_style import ThemedStyle
 
 class Room:
     """
-    This clas is responsible for creating the Gui for our chat.
+    This class is responsible for creating the Gui for our chat.
     in particular - LOGIN window & Chat room window
     """
 
@@ -67,6 +67,7 @@ class Room:
                                     , highlightthickness=0)
         self.password_entry.place(relheight=0.06, relwidth=0.6, relx=0.2, rely=0.514)
         self.password_entry.insert(0, "Password")
+
         # Appearing and reappearing text:
         self.username_entry.bind("<FocusIn>", self.default_text)
         self.username_entry.bind("<FocusOut>", self.default_text)
@@ -81,6 +82,7 @@ class Room:
         forgot_password.place(relx=0.58, rely=0.611, relheight=0.035, relwidth=0.23)
         forgot_password.bind('<Button-1>', lambda event: webbrowser.open_new_tab(
             'https://previews.123rf.com/images/channarongsds/channarongsds1806/channarongsds180600192/102871142-hand-drawing-vintage-style-middle-finger-show.jpg?fj=1'))
+
         # connect button:
         button_img = ImageTk.PhotoImage(Image.open(self.images_path + 'Login_btn.png'))
         button_press_img = ImageTk.PhotoImage(Image.open(self.images_path + 'Login_press_btn.png'))

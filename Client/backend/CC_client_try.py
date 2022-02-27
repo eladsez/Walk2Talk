@@ -13,14 +13,19 @@ class CClient:
         self.file_size = None  # here the file size is actually the length of datagrams list
 
     def connect(self, file_name):
+        """
+        This method connects the client to the server in a three way handshake method.
+        :param file_name: the chosen file the client chose
+        :return: True / False if the connection was established
+        """
         self.file_name = file_name
         try:
-            self.sock = socket(AF_INET, SOCK_DGRAM)
+            self.sock = socket(AF_INET, SOCK_DGRAM)  # UDP
             self.sock.bind(self.client_addr)
             # self.sock.settimeout(2)
             syn, addr = self.sock.recvfrom(1024)
             self.file_size = int(syn.decode().split('-')[-1])
-            if syn.decode() == udp_packets.server_handshake('syn', self.file_size):
+            if syn.decode() == udp_packets.server_handshake('syn', self.file_size):  # First syn
                 self.server_addr = addr
                 self.sock.sendto(udp_packets.client_handshake().encode(), addr)
             ack, addr = self.sock.recvfrom(1024)
@@ -38,6 +43,12 @@ class CClient:
             return False
 
     def recv_file(self, file_path):
+        """
+        This method receives the file over the udp socket and appending the datagrams of the file into a list.
+        this way we could monitor when the file was done with the download.
+        :param file_path: file path location.
+        :return:
+        """
         buff = 8192  # this is the max size we allow the client to receive
         last_seq = 0
         pkts = []  # list of tuples (seq, pkt)
@@ -67,6 +78,13 @@ class CClient:
             print('file downloaded!')
 
     def write_file(self, pkts: list, file_path):
+        """
+        This method writes the file to the location the client chose,
+        while combining the datagrams that was transferred after sorting them.
+        :param pkts: the entire datagrams
+        :param file_path: file path location that the client chose.
+        :return:
+        """
         pkts.sort(key=lambda pkt: pkt[0])
         try:
             file = open(file_path, 'wb')
@@ -80,6 +98,6 @@ class CClient:
 
 
 if __name__ == '__main__':
-    client = CClient(('127.0.0.1', 5550))
+    client = CClient(('0.0.0.0', 5550))
     client.connect('DSC02199.jpg')
-    client.recv_file()
+    client.recv_file("./DSC02199.jpg")

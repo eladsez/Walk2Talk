@@ -1,7 +1,6 @@
 import threading
 from tkinter import Text, END, DISABLED, NORMAL, Entry, Tk, Toplevel, Listbox, filedialog
 from Client.backend.client import Client
-from Utilities import Misc
 
 
 class Controller:
@@ -19,6 +18,14 @@ class Controller:
         self.chat_box = None
 
     def recv(self, chat_box: Text, names_box: Listbox, files_box: Listbox):
+        """
+        This method is responsible for updating the chat_box, file box and names box.
+        after clicking or sending a new message.
+        :param chat_box:
+        :param names_box:
+        :param files_box:
+        :return:
+        """
         while self.recv_runner:
             try:
                 box_update, which_box = self.client.receive()
@@ -46,10 +53,23 @@ class Controller:
                         names_box.insert(END, name)
                 names_box.update()
 
-    def connect(self, login: Toplevel, chat: Tk, txt_name: Entry, chat_box: Text, files_box, names_box, event = None):
+    def connect(self, login: Toplevel, chat: Tk, txt_name: Entry, chat_box: Text, files_box, names_box, event=None):
+        """
+        This method is responsible for the login connection window.
+        it saves the name the client entered in the "username" area and sends it to the client.
+        also its responsible for connection establishment to the server.
+        :param login:
+        :param chat:
+        :param txt_name:
+        :param chat_box:
+        :param files_box:
+        :param names_box:
+        :param event:
+        :return:
+        """
         if event:
             event.widget.config(image=event.widget.image_press)
-        if self.client.client_name is not None:
+        if self.client.client_name is not None:  # if the client name is viable
             self.recv_thread = threading.Thread(target=self.recv, args=(chat_box, names_box, files_box,), daemon=True)
         client_name = txt_name.get()
         txt_name.delete(0, END)
@@ -70,7 +90,7 @@ class Controller:
         login.deiconify()
         chat.withdraw()  # TODO: fix this to make the chat "disappear" and to not show old contents after reestablishing connection
 
-    def send_msg(self, chat_box: Text, msg_box: Entry, msg_details: Text, event = None):
+    def send_msg(self, chat_box: Text, msg_box: Entry, msg_details: Text, event=None):
         """
         This method displays a message to certain person in the chat
         :return:
@@ -122,6 +142,12 @@ class Controller:
         chat_box.config(state=DISABLED)
 
     def update_send_to(self, event, msg_details: Text):
+        """
+        This method updates the label bar above the sending message to fit the user we send the message to.
+        :param event:
+        :param msg_details:
+        :return:
+        """
         w = event.widget
         try:
             index = int(w.curselection()[0])
@@ -137,6 +163,12 @@ class Controller:
         msg_details.config(state=DISABLED)
 
     def send_emoji(self, msg: Entry, Emoji):
+        """
+        This method is responsible for the emoji sending menubar
+        :param msg:
+        :param Emoji:
+        :return:
+        """
         if msg == "Type message here..." or Emoji == "Emojis":
             msg.delete(0, END)
             msg.insert(0, Emoji)
@@ -155,7 +187,7 @@ class Controller:
             return
         # Getting name file.
         file_name = files_box.get(file_number)
-        file_path = filedialog.asksaveasfilename(defaultextension=file_name)
+        file_path = filedialog.asksaveasfilename(defaultextension=file_name)  # JFILECHOOSER
         if file_path == '':
             return
         self.client.request_download(file_name, file_path)
