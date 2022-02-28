@@ -81,6 +81,8 @@ class Server:
                 except error as err:
                     raise err
             if layers[1] == 'files':
+                # updates files during running application
+                self.files = [file for file in os.listdir('./files') if os.path.isfile(os.path.join('./files', file))]
                 pkt = tcp_packets.server_files_packet(self.files)
                 try:
                     client_sock.send(pkt.encode())

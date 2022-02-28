@@ -41,13 +41,13 @@ class Controller:
                 chat_box.config(state=DISABLED)
                 chat_box.update()
             if which_box == 'files_box':
-                files_box.delete(1, END)
+                files_box.delete(0, END)
                 for file in tmp_update:
                     if file != '':
                         files_box.insert(END, file)
                 files_box.update()
             if which_box == 'names_box':
-                names_box.delete(2, END)
+                names_box.delete(1, END)
                 for name in tmp_update:
                     if name != '':
                         names_box.insert(END, name)
