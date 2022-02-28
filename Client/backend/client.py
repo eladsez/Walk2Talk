@@ -21,6 +21,7 @@ class Client:
         except socket.error as err:
             print("ERROR, failed to create Client socket")
             raise err
+        self.c_client = CClient(None)
 
     def connect(self, addr: tuple, client_name: str):
         """
@@ -134,11 +135,11 @@ class Client:
         A simple download file method
         :return:
         """
-        c_client = CClient(addr=('0.0.0.0', 5550))
+        self.c_client = CClient(addr=('0.0.0.0', 5550))
         connect = False
         while not connect:
-            connect = c_client.connect(file_name)
-        c_client.recv_file(file_path)
+            connect = self.c_client.connect(file_name)
+        self.c_client.recv_file(file_path)
 
 
 if __name__ == '__main__':

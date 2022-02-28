@@ -41,10 +41,8 @@ def active_clients_packet(client_names: List[str]):
     :return:
     """
     pkt = LIST_TYPE + '|names|' + client_names[0]
-    for name in client_names:
-        if client_names[0] == name:
-            continue
-        pkt += ',' + name
+    for i in range(1, len(client_names)):
+        pkt += ',' + client_names[i]
     return pkt
 
 
@@ -65,10 +63,8 @@ def server_files_packet(files: List[str]):
     :return:
     """
     pkt = LIST_TYPE + '|files|' + files[0]
-    for name in files:
-        if files[0] == name:
-            continue
-        pkt += ',' + name
+    for i in range(1, len(files)):
+        pkt += ',' + files[i]
     return pkt
 
 

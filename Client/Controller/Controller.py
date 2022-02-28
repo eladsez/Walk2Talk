@@ -1,6 +1,8 @@
 import threading
-from tkinter import Text, END, DISABLED, NORMAL, Entry, Tk, Toplevel, Listbox, filedialog, messagebox
+import time
+from tkinter import Text, END, DISABLED, NORMAL, Entry, Tk, Toplevel, Listbox, filedialog, messagebox, ttk
 from Client.backend.client import Client
+
 
 
 class Controller:
@@ -41,13 +43,13 @@ class Controller:
                 chat_box.config(state=DISABLED)
                 chat_box.update()
             if which_box == 'files_box':
-                files_box.delete(1, END)
+                files_box.delete(0, END)
                 for file in tmp_update:
                     if file != '':
                         files_box.insert(END, file)
                 files_box.update()
             if which_box == 'names_box':
-                names_box.delete(2, END)
+                names_box.delete(1, END)
                 for name in tmp_update:
                     if name != '':
                         names_box.insert(END, name)
@@ -69,14 +71,18 @@ class Controller:
         """
         if event:
             event.widget.config(image=event.widget.image_press)
-        if self.client.client_name is not None:  # if the client name is viable
-            self.recv_thread = threading.Thread(target=self.recv, args=(chat_box, names_box, files_box,), daemon=True)
+
         client_name = txt_name.get()
-        txt_name.delete(0, END)
-        txt_name.insert(0, "Username")
+
         if not self.client.connect(self.addr, client_name):
             messagebox.showinfo("ERROR",  "INVALID NAME OR PASSWORD please try again")
             return
+
+        if self.client.client_name is not None:  # if the client name is viable
+            self.recv_thread = threading.Thread(target=self.recv, args=(chat_box, names_box, files_box,), daemon=True)
+
+        txt_name.delete(0, END)
+        txt_name.insert(0, "Username")
         login.withdraw()
         chat.deiconify()
         self.recv_runner = True
@@ -179,7 +185,7 @@ class Controller:
         elif Emoji != "Emojis":
             msg.insert(END, Emoji)
 
-    def download(self, files_box: Listbox, event):
+    def download(self, files_box: Listbox, pro_bar, event):
         """
         This method gets the download file for the client.
         :return:
@@ -200,3 +206,21 @@ class Controller:
         if file_path == '':
             return
         self.client.request_download(file_name, file_path)
+        threading.Thread(target=self.progress_bar_download, args=(pro_bar,)).start()
+
+    def progress_bar_download(self, pro_bar: ttk.Progressbar):
+        final_len = self.client.c_client.file_size
+        while not final_len:
+            final_len = self.client.c_client.file_size
+        progress_len = self.client.c_client.pkts_arrived_len
+        jump = 100 / final_len
+        while progress_len < final_len:
+            pro_bar['value'] = progress_len * jump
+            progress_len = self.client.c_client.pkts_arrived_len
+        messagebox.showinfo("DOWNLOAD", "download complete!")
+        pro_bar['value'] = 0
+
+
+
+
+

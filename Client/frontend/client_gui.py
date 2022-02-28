@@ -35,7 +35,7 @@ class Room:
         self.generate_background(name="chat_template.png", window=self.chat_window)
         self.chat_window_textbox_builder()
         # controller:
-        self.controller = Controller(("10.9.6.146", 12345), self.chat_box, self.names_box, self.files_box)
+        self.controller = Controller(("127.0.0.1", 12345), self.chat_box, self.names_box, self.files_box)
         self.chat_window_button_builder()
         self.chat_window.withdraw()
         # login window
@@ -207,6 +207,17 @@ class Room:
         send_msg.bind('<ButtonRelease-1>', lambda event: send_msg.config(image=send_img))
         send_msg.place(relx=0.7535, rely=0.855)
 
+        """
+        This  is the progress bar widget building
+        """
+        s = ThemedStyle()
+        s.theme_use('breeze')
+        s.configure("our.Horizontal.TProgressbar", background='#093545')
+        pro_bar = ttk.Progressbar(self.chat_window, orient=HORIZONTAL, mode='determinate', length=214,
+                                  style="our.Horizontal.TProgressbar")
+        pro_bar['value'] = 0
+        pro_bar.place(relx=0.757, rely=0.745)
+
         # Download Button:
         """
         This is the Download button, it will send the file to our client
@@ -218,7 +229,7 @@ class Room:
         open_download_press = Image.open((self.images_path + 'download_btn_press.png'))
         download_press_image = ImageTk.PhotoImage(open_download_press)
         download.image_press = download_press_image
-        download.bind('<Button-1>', lambda event: self.controller.download(self.files_box, event))
+        download.bind('<Button-1>', lambda event: self.controller.download(self.files_box, pro_bar, event))
         download.bind('<ButtonRelease-1>', lambda event: download.config(image=download_img))
         download.place(relx=0.7535, rely=0.772)
 
