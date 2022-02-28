@@ -73,10 +73,6 @@ class Room:
         self.password_entry.bind("<FocusIn>", self.default_text)
         self.password_entry.bind("<FocusOut>", self.default_text)
 
-        # checkbutton_img = ImageTk.PhotoImage(Image.open((self.images_path + 'Remember me.png')))
-        # Label(self.chat_login, image=checkbutton_img, borderwidth=0).\
-        #     place(relx=0.1, rely=0.5)
-
         forgot_password = Label(self.chat_login, font=font_text, text='Forgot password?', fg='#20DF7F', bg='#093545')
         forgot_password.place(relx=0.58, rely=0.611, relheight=0.035, relwidth=0.23)
         forgot_password.bind('<Button-1>', lambda event: webbrowser.open_new_tab(
@@ -218,6 +214,18 @@ class Room:
         pro_bar['value'] = 0
         pro_bar.place(relx=0.757, rely=0.745)
 
+        """
+        This is the pause ane resume button building and bind
+        """
+        pause_image = ImageTk.PhotoImage(Image.open((self.images_path + 'pause_btn.png')))
+        pause = Label(self.chat_window, image=pause_image, borderwidth=0, bg='#093545')
+        pause.bind('<Button-1>', lambda event: self.controller.pause_download(event, resume))
+        pause.image = pause_image
+        resume_image = ImageTk.PhotoImage(Image.open((self.images_path + 'resume_btn.png')))
+        resume = Label(self.chat_window, image=resume_image, borderwidth=0, bg='#093545')
+        resume.bind('<Button-1>', lambda event: self.controller.resume_btn(event, pause))
+        resume.image = resume_image
+
         # Download Button:
         """
         This is the Download button, it will send the file to our client
@@ -229,11 +237,12 @@ class Room:
         open_download_press = Image.open((self.images_path + 'download_btn_press.png'))
         download_press_image = ImageTk.PhotoImage(open_download_press)
         download.image_press = download_press_image
-        download.bind('<Button-1>', lambda event: self.controller.download(self.files_box, pro_bar, event))
+        download.bind('<Button-1>', lambda event: self.controller.download(self.files_box, pro_bar, event, pause))
         download.bind('<ButtonRelease-1>', lambda event: download.config(image=download_img))
         download.place(relx=0.7535, rely=0.772)
 
         # disconnect button:
+
         """
         This is the exit button
         """

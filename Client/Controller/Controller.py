@@ -1,8 +1,7 @@
 import threading
 import time
-from tkinter import Text, END, DISABLED, NORMAL, Entry, Tk, Toplevel, Listbox, filedialog, messagebox, ttk
+from tkinter import Text, END, DISABLED, NORMAL, Entry, Tk, Toplevel, Listbox, filedialog, messagebox, ttk, Label
 from Client.backend.client import Client
-
 
 
 class Controller:
@@ -75,7 +74,7 @@ class Controller:
         client_name = txt_name.get()
 
         if not self.client.connect(self.addr, client_name):
-            messagebox.showinfo("ERROR",  "INVALID NAME OR PASSWORD please try again")
+            messagebox.showinfo("ERROR", "INVALID NAME OR PASSWORD please try again")
             return
 
         if self.client.client_name is not None:  # if the client name is viable
@@ -185,12 +184,21 @@ class Controller:
         elif Emoji != "Emojis":
             msg.insert(END, Emoji)
 
-    def download(self, files_box: Listbox, pro_bar, event):
+    def resume_btn(self, event, pause_btn: Label):
+        event.widget.place_forget()
+        pause_btn.place(relx=0.944, rely=0.725)
+
+    def pause_download(self, event, resume_btn: Label):
+        event.widget.place_forget()
+        resume_btn.place(relx=0.944, rely=0.725)
+
+    def download(self, files_box: Listbox, pro_bar, event, pause_btn: Label):
         """
         This method gets the download file for the client.
         :return:
         """
         event.widget.config(image=event.widget.image_press)
+        pause_btn.place(relx=0.944, rely=0.725)
         try:
             file_number = int(files_box.curselection()[0])
         except IndexError:
@@ -219,8 +227,3 @@ class Controller:
             progress_len = self.client.c_client.pkts_arrived_len
         messagebox.showinfo("DOWNLOAD", "download complete!")
         pro_bar['value'] = 0
-
-
-
-
-

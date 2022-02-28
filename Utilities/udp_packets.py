@@ -44,7 +44,7 @@ def file_to_pkt(file: BinaryIO, seq: int):
     """
     data = None
     try:
-        data = file.read(100)
+        data = file.read(5120)
     except Exception as e:
         print(e)
     if not data:
