@@ -35,7 +35,7 @@ class Room:
         self.generate_background(name="chat_template.png", window=self.chat_window)
         self.chat_window_textbox_builder()
         # controller:
-        self.controller = Controller(("127.0.0.1", 12345), self.chat_box, self.names_box, self.files_box)
+        self.controller = Controller(("10.9.6.146", 12345), self.chat_box, self.names_box, self.files_box)
         self.chat_window_button_builder()
         self.chat_window.withdraw()
         # login window
