@@ -1,4 +1,5 @@
 import threading
+import time
 from collections import OrderedDict
 from Utilities import udp_packets
 from socket import socket, error
@@ -18,6 +19,7 @@ class SlidingWindow:
         self.expected_ack = None  # The seq of the supposed ack that the server wait to recv
         self.acked = []
         self.lock = threading.Lock()
+        self.dup_ack = 0  # top 3
         self.init_win()
 
     def init_win(self):
@@ -37,26 +39,38 @@ class SlidingWindow:
 
     def handle_ack(self, ack):
         self.lock.acquire()
+
         if self.next_index >= len(self.datagrams):
             self.lock.release()
             return
+
         seq_of_ack = udp_packets.seq_from_client_ack(ack)
-        del self.curr_window[seq_of_ack]
+
+        if seq_of_ack in list(self.curr_window.keys()):
+            del self.curr_window[seq_of_ack]
+            self.curr_window[self.datagrams[self.next_index][0]] = self.datagrams[self.next_index][1]
+
+        elif seq_of_ack in self.acked:
+            self.lock.release()
+            return
+
         self.acked.append(seq_of_ack)
-        self.curr_window[self.datagrams[self.next_index][0]] = self.datagrams[self.next_index][1]
         self.next_index += 1  # advance to the next index in the datagrams list
-        print(f'---------received ack of seq: {seq_of_ack} - moving the window!------------')
         if seq_of_ack == self.expected_ack:
+            print(f'---------received ack of seq: {seq_of_ack} - moving the window!------------')
             self.send_window()  # send the new datagram that added to the window above and then return
 
         else:
+            print(f'expected ack was {self.expected_ack} but received {seq_of_ack}')
             self.retransmission(seq_of_ack)
+
         self.expected_ack = list(self.curr_window.keys())[0]  # getting the first seq in the window
+        # print(f'expected ack = {self.expected_ack}')
         self.lock.release()
 
     def retransmission(self, skipped_ack):
         for seq, pkt in self.curr_window.items():
-            if self.expected_ack <= seq < skipped_ack:
+            if self.expected_ack <= seq < skipped_ack and seq not in self.acked:
                 try:
                     print(f'server retransmission pkt seq: {seq}')
                     self.sock.sendto(pkt, self.client_addr)
@@ -64,3 +78,27 @@ class SlidingWindow:
                     print(e)
             if seq >= skipped_ack:
                 return
+
+    def calc_win_size(self):
+        """
+        This method calcualtes the right window size we want to set.
+        if the network connection is fluid, then we will increase the window size by TODO: TBD
+        it considers : RTT, dup acks and if timeout were to occur.
+        RTT - round trip time - since packet was sent to the moment ack response was received.
+        dup acs - we monitor up to 3 duplicate acks and then cut the window size by half.
+        time out - if timeout were to happen, window size is reset to its initial size,
+        and the entire window is sent again.
+        :return:
+        """
+        pass
+
+    def resize_window(self, timeout: bool, dup_acks: bool):
+        """
+        This method is responsible for resizing the window.
+        if both are False, the window size will increase.
+        other wise, cases are handled like explained in calc_win_size.
+        :param: timeout - timeout checker
+        :param: dup_acks - 3 dups checker
+        :return:
+        """
+        pass

@@ -1,5 +1,6 @@
 import threading
-from tkinter import Text, END, DISABLED, NORMAL, Entry, Tk, Toplevel, Listbox, filedialog, messagebox
+import time
+from tkinter import Text, END, DISABLED, NORMAL, Entry, Tk, Toplevel, Listbox, filedialog, messagebox, ttk, Label
 from Client.backend.client import Client
 
 
@@ -69,14 +70,18 @@ class Controller:
         """
         if event:
             event.widget.config(image=event.widget.image_press)
-        if self.client.client_name is not None:  # if the client name is viable
-            self.recv_thread = threading.Thread(target=self.recv, args=(chat_box, names_box, files_box,), daemon=True)
+
         client_name = txt_name.get()
-        txt_name.delete(0, END)
-        txt_name.insert(0, "Username")
+
         if not self.client.connect(self.addr, client_name):
             messagebox.showinfo("ERROR", "INVALID NAME OR PASSWORD please try again")
             return
+
+        if self.client.client_name is not None:  # if the client name is viable
+            self.recv_thread = threading.Thread(target=self.recv, args=(chat_box, names_box, files_box,), daemon=True)
+
+        txt_name.delete(0, END)
+        txt_name.insert(0, "Username")
         login.withdraw()
         chat.deiconify()
         self.recv_runner = True
@@ -179,12 +184,21 @@ class Controller:
         elif Emoji != "Emojis":
             msg.insert(END, Emoji)
 
-    def download(self, files_box: Listbox, event):
+    def resume_btn(self, event, pause_btn: Label):
+        event.widget.place_forget()
+        pause_btn.place(relx=0.944, rely=0.725)
+
+    def pause_download(self, event, resume_btn: Label):
+        event.widget.place_forget()
+        resume_btn.place(relx=0.944, rely=0.725)
+
+    def download(self, files_box: Listbox, pro_bar, event, pause_btn: Label):
         """
         This method gets the download file for the client.
         :return:
         """
         event.widget.config(image=event.widget.image_press)
+        pause_btn.place(relx=0.944, rely=0.725)
         try:
             file_number = int(files_box.curselection()[0])
         except IndexError:
@@ -200,3 +214,16 @@ class Controller:
         if file_path == '':
             return
         self.client.request_download(file_name, file_path)
+        threading.Thread(target=self.progress_bar_download, args=(pro_bar,)).start()
+
+    def progress_bar_download(self, pro_bar: ttk.Progressbar):
+        final_len = self.client.c_client.file_size
+        while not final_len:
+            final_len = self.client.c_client.file_size
+        progress_len = self.client.c_client.pkts_arrived_len
+        jump = 100 / final_len
+        while progress_len < final_len:
+            pro_bar['value'] = progress_len * jump
+            progress_len = self.client.c_client.pkts_arrived_len
+        messagebox.showinfo("DOWNLOAD", "download complete!")
+        pro_bar['value'] = 0

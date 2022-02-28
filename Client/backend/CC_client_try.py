@@ -1,4 +1,5 @@
 import sys
+import time
 from socket import socket, AF_INET, SOCK_DGRAM, timeout, error
 from Utilities import udp_packets
 
@@ -11,6 +12,8 @@ class CClient:
         self.sock = None
         self.file_name = None
         self.file_size = None  # here the file size is actually the length of datagrams list
+        self.pkts_arrived_len = 0  # the length of the pkts list in recv_file func
+        self.acked = []
 
     def connect(self, file_name):
         """
@@ -23,7 +26,6 @@ class CClient:
             self.sock = socket(AF_INET, SOCK_DGRAM)  # UDP
             self.sock.bind(self.client_addr)
             # self.sock.settimeout(1)
-            print('blabla')
             syn, addr = self.sock.recvfrom(1024)
             self.file_size = int(syn.decode().split('-')[-1])
             if syn.decode() == udp_packets.server_handshake('syn', self.file_size):  # First syn
@@ -51,28 +53,39 @@ class CClient:
         :return:
         """
         buff = 8192  # this is the max size we allow the client to receive
-        last_seq = 0
         pkts = []  # list of tuples (seq, pkt)
-        # while last_seq <= self.file_size:
+        k = l = True
         while len(pkts) != self.file_size:
             try:
                 pkt, addr = self.sock.recvfrom(buff)
                 if addr != self.server_addr: continue
 
                 seq, data = udp_packets.pkt_to_file(pkt)
+                if seq in self.acked:
+                    self.sock.sendto(udp_packets.ack_from_client(seq), self.server_addr)
+                    continue
+
+                # if seq == 1596 and k:  # test
+                #     k = False
+                #     continue
+                #
+                # if seq == 266 and l:  # test
+                #     l = False
+                #     continue
+
                 print('client receiving pkt seq:' + str(seq))
-                data_size = sys.getsizeof(data)
-                if seq == last_seq + data_size:
-                    pkts.append((seq, data))
-                    last_seq = seq
-                    self.sock.sendto(udp_packets.ack_from_client(last_seq), self.server_addr)
+                pkts.append((seq, data))
+                self.acked.append(seq)
+                self.pkts_arrived_len += 1  # for progress bar
+                print(f'sending ack of pkt seq {seq}')
+                self.sock.sendto(udp_packets.ack_from_client(seq), self.server_addr)
 
             except InterruptedError as e:
                 print(e)
                 print('error occurred while receiving from the server')
                 return False
 
-        if last_seq >= self.file_size:
+        if len(pkts) >= self.file_size:
             self.sock.sendto(udp_packets.ack_from_client(None, final=True), self.server_addr)
             self.sock.close()
             self.write_file(pkts, file_path)
@@ -99,6 +112,6 @@ class CClient:
 
 
 if __name__ == '__main__':
-    client = CClient(('0.0.0.0', 5550))
-    client.connect('DSC02199.jpg')
-    client.recv_file("./DSC02199.jpg")
+    client = CClient(('127.0.0.1', 5550))
+    client.connect('elad.txt')
+    client.recv_file("./bla.txt")

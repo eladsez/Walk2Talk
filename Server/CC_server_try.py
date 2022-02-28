@@ -10,9 +10,7 @@ class CCServer:
         self.sock = None
         self.client_addr = None
         self.filepath = None
-        self.RTT = None
         self.cwnd = None
-        self.dup_ack_count = 0  # 3 top
 
     def connect(self, client_addr, filepath: str):
         """
@@ -30,7 +28,7 @@ class CCServer:
             self.sock = socket(AF_INET, SOCK_DGRAM)  # UDP SOCK
             self.sock.sendto(udp_packets.server_handshake('syn', len(datagrams)).encode(),
                              self.client_addr)
-            self.sock.settimeout(2)
+            self.sock.settimeout(3)
             syn_ack, addr = self.sock.recvfrom(1024)
             if syn_ack.decode() == udp_packets.client_handshake() and addr == self.client_addr:
                 self.sock.sendto(udp_packets.server_handshake('ack').encode(), self.client_addr)
@@ -83,8 +81,8 @@ class CCServer:
                 if addr != self.client_addr: continue
             except timeout:
                 print('server didnt recv data ack from the client (timeout)')
-
-            threading.Thread(target=self.cwnd.handle_ack, args=(ack,), daemon=True).start()
+                continue
+            threading.Thread(target=self.cwnd.handle_ack, args=(ack,)).start()
 
         self.sock.close()
         print('file send successfully!')
@@ -92,5 +90,5 @@ class CCServer:
 
 if __name__ == '__main__':
     server = CCServer()
-    server.connect(('10.9.6.146', 5550), './files/DSC02199.jpg')
+    server.connect(('127.0.0.1', 5550), './files/elad.txt')
     server.send_file()
