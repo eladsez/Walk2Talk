@@ -103,6 +103,15 @@ def download_request(file_name: str):
     return DOWNLOAD_REQ + "|" + file_name
 
 
+def resume_pkt():
+    return (DOWNLOAD_REQ + "|" + 'RESUME-DOWNLOAD').encode()
+
+
+def pause_pkt():
+    return (DOWNLOAD_REQ + "|" + 'PAUSE-DOWNLOAD').encode()
+
+
+
 def download_details():
     """
     This method will be sent by the server to the client, and will contain all the details about the file.

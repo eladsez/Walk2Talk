@@ -1,5 +1,4 @@
 import threading
-import time
 from collections import OrderedDict
 from Utilities import udp_packets
 from socket import socket, error
@@ -65,7 +64,7 @@ class SlidingWindow:
             self.retransmission(seq_of_ack)
 
         self.expected_ack = list(self.curr_window.keys())[0]  # getting the first seq in the window
-        # print(f'expected ack = {self.expected_ack}')
+        print(f'expected ack = {self.expected_ack}')
         self.lock.release()
 
     def retransmission(self, skipped_ack):

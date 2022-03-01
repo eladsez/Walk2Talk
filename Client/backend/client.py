@@ -141,6 +141,22 @@ class Client:
             connect = self.c_client.connect(file_name)
         self.c_client.recv_file(file_path)
 
+    def pause_download(self):
+        if self.sock:
+            try:
+                self.sock.send(tcp_packets.pause_pkt())
+            except socket.error as e:
+                print(e)
+                print('error with resume the download')
+
+    def resume_download(self):
+        if self.sock:
+            try:
+                self.sock.send(tcp_packets.resume_pkt())
+            except socket.error as e:
+                print(e)
+                print('error with resume the download')
+
 
 if __name__ == '__main__':
     client = Client()

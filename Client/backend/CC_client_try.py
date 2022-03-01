@@ -14,6 +14,7 @@ class CClient:
         self.file_size = None  # here the file size is actually the length of datagrams list
         self.pkts_arrived_len = 0  # the length of the pkts list in recv_file func
         self.acked = []
+        self.pause = False
 
     def connect(self, file_name):
         """
