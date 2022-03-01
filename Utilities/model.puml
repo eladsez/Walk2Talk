@@ -1,0 +1,25 @@
+@startuml
+
+class client{
+-sock : socket
+-client_name : str
+-c_client = CC_client
+
++connect()
+}
+class CC_client
+
+class Controller
+
+class client_gui
+class Emoji
+
+class server
+class CC_server
+class cwnd
+
+class Misc
+class tcp_packets
+class udp_packets
+
+@enduml

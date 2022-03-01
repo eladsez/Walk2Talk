@@ -1,7 +1,7 @@
 import os
 import threading
 from socket import socket, AF_INET, SOCK_STREAM, error
-from Server.CC_server_try import CCServer
+from Server.CC_server import CCServer
 from Utilities import tcp_packets, Misc
 
 MSG_TYPE = '1'

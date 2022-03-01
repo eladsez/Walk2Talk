@@ -12,13 +12,20 @@ class SlidingWindow:
         self.datagrams = datagrams
         self.datagrams.sort(key=lambda pkt: pkt[0])
         self.curr_window = OrderedDict()  # ordered dict of frames represent by (seq:pkt)
-        self.max_win_size = 4  # The initial window size is 4
         self.next_seq_to_send = 0  # stores the last seq of the pkt we send
         self.next_index = 0  # The index of the next frame to be added to the window from the datagrams list
         self.expected_ack = None  # The seq of the supposed ack that the server wait to recv
         self.acked = []
-        self.lock = threading.Lock()
+
+        self.lock = threading.Lock()  # used later in locking and releasing the threads.
+
+        self.RTT = None  # round trip time - > time it took to last pkt to be sent.
+        self.max_win_size = 4  # The initial window size is 4
+        self.ssthresh = 4 + 1
+        self.last_seq_timeout = 0  # checks the current timeout is the same as the previous.
         self.dup_ack = 0  # top 3
+        self.timeout_count = 0  # if three timeouts were to happen on the same expected ack, stop the download
+
         self.init_win()
 
     def init_win(self):
@@ -47,20 +54,23 @@ class SlidingWindow:
 
         if seq_of_ack in list(self.curr_window.keys()):
             del self.curr_window[seq_of_ack]
-            self.curr_window[self.datagrams[self.next_index][0]] = self.datagrams[self.next_index][1]
 
         elif seq_of_ack in self.acked:
             self.lock.release()
             return
 
         self.acked.append(seq_of_ack)
-        self.next_index += 1  # advance to the next index in the datagrams list
         if seq_of_ack == self.expected_ack:
             print(f'---------received ack of seq: {seq_of_ack} - moving the window!------------')
+            self.inc_win_size()
             self.send_window()  # send the new datagram that added to the window above and then return
+
 
         else:
             print(f'expected ack was {self.expected_ack} but received {seq_of_ack}')
+            self.dup_ack += 1
+            if self.dup_ack == 3:
+                self.three_dup_acks()
             self.retransmission(seq_of_ack)
 
         self.expected_ack = list(self.curr_window.keys())[0]  # getting the first seq in the window
@@ -78,26 +88,81 @@ class SlidingWindow:
             if seq >= skipped_ack:
                 return
 
-    def calc_win_size(self):
+    def timeout_occur(self):
         """
-        This method calcualtes the right window size we want to set.
-        if the network connection is fluid, then we will increase the window size by TODO: TBD
-        it considers : RTT, dup acks and if timeout were to occur.
-        RTT - round trip time - since packet was sent to the moment ack response was received.
-        dup acs - we monitor up to 3 duplicate acks and then cut the window size by half.
-        time out - if timeout were to happen, window size is reset to its initial size,
-        and the entire window is sent again.
+        This method checks when a timeout happens and increases it.
         :return:
         """
-        pass
+        # TODO: decrease window size to ssthresh/2
 
-    def resize_window(self, timeout: bool, dup_acks: bool):
+        self.dup_ack = 0
+        self.ssthresh = self.max_win_size / 2
+        self.max_win_size = 4
+
+        # case which the same timeout occurred on the same sequence, meaning the client is probably disconnected, so stop the download.
+        if self.last_seq_timeout == self.expected_ack:
+            self.timeout_count += 1
+        else:
+            self.timeout_count = 1
+            self.last_seq_timeout = self.expected_ack
+
+        if self.timeout_count > 3:  # Break the download
+            pass
+
+        self.update_win_size()
+
+        self.retransmission(skipped_ack=list(self.curr_window.keys())[-1])  # retransmission the entire window.
+
+    def three_dup_acks(self):
         """
-        This method is responsible for resizing the window.
-        if both are False, the window size will increase.
-        other wise, cases are handled like explained in calc_win_size.
-        :param: timeout - timeout checker
-        :param: dup_acks - 3 dups checker
+        This method handles the case where 3 dupliactes acks happened.
         :return:
         """
-        pass
+        self.ssthresh = self.max_win_size / 2
+        self.max_win_size = self.ssthresh + 3
+
+        self.update_win_size()
+
+    def inc_win_size(self):
+        """
+        This method increases the size of the window in case nothing went wrong ( no dup acks,no timeouts..)
+        if the network connection is fluid, then we will increase the window size by the formulae:
+        # TODO: W_cubic(t) = C*(t-K)^3 + W_max
+        # TODO: win_size = win_size*2
+        :return:
+        """
+        self.dup_ack = 0
+        if self.max_win_size >= self.ssthresh:  # linear case, where we're over the threshold.
+            self.max_win_size += 3
+        else:  # exponential case, where we're below the threshold
+            self.max_win_size *= 2
+
+        self.update_win_size()
+
+    def update_win_size(self):
+        """
+        This method dynamically changes the window size, given the occurrences in the network :
+        timeout, 3 dup acks or fluid connection.
+        :return:
+        """
+        if len(self.curr_window) < self.max_win_size:
+            for i in range(self.next_index, self.next_index + self.max_win_size - len(self.curr_window)):
+                self.curr_window[self.datagrams[i][0]] = self.datagrams[i][1]
+                self.next_index += 1  # advance to the next index in the datagrams list
+        else:
+            # below we had to manipulate the dictionary a bit so we can remove the objects from the last location.
+            # what we did is to add into the list the datagrams from the last we want to remove from the dictionary.
+            to_remv = []
+            i = 0
+            rev_seq_list = list(self.curr_window.keys())
+            rev_seq_list.reverse()
+            for seq in rev_seq_list:
+                if i == len(self.curr_window) - self.max_win_size:
+                    break
+                else:
+                    to_remv.append(seq)
+                i += 1
+            # now we simply remove the datagram from the window.
+            for seq in to_remv:
+                del self.curr_window[seq]
+                self.next_index -= 1  # advance to the next index in the datagrams list

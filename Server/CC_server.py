@@ -82,6 +82,7 @@ class CCServer:
                     if addr != self.client_addr: continue
                 except timeout:
                     print('server didnt recv data ack from the client (timeout)')
+                    self.cwnd.timeout_occur()  # TODO: consider using thread on this method.
                     continue
                 threading.Thread(target=self.cwnd.handle_ack, args=(ack,)).start()
 

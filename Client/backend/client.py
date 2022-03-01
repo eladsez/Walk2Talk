@@ -1,6 +1,6 @@
 import socket
 import threading
-from Client.backend.CC_client_try import CClient
+from Client.backend.CC_client import CClient
 from Utilities import tcp_packets
 
 MSG_TYPE = '1'

@@ -109,31 +109,3 @@ def resume_pkt():
 
 def pause_pkt():
     return (DOWNLOAD_REQ + "|" + 'PAUSE-DOWNLOAD').encode()
-
-
-
-def download_details():
-    """
-    This method will be sent by the server to the client, and will contain all the details about the file.
-    i.e - size,which file...
-    :return:
-    """
-    pass
-
-
-def encrypt_packet(pkt):
-    """
-    This method encrypts our packet and sends it to the Client as an encrypted,
-    he will be able to decrypt it using the decrypt message in the Server.
-    :return:
-    """
-    pass
-
-
-def decrypt_packet(encrypted_pkt):
-    """
-    This method decrypts our packet using the algorithm we provided.
-    :param encrypted_pkt:
-    :return:
-    """
-    pass
