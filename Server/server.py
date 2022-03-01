@@ -17,6 +17,7 @@ class Server:
         self.clients_addr = {}  # (name:addr)
         self.clients_sock = {}  # (socket:name)
         self.clients_threads = []
+        self.cc_server = None
         self.files = [file for file in os.listdir('./files') if os.path.isfile(os.path.join('./files', file))]
         try:
             self.serverSock = socket(AF_INET, SOCK_STREAM)  # socket for Client to connect
@@ -98,7 +99,13 @@ class Server:
                 self.broadcast(pkt, client_sock)
 
         if layers[0] == DOWNLOAD_REQ:
-            threading.Thread(target=self.download, args=(layers[1], client_sock,)).start()
+            if layers[1] == 'RESUME-DOWNLOAD':
+                pass
+            elif layers[1] == 'PAUSE-DOWNLOAD':
+                print('pause pressed!!')
+                self.cc_server.pause = True
+            else:
+                threading.Thread(target=self.download, args=(layers[1], client_sock,)).start()
 
     def broadcast(self, pkt, conn=None):
         copy_client_sock = self.clients_sock.copy()  # important
@@ -126,14 +133,14 @@ class Server:
         # file_path = parent_path + "\\files\\" + file_name
         file_path = './files/' + file_name
 
-        cc_server = CCServer()
+        self.cc_server = CCServer()
         # extract the addr for the current client :
         client_name = self.clients_sock[client_sock]
         client_addr = self.clients_addr[client_name]
-        connect = cc_server.connect((client_addr[0], 5550), file_path)
+        connect = self.cc_server.connect((client_addr[0], 5550), file_path)
         while not connect:
-            connect = cc_server.connect((client_addr[0], 5550), file_path)
-        cc_server.send_file()
+            connect = self.cc_server.connect((client_addr[0], 5550), file_path)
+        self.cc_server.send_file()
 
 
 if __name__ == '__main__':

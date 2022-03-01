@@ -186,11 +186,13 @@ class Controller:
 
     def resume_btn(self, event, pause_btn: Label):
         event.widget.place_forget()
-        pause_btn.place(relx=0.944, rely=0.725)
+        pause_btn.place(relx=0.7, rely=0.725)
+        self.client.resume_download()
 
     def pause_download(self, event, resume_btn: Label):
         event.widget.place_forget()
-        resume_btn.place(relx=0.944, rely=0.725)
+        resume_btn.place(relx=0.7, rely=0.725)
+        self.client.pause_download()
 
     def download(self, files_box: Listbox, pro_bar, event, pause_btn: Label):
         """
@@ -198,7 +200,7 @@ class Controller:
         :return:
         """
         event.widget.config(image=event.widget.image_press)
-        pause_btn.place(relx=0.944, rely=0.725)
+        pause_btn.place(relx=0.7, rely=0.725)
         try:
             file_number = int(files_box.curselection()[0])
         except IndexError:
@@ -214,16 +216,19 @@ class Controller:
         if file_path == '':
             return
         self.client.request_download(file_name, file_path)
-        threading.Thread(target=self.progress_bar_download, args=(pro_bar,)).start()
+        threading.Thread(target=self.progress_bar_download, args=(pro_bar, pause_btn)).start()
 
-    def progress_bar_download(self, pro_bar: ttk.Progressbar):
+    def progress_bar_download(self, pro_bar: ttk.Progressbar, pause_btn: Label):
         final_len = self.client.c_client.file_size
         while not final_len:
             final_len = self.client.c_client.file_size
         progress_len = self.client.c_client.pkts_arrived_len
         jump = 100 / final_len
+
         while progress_len < final_len:
             pro_bar['value'] = progress_len * jump
             progress_len = self.client.c_client.pkts_arrived_len
+
         messagebox.showinfo("DOWNLOAD", "download complete!")
         pro_bar['value'] = 0
+        pause_btn.place_forget()

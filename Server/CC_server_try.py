@@ -11,6 +11,7 @@ class CCServer:
         self.client_addr = None
         self.filepath = None
         self.cwnd = None
+        self.pause = False
 
     def connect(self, client_addr, filepath: str):
         """
@@ -24,7 +25,6 @@ class CCServer:
         self.client_addr = client_addr
         datagrams = self.file_to_datagrams()  # Separates the file size into datagrams in order to send the client how many datagrams.
         try:
-            print(len(datagrams))
             self.sock = socket(AF_INET, SOCK_DGRAM)  # UDP SOCK
             self.sock.sendto(udp_packets.server_handshake('syn', len(datagrams)).encode(),
                              self.client_addr)
@@ -63,7 +63,7 @@ class CCServer:
         """
         Send file method while activating the ack listener method which listens to acks constantly.
         it is used to make sure the client receives the datagrams everytime, and to see if there was a missing packet.
-        if was, it will be retransmissioned.
+        if was, it will be retransmission.
         :return:
         """
         self.cwnd.send_window()
@@ -76,13 +76,14 @@ class CCServer:
         """
         ack = ''.encode()
         while ack.decode() != udp_packets.ack_from_client(None, final=True).decode():
-            try:
-                ack, addr = self.sock.recvfrom(1024)
-                if addr != self.client_addr: continue
-            except timeout:
-                print('server didnt recv data ack from the client (timeout)')
-                continue
-            threading.Thread(target=self.cwnd.handle_ack, args=(ack,)).start()
+            if not self.pause:
+                try:
+                    ack, addr = self.sock.recvfrom(1024)
+                    if addr != self.client_addr: continue
+                except timeout:
+                    print('server didnt recv data ack from the client (timeout)')
+                    continue
+                threading.Thread(target=self.cwnd.handle_ack, args=(ack,)).start()
 
         self.sock.close()
         print('file send successfully!')
