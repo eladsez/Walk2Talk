@@ -1,5 +1,6 @@
 import threading
 from socket import socket, AF_INET, SOCK_DGRAM, timeout, error
+
 from Server.cwnd import SlidingWindow
 from Utilities import udp_packets
 
@@ -45,6 +46,7 @@ class CCServer:
         print('reliable udp connection established')
         return True
 
+    # Private Method
     def file_to_datagrams(self):  # TODO: take care of the extra size while reading
         """
         This method separates the file into list of datagrams for us to process and send to the client.
@@ -69,6 +71,7 @@ class CCServer:
         self.cwnd.send_window()
         self.ack_listener()
 
+    # Private Method
     def ack_listener(self):
         """
         Method used for listening for acks sent by the client for each packet received by him from the file datagrams.

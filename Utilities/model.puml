@@ -1,25 +1,231 @@
 @startuml
 
-class client{
--sock : socket
--client_name : str
--c_client = CC_client
+class Client{
+* MSG_TYPE = '1'
+* REQ_TYPE = '2
+* LIST_TYPE = '3
+--
++sock : Socket
++client_name : Str
++c_client = CClient
+--
++connect()
++disconnect()
++receive()
++handle_pkt()
++send_msg()
++send_names_req()
++send_files_req()
++request_download()
++download()
++pause_download()
++resume_download()
+}
+
+class CClient {
+
++client_addr : Tuple
++server_addr : Tuple
++sock : Socket
++file_name : Str
++file_size : Int
++pkts_arrived_len : Int
++acked : List
++pause : Bool
 
 +connect()
++recv_file()
++write_file()
+
 }
-class CC_client
 
-class Controller
+class Controller {
 
-class client_gui
-class Emoji
++lock : LOCK
++client : Client
++addr : Tuple
++recv_thread : Thread
++recv_runner : Bool
++chat_box : TextBox
 
-class server
-class CC_server
-class cwnd
++recv()
++connect()
++exit_chat()
++send_msg()
++get_clients()
++get_files()
++clear_chat()
++update_send_to()
++send_emoji()
++resume_btn()
++pause_download()
++download()
++progress_bar_download()
 
-class Misc
-class tcp_packets
-class udp_packets
+}
+
+class Room{
+
++chat_window : Tk
+-parent_path :
++image_path : Str
++chat_box : Text
++names_box : ListBox
++files_box : ListBox
++username_entry : Entry
++client_msg : Entry
++password_entry : Entry
++controller : Controller
++chat_login : Toplevel
+
+-chat_login_builder()
+-chat_window_textbox_builder()
+-chat_window_button_builder()
+-scrollbar()
+-default_text()
+resize_image()
+- generate_background()
+
+}
+
+class Emoji{
+
++HAPPY : str
++LAUGH : str
++WINK : str
++SMILE : str
++LOVE : str
++SMIRK : str
++OOF : str
++KISS : str
++ANGRY : str
++CRY : str
++CORONA : str
++options_list : List
+
+}
+
+class Server {
+* MSG_TYPE = '1'
+* REQ_TYPE = '2'
+* LIST_TYPE = '3'
+* DOWNLOAD_REQ = '4'
+--
++addr : Tuple
++clients_addr : Dict
++clients_sock : Dict
++clients_threads : List
++cc_server : CCServer
++files : List
++serverSock : Socket
+--
++listen_for_clients()
+-handle_client()
+-find_sock_by_name()
+-handle_tcp_pkt()
++broadcast()
++remove_client()
++download()
+}
+
+class CCServer{
+
++sock : Socket
++client_addr : Tuple
++filepath : Str
++cwnd : SlidingWindow
++pause : Bool
+
++connect()
+-file_to_datagrams()
++send_file()
+-ack_listener()
+
+}
+
+class SlidingWindow{
+
++sock : Socket
++client_addr : Tuple
++datagrams : List
++curr_window : OrderedDict
++next_seq_to_send : Int
++next_index : Int
++expected_ack : Int
++acked : List
++lock : LOCK
++RTT : float
++max_win_size : Int
++ssthresh : Int
++last_seq_timeout : Int
++dup_ack : Int
++timeout_count : Int
+
+-init_win()
++send_window()
++handle_ack()
+-retransmission()
++timeout_occur()
+-three_dup_acks()
+-inc_win_size()
+-update_win_size()
+
+}
+
+class Misc{
+
++resource_path()
++paint_txt()
+
+}
+
+class tcp_packets {
+
+* MSG_TYPE = '1'
+* REQ_TYPE = '2'
+* LIST_TYPE = '3'
+* DOWNLOAD_REQ = '4'
+
++get_active_clients_packet()
++active_clients_packet()
++get_server_files_packet()
++server_files_packet()
++msg_packet()
++display_list()
++download_request()
++resume_pkt()
++pause_pkt()
+
+}
+
+class udp_packets{
+
++server_handshake()
++client_handshake()
++ack_from_client()
++seq_from_client_ack()
++file_to_pkt()
++pkt_to_file()
+
+}
+
+CClient <-- udp_packets : Import
+
+Client <-- udp_packets : Import
+Client <-- CClient : Import
+
+Controller <-- Client : Import
+
+Room <-- Emoji : Import
+Room <-- Misc : Import
+Room <- Controller : Import
+
+CCServer <-- SlidingWindow : Import
+CCServer <-- udp_packets : Import
+
+SlidingWindow <-- udp_packets : Import
+
+Server <-- CCServer : Import
+Server <- tcp_packets : Import
 
 @enduml

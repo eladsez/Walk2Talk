@@ -25,14 +25,6 @@ def seq_from_client_ack(ack: bytes):
     return int(ack.decode()[13:])
 
 
-def nack_from_client(seq: int):
-    """
-    This method gets an not acknowledgement response from the client
-    :return:
-    """
-    pass
-
-
 def file_to_pkt(file: BinaryIO, seq: int):
     """
     This method gets a file and returns a packet of the maximum datagram by size the client can receive, numbered by seq.

@@ -1,5 +1,4 @@
 import threading
-import time
 from tkinter import Text, END, DISABLED, NORMAL, Entry, Tk, Toplevel, Listbox, filedialog, messagebox, ttk, Label
 from Client.backend.client import Client
 

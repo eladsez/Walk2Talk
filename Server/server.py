@@ -1,8 +1,9 @@
 import os
 import threading
 from socket import socket, AF_INET, SOCK_STREAM, error
+
 from Server.CC_server import CCServer
-from Utilities import tcp_packets, Misc
+from Utilities import tcp_packets
 
 MSG_TYPE = '1'
 REQ_TYPE = '2'
@@ -38,6 +39,7 @@ class Server:
 
         server.close()
 
+    # Private Method
     def handle_client(self, client_sock, client_addr):
         client_name = client_sock.recv(1024).decode()
         try:  # valid check for the client name

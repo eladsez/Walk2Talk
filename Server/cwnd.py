@@ -1,7 +1,8 @@
 import threading
 from collections import OrderedDict
-from Utilities import udp_packets
 from socket import socket, error
+
+from Utilities import udp_packets
 
 
 class SlidingWindow:
@@ -28,6 +29,7 @@ class SlidingWindow:
 
         self.init_win()
 
+    # Private Method
     def init_win(self):
         max_win = min(self.max_win_size, len(self.datagrams))
         for i in range(0, max_win):
@@ -77,6 +79,7 @@ class SlidingWindow:
         print(f'expected ack = {self.expected_ack}')
         self.lock.release()
 
+    # Private Method
     def retransmission(self, skipped_ack):
         for seq, pkt in self.curr_window.items():
             if self.expected_ack <= seq < skipped_ack and seq not in self.acked:
@@ -113,6 +116,7 @@ class SlidingWindow:
 
         self.retransmission(skipped_ack=list(self.curr_window.keys())[-1])  # retransmission the entire window.
 
+    # Private Method
     def three_dup_acks(self):
         """
         This method handles the case where 3 dupliactes acks happened.
@@ -123,6 +127,7 @@ class SlidingWindow:
 
         self.update_win_size()
 
+    # Private Method
     def inc_win_size(self):
         """
         This method increases the size of the window in case nothing went wrong ( no dup acks,no timeouts..)
@@ -139,6 +144,7 @@ class SlidingWindow:
 
         self.update_win_size()
 
+    # Private Method
     def update_win_size(self):
         """
         This method dynamically changes the window size, given the occurrences in the network :
