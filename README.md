@@ -43,14 +43,17 @@ DEDICATED WIKI FOR THAT.
 ## How To use
 TBD
 
-## dependencies
-
-``` Tkinter ```  - please see [Tkinter documentaion](https://docs.python.org/3/library/tk.html)
-
 
 ## Hierarchy
-TBD - UML
+![UML](https://user-images.githubusercontent.com/73894107/156386825-a8868446-246f-40d1-bce0-122cb50580c2.png)
 
+## dependencies
+
+``` Tkinter ```  - please see [Tkinter documentaion](https://docs.python.org/3/library/tk.html) </br>
+``` Tkinter Themes``` - please see [Tkinter Themes documenation](https://ttkthemes.readthedocs.io/en/latest/installation.html)
 
 ## Reading Material
-TBD
+* [What is UDP](https://en.wikipedia.org/wiki/User_Datagram_Protocol)
+* [What is TCP](https://www.techtarget.com/searchnetworking/definition/TCP)
+* [Extra on Selective Repeat](https://en.wikipedia.org/wiki/Selective_Repeat_ARQ)
+* [Congestion Control Video](https://www.youtube.com/watch?v=rib_ujnMqcs)
