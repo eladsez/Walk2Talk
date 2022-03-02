@@ -123,7 +123,7 @@ class SlidingWindow:
         self.update_win_size()
 
         self.next_seq_to_send = self.expected_ack - 1
-        self.send_window() # retransmission the entire window.
+        self.send_window()  # retransmission the entire window.
         self.lock.release()
 
     # Private Method
@@ -167,7 +167,10 @@ class SlidingWindow:
 
             for i in range(self.next_index,
                            min(self.next_index + self.max_win_size - len(self.curr_window), len(self.datagrams))):
-                self.curr_window[self.datagrams[i][0]] = self.datagrams[i][1]
+                if self.datagrams[i][0] not in self.acked:
+                    self.curr_window[self.datagrams[i][0]] = self.datagrams[i][1]
+                else:
+                    i -= 1
                 self.next_index += 1  # advance to the next index in the datagrams list
         else:
             # below we had to manipulate the dictionary a bit so we can remove the objects from the last location.

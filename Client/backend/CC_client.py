@@ -64,21 +64,21 @@ class CClient:
                     self.sock.sendto(udp_packets.ack_from_client(seq), self.server_addr)
                     continue
 
-                if seq == 3481914 and k:  # test
-                    k = False
-                    continue
-
-                if seq == 12486864 and l:  # test
-                    l = False
-                    continue
-
-                if seq == 9845412 and m:  # test
-                    m = False
-                    continue
-
-                if seq == 9064983 and m:  # test
-                    m = False
-                    continue
+                # if seq == 3481914 and k:  # test
+                #     k = False
+                #     continue
+                #
+                # if seq == 12486864 and l:  # test
+                #     l = False
+                #     continue
+                #
+                # if seq == 9845412 and m:  # test
+                #     m = False
+                #     continue
+                #
+                # if seq == 9064983 and m:  # test
+                #     m = False
+                #     continue
 
                 print('client receiving pkt seq:' + str(seq))
                 pkts.append((seq, data))
