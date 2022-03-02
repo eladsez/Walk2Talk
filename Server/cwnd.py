@@ -21,8 +21,8 @@ class SlidingWindow:
         self.lock = threading.Lock()  # used later in locking and releasing the threads.
 
         self.RTT = None  # round trip time - > time it took to last pkt to be sent.
-        self.max_win_size = 4  # The initial window size is 4
-        self.ssthresh = 4 + 1
+        self.max_win_size = 2  # The initial window size is 4
+        self.ssthresh = 5
         self.last_seq_timeout = 0  # checks the current timeout is the same as the previous.
         self.dup_ack = 0  # top 3
         self.timeout_count = 0  # if three timeouts were to happen on the same expected ack, stop the download
@@ -69,14 +69,20 @@ class SlidingWindow:
 
 
         else:
-            print(f'expected ack was {self.expected_ack} but received {seq_of_ack}')
+
+            print(f'-------expected ack was {self.expected_ack} but received {seq_of_ack}--------')
             self.dup_ack += 1
             if self.dup_ack == 3:
                 self.three_dup_acks()
             self.retransmission(seq_of_ack)
+            print(f'seq of ack = {seq_of_ack}, curr_window = {self.curr_window.keys()}')
+        print(f'length of curr window = {len(self.curr_window)} , curr max_win_size =  {self.max_win_size}')
+        print('-----------------------------------------------------')
 
-        self.expected_ack = list(self.curr_window.keys())[0]  # getting the first seq in the window
-        print(f'expected ack = {self.expected_ack}')
+        try:
+            self.expected_ack = list(self.curr_window.keys())[0]  # getting the first seq in the window
+        except Exception as e:
+            print('the file is about to end!')
         self.lock.release()
 
     # Private Method
@@ -84,10 +90,11 @@ class SlidingWindow:
         for seq, pkt in self.curr_window.items():
             if self.expected_ack <= seq < skipped_ack and seq not in self.acked:
                 try:
-                    print(f'server retransmission pkt seq: {seq}')
+                    print(f'retransmission pkt seq: {seq}')
                     self.sock.sendto(pkt, self.client_addr)
                 except error as e:
                     print(e)
+
             if seq >= skipped_ack:
                 return
 
@@ -96,11 +103,12 @@ class SlidingWindow:
         This method checks when a timeout happens and increases it.
         :return:
         """
+        self.lock.acquire()
         # TODO: decrease window size to ssthresh/2
 
         self.dup_ack = 0
-        self.ssthresh = self.max_win_size / 2
-        self.max_win_size = 4
+        self.ssthresh = self.max_win_size // 2
+        self.max_win_size = 1
 
         # case which the same timeout occurred on the same sequence, meaning the client is probably disconnected, so stop the download.
         if self.last_seq_timeout == self.expected_ack:
@@ -114,7 +122,9 @@ class SlidingWindow:
 
         self.update_win_size()
 
-        self.retransmission(skipped_ack=list(self.curr_window.keys())[-1])  # retransmission the entire window.
+        self.next_seq_to_send = self.expected_ack - 1
+        self.send_window() # retransmission the entire window.
+        self.lock.release()
 
     # Private Method
     def three_dup_acks(self):
@@ -122,7 +132,8 @@ class SlidingWindow:
         This method handles the case where 3 dupliactes acks happened.
         :return:
         """
-        self.ssthresh = self.max_win_size / 2
+        self.dup_ack = 0
+        self.ssthresh = self.max_win_size // 2
         self.max_win_size = self.ssthresh + 3
 
         self.update_win_size()
@@ -136,11 +147,12 @@ class SlidingWindow:
         # TODO: win_size = win_size*2
         :return:
         """
+        # self.max_win_size += 1
         self.dup_ack = 0
         if self.max_win_size >= self.ssthresh:  # linear case, where we're over the threshold.
-            self.max_win_size += 3
+            self.max_win_size += min(3, len(self.datagrams) - (len(self.curr_window) + len(self.acked)))
         else:  # exponential case, where we're below the threshold
-            self.max_win_size *= 2
+            self.max_win_size += min(self.max_win_size, len(self.datagrams) - (len(self.curr_window) + len(self.acked)))
 
         self.update_win_size()
 
@@ -152,7 +164,9 @@ class SlidingWindow:
         :return:
         """
         if len(self.curr_window) < self.max_win_size:
-            for i in range(self.next_index, self.next_index + self.max_win_size - len(self.curr_window)):
+
+            for i in range(self.next_index,
+                           min(self.next_index + self.max_win_size - len(self.curr_window), len(self.datagrams))):
                 self.curr_window[self.datagrams[i][0]] = self.datagrams[i][1]
                 self.next_index += 1  # advance to the next index in the datagrams list
         else:

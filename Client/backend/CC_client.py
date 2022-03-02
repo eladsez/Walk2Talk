@@ -51,9 +51,9 @@ class CClient:
         :param file_path: file path location.
         :return:
         """
-        buff = 8192  # this is the max size we allow the client to receive
+        buff = 80000  # this is the max size we allow the client to receive
         pkts = []  # list of tuples (seq, pkt)
-        k = l = True
+        k = l = m = y = True
         while len(pkts) != self.file_size:
             try:
                 pkt, addr = self.sock.recvfrom(buff)
@@ -64,13 +64,21 @@ class CClient:
                     self.sock.sendto(udp_packets.ack_from_client(seq), self.server_addr)
                     continue
 
-                # if seq == 1596 and k:  # test
-                #     k = False
-                #     continue
-                #
-                # if seq == 266 and l:  # test
-                #     l = False
-                #     continue
+                if seq == 3481914 and k:  # test
+                    k = False
+                    continue
+
+                if seq == 12486864 and l:  # test
+                    l = False
+                    continue
+
+                if seq == 9845412 and m:  # test
+                    m = False
+                    continue
+
+                if seq == 9064983 and m:  # test
+                    m = False
+                    continue
 
                 print('client receiving pkt seq:' + str(seq))
                 pkts.append((seq, data))
@@ -112,5 +120,5 @@ class CClient:
 
 if __name__ == '__main__':
     client = CClient(('127.0.0.1', 5550))
-    client.connect('elad.txt')
-    client.recv_file("./bla.txt")
+    client.connect('DSC02199.jpg')
+    client.recv_file("./bla.jpg")
