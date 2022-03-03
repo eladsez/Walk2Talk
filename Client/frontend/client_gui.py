@@ -17,13 +17,15 @@ class Room:
     in particular - LOGIN window & Chat room window
     """
 
-    def __init__(self):
+    def __init__(self, addr: tuple):
         # This is the chat window, it will be hidden for new users until they join the room.
         self.chat_window = Tk()
         # imgs abs paths:
         os.chdir(os.path.abspath(os.path.join(os.getcwd(), os.pardir)))
-        parent_path = Misc.resource_path(relative_path='frontend')
-        self.images_path = parent_path + "/imgs/"
+        # parent_path = Misc.resource_path(relative_path='frontend')
+        # self.images_path = parent_path + "/imgs/"
+        parent_path = Misc.resource_path(relative_path='Client')
+        self.images_path = parent_path + "/frontend/imgs/"
         # TXT BOXES:
         self.chat_box = None  # TODO: find better solution
         self.names_box = None
@@ -36,7 +38,7 @@ class Room:
         self.generate_background(name="chat_template.png", window=self.chat_window)
         self.chat_window_textbox_builder()
         # controller:
-        self.controller = Controller(("127.0.0.1", 12345), self.chat_box, self.names_box, self.files_box)
+        self.controller = Controller(addr, self.chat_box, self.names_box, self.files_box)
         self.chat_window_button_builder()
         self.chat_window.withdraw()
         # login window
@@ -385,4 +387,4 @@ class Room:
 
 
 if __name__ == '__main__':
-    Room()
+    Room(('127.0.0.1',12345))

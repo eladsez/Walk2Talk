@@ -22,7 +22,7 @@ class SlidingWindow:
         self.lock = threading.Lock()  # used later in locking and releasing the threads.
 
         self.max_win_size = 2  # The initial window size is 4
-        self.ssthresh = 50
+        self.ssthresh = 500
         self.last_seq_timeout = 0  # checks the current timeout is the same as the previous.
         self.dup_ack = 0  # top 3
         self.timeout_count = 0  # if three timeouts were to happen on the same expected ack, stop the download
@@ -97,11 +97,13 @@ class SlidingWindow:
             self.expected_ack = list(self.curr_window.keys())[0]  # getting the first seq in the window
         except Exception as e:
             print('the file is about to end!')
+            self.curr_window[self.datagrams[self.next_index][0]] = self.datagrams[self.next_index][1]
+            self.next_index += 1
+            self.expected_ack = list(self.curr_window.keys())[0]
         self.lock.release()
 
     # Private Method
     def retransmission(self, skipped_ack):
-        print(self.curr_window.keys())
         for seq, pkt in self.curr_window.items():
             if self.expected_ack <= seq < skipped_ack and seq not in self.acked:
                 try:
@@ -135,7 +137,8 @@ class SlidingWindow:
             self.last_seq_timeout = self.expected_ack
 
         if self.timeout_count > 3:  # Break the download
-            pass
+            self.sock.close()
+            self.finished = True
 
         self.update_win_size()
 

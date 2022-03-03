@@ -10,7 +10,7 @@ class Controller:
     """
 
     def __init__(self, addr, chat_box, names_box, files_box):
-        self.lock = threading.Lock()
+        # self.lock = threading.Lock()
         self.client = Client()
         self.addr = addr
         self.recv_thread = threading.Thread(target=self.recv, args=(chat_box, names_box, files_box,), daemon=True)

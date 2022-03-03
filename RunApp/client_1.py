@@ -1,4 +1,3 @@
 from Client.frontend.client_gui import Room
 
-Room()
-
+Room(('127.0.0.1', 12345))
