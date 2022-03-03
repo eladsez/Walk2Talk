@@ -17,12 +17,12 @@ class SlidingWindow:
         self.next_index = 0  # The index of the next frame to be added to the window from the datagrams list
         self.expected_ack = None  # The seq of the supposed ack that the server wait to recv
         self.acked = []
+        self.finished = False  # boll val for all the other thread to know when they should done.
 
         self.lock = threading.Lock()  # used later in locking and releasing the threads.
 
-        self.RTT = None  # round trip time - > time it took to last pkt to be sent.
         self.max_win_size = 2  # The initial window size is 4
-        self.ssthresh = 5
+        self.ssthresh = 50
         self.last_seq_timeout = 0  # checks the current timeout is the same as the previous.
         self.dup_ack = 0  # top 3
         self.timeout_count = 0  # if three timeouts were to happen on the same expected ack, stop the download
@@ -39,16 +39,27 @@ class SlidingWindow:
         self.expected_ack = self.datagrams[0][0]
 
     def send_window(self):
+        """
+        This method send the curr window from the the right sequence that calculate over this class
+        :return: 
+        """""
         for seq, pkt in self.curr_window.items():
             if seq > self.next_seq_to_send:
                 print(f'server sending pkt seq: {seq}')
-                self.sock.sendto(pkt, self.client_addr)
+                try:
+                    self.sock.sendto(pkt, self.client_addr)
+                except error as e:
+                    print(e)
+                    print('udp socket damaged because the download probably finished!')
+                    self.finished = True
+                    return
+
                 self.next_seq_to_send = seq
 
     def handle_ack(self, ack):
         self.lock.acquire()
-
-        if self.next_index >= len(self.datagrams):
+        deleted_from_window = False
+        if self.finished or self.next_index >= len(self.datagrams):
             self.lock.release()
             return
 
@@ -56,6 +67,7 @@ class SlidingWindow:
 
         if seq_of_ack in list(self.curr_window.keys()):
             del self.curr_window[seq_of_ack]
+            deleted_from_window = True
 
         elif seq_of_ack in self.acked:
             self.lock.release()
@@ -69,13 +81,15 @@ class SlidingWindow:
 
 
         else:
-
             print(f'-------expected ack was {self.expected_ack} but received {seq_of_ack}--------')
             self.dup_ack += 1
             if self.dup_ack == 3:
                 self.three_dup_acks()
+            elif deleted_from_window:  # to keep the window length in the right size
+                self.curr_window[self.datagrams[self.next_index][0]] = self.datagrams[self.next_index][1]
+                self.next_index += 1
             self.retransmission(seq_of_ack)
-            print(f'seq of ack = {seq_of_ack}, curr_window = {self.curr_window.keys()}')
+            # print(f'seq of ack = {seq_of_ack}, curr_window = {self.curr_window.keys()}')
         print(f'length of curr window = {len(self.curr_window)} , curr max_win_size =  {self.max_win_size}')
         print('-----------------------------------------------------')
 
@@ -87,6 +101,7 @@ class SlidingWindow:
 
     # Private Method
     def retransmission(self, skipped_ack):
+        print(self.curr_window.keys())
         for seq, pkt in self.curr_window.items():
             if self.expected_ack <= seq < skipped_ack and seq not in self.acked:
                 try:
@@ -94,6 +109,9 @@ class SlidingWindow:
                     self.sock.sendto(pkt, self.client_addr)
                 except error as e:
                     print(e)
+                    print('udp socket damaged because the download probably finished!')
+                    self.finished = True
+                    return
 
             if seq >= skipped_ack:
                 return
@@ -103,7 +121,6 @@ class SlidingWindow:
         This method checks when a timeout happens and increases it.
         :return:
         """
-        self.lock.acquire()
         # TODO: decrease window size to ssthresh/2
 
         self.dup_ack = 0
@@ -124,7 +141,6 @@ class SlidingWindow:
 
         self.next_seq_to_send = self.expected_ack - 1
         self.send_window()  # retransmission the entire window.
-        self.lock.release()
 
     # Private Method
     def three_dup_acks(self):
@@ -143,7 +159,6 @@ class SlidingWindow:
         """
         This method increases the size of the window in case nothing went wrong ( no dup acks,no timeouts..)
         if the network connection is fluid, then we will increase the window size by the formulae:
-        # TODO: W_cubic(t) = C*(t-K)^3 + W_max
         # TODO: win_size = win_size*2
         :return:
         """

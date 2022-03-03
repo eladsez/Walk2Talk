@@ -1,4 +1,5 @@
 import threading
+import time
 from socket import socket, AF_INET, SOCK_DGRAM, timeout, error
 
 from Server.cwnd import SlidingWindow
@@ -12,7 +13,8 @@ class CCServer:
         self.client_addr = None
         self.filepath = None
         self.cwnd = None
-        self.pause = False
+        self.pause = False  # for the pause button to stop the download
+        self.RTT = None  # round trip time - > time it took to last pkt to be sent.
 
     def connect(self, client_addr, filepath: str):
         """
@@ -27,12 +29,15 @@ class CCServer:
         datagrams = self.file_to_datagrams()  # Separates the file size into datagrams in order to send the client how many datagrams.
         try:
             self.sock = socket(AF_INET, SOCK_DGRAM)  # UDP SOCK
+            self.RTT = time.perf_counter()
             self.sock.sendto(udp_packets.server_handshake('syn', len(datagrams)).encode(),
                              self.client_addr)
             self.sock.settimeout(0.5)
             syn_ack, addr = self.sock.recvfrom(1024)
+            self.RTT = time.perf_counter() - self.RTT
             if syn_ack.decode() == udp_packets.client_handshake() and addr == self.client_addr:
                 self.sock.sendto(udp_packets.server_handshake('ack').encode(), self.client_addr)
+                self.sock.settimeout(self.RTT)
 
         except timeout as tio:
             print(tio)
@@ -84,8 +89,10 @@ class CCServer:
                     ack, addr = self.sock.recvfrom(1024)
                     if addr != self.client_addr: continue
                 except timeout:
+                    self.cwnd.lock.acquire()
                     print('server didnt recv data ack from the client (timeout)')
                     self.cwnd.timeout_occur()  # TODO: consider using thread on this method.
+                    self.cwnd.lock.release()
                     continue
                 if ack.decode() != udp_packets.ack_from_client(None, final=True).decode():
                     threading.Thread(target=self.cwnd.handle_ack, args=(ack,), daemon=True).start()
