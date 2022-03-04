@@ -37,7 +37,7 @@ class CCServer:
             self.RTT = time.perf_counter() - self.RTT
             if syn_ack.decode() == udp_packets.client_handshake() and addr == self.client_addr:
                 self.sock.sendto(udp_packets.server_handshake('ack').encode(), self.client_addr)
-                # self.sock.settimeout(self.RTT+0.3)
+                # self.sock.settimeout(self.RTT+0.5)
 
         except timeout as tio:
             print(tio)

@@ -21,7 +21,7 @@ class SlidingWindow:
 
         self.lock = threading.Lock()  # used later in locking and releasing the threads.
 
-        self.max_win_size = 2  # The initial window size is 4
+        self.max_win_size = 4  # The initial window size is 4
         self.ssthresh = 500
         self.last_seq_timeout = 0  # checks the current timeout is the same as the previous.
         self.dup_ack = 0  # top 3
@@ -137,9 +137,9 @@ class SlidingWindow:
             self.last_seq_timeout = self.expected_ack
 
         if self.timeout_count > 3:  # Break the download
-            self.sock.close()
-            self.finished = True
-
+            # self.sock.close()
+            # self.finished = True
+            pass
         self.update_win_size()
 
         self.next_seq_to_send = self.expected_ack - 1
