@@ -385,6 +385,3 @@ class Room:
         bg.pack(fill=BOTH, expand=YES)
         bg.bind('<Configure>', lambda event: Room.resize_image(event, template.copy(), bg))
 
-
-if __name__ == '__main__':
-    Room(('127.0.0.1',12345))

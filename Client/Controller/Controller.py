@@ -10,7 +10,6 @@ class Controller:
     """
 
     def __init__(self, addr, chat_box, names_box, files_box):
-        # self.lock = threading.Lock()
         self.client = Client()
         self.addr = addr
         self.recv_thread = threading.Thread(target=self.recv, args=(chat_box, names_box, files_box,), daemon=True)
@@ -225,6 +224,7 @@ class Controller:
         jump = 100 / final_len
 
         while progress_len < final_len:
+            pro_bar.update()
             pro_bar['value'] = progress_len * jump
             progress_len = self.client.c_client.pkts_arrived_len
 

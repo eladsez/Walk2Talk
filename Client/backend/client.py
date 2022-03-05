@@ -21,7 +21,7 @@ class Client:
         except socket.error as err:
             print("ERROR, failed to create Client socket")
             raise err
-        self.c_client = CClient(None)
+        self.c_client = None
 
     def connect(self, addr: tuple, client_name: str):
         """
@@ -147,7 +147,7 @@ class Client:
                 self.sock.send(tcp_packets.pause_pkt())
             except socket.error as e:
                 print(e)
-                print('error with resume the download')
+                print('error with Pause the download')
 
     def resume_download(self):
         if self.sock:
