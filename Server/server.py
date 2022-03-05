@@ -19,7 +19,8 @@ class Server:
         self.clients_sock = {}  # (socket:name)
         self.clients_threads = []
         self.cc_server = None
-        self.files = [file for file in os.listdir('./files') if os.path.isfile(os.path.join('./files', file))]
+        self.on = True
+        self.files = None
         try:
             self.serverSock = socket(AF_INET, SOCK_STREAM)  # socket for Client to connect
             self.serverSock.bind(self.addr)
@@ -30,14 +31,16 @@ class Server:
         self.serverSock.listen(5)
         print('Waitnig for clients to connect...')
         while True:
-            client_sock, client_addr = self.serverSock.accept()
+            client_sock = client_addr = None
+            try:
+                client_sock, client_addr = self.serverSock.accept()
+            except error:
+                pass
             print(f'{len(self.clients_sock) + 1} client connected: {client_addr[0]}')
             print(f'{client_addr} connected')
             thread = threading.Thread(target=self.handle_client, args=(client_sock, client_addr,))
             self.clients_threads.append(thread)
             thread.start()
-
-        server.close()
 
     # Private Method
     def handle_client(self, client_sock, client_addr):
@@ -145,6 +148,15 @@ class Server:
         while not connect:
             connect = self.cc_server.connect((client_addr[0], 5550), file_path)
         self.cc_server.send_file()
+
+    def shout_down(self):
+        try:
+            self.serverSock.close()
+            self.on = False
+        except error:
+            return False
+        print('the server have been shout down')
+        return True
 
 
 if __name__ == '__main__':
