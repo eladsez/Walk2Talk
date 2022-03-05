@@ -36,7 +36,7 @@ def file_to_pkt(file: BinaryIO, seq: int):
     """
     data = None
     try:
-        data = file.read(60000)
+        data = file.read(5120)
     except Exception as e:
         print(e)
     if not data:
@@ -53,5 +53,3 @@ def pkt_to_file(pkt: bytes) -> tuple:
     """
     pkt = loads(pkt)
     return pkt[0], pkt[1]
-
-

@@ -31,10 +31,6 @@ class SlidingWindow:
 
     # Private Method
     def init_win(self):
-        """
-        This method init the window size
-        :return:
-        """
         max_win = min(self.max_win_size, len(self.datagrams))
         for i in range(0, max_win):
             self.curr_window[self.datagrams[i][0]] = self.datagrams[i][1]
@@ -48,7 +44,7 @@ class SlidingWindow:
         :return: 
         """""
         for seq, pkt in self.curr_window.items():
-            if seq > self.next_seq_to_send and seq not in self.acked:
+            if seq > self.next_seq_to_send:
                 print(f'server sending pkt seq: {seq}')
                 try:
                     self.sock.sendto(pkt, self.client_addr)
@@ -61,13 +57,6 @@ class SlidingWindow:
                 self.next_seq_to_send = seq
 
     def handle_ack(self, ack):
-        """
-        This method is the brain behind the window, it checks if an ack response has already been received by the client,
-        or if it was duplicated, timeout occurred, and updates the next packet we expect.
-        it handles each case in its own way.
-        :param ack:
-        :return:
-        """
         self.lock.acquire()
         deleted_from_window = False
         if self.finished or self.next_index >= len(self.datagrams):
@@ -78,7 +67,6 @@ class SlidingWindow:
 
         if seq_of_ack in list(self.curr_window.keys()):
             del self.curr_window[seq_of_ack]
-            self.max_win_size -= 1
             deleted_from_window = True
 
         elif seq_of_ack in self.acked:
@@ -95,12 +83,12 @@ class SlidingWindow:
         else:
             print(f'-------expected ack was {self.expected_ack} but received {seq_of_ack}--------')
             self.dup_ack += 1
-            self.retransmission()
             if self.dup_ack == 3:
                 self.three_dup_acks()
-            # elif deleted_from_window:  # to keep the window length in the right size
-            #     self.curr_window[self.datagrams[self.next_index][0]] = self.datagrams[self.next_index][1]
-            #     self.next_index += 1
+            elif deleted_from_window:  # to keep the window length in the right size
+                self.curr_window[self.datagrams[self.next_index][0]] = self.datagrams[self.next_index][1]
+                self.next_index += 1
+            self.retransmission(seq_of_ack)
             # print(f'seq of ack = {seq_of_ack}, curr_window = {self.curr_window.keys()}')
         print(f'length of curr window = {len(self.curr_window)} , curr max_win_size =  {self.max_win_size}')
         print('-----------------------------------------------------')
@@ -115,44 +103,20 @@ class SlidingWindow:
         self.lock.release()
 
     # Private Method
-    def retransmission(self):
-        """
-        This method is responsible for retransmission of the lost packet in the window.
-        How it works : if a packet was lost or not received, it will resend the window starting with the lost packet
-        to the last received packet.
-        :param skipped_ack:
-        :return:
-        """
+    def retransmission(self, skipped_ack):
+        for seq, pkt in self.curr_window.items():
+            if self.expected_ack <= seq < skipped_ack and seq not in self.acked:
+                try:
+                    print(f'retransmission pkt seq: {seq}')
+                    self.sock.sendto(pkt, self.client_addr)
+                except error as e:
+                    print(e)
+                    print('udp socket damaged because the download probably finished!')
+                    self.finished = True
+                    return
 
-        try:
-            self.sock.sendto(self.curr_window[self.expected_ack], self.client_addr)
-            print(f'retransmission pkt seq: {self.expected_ack}')
-        except error as e:
-            print(e)
-            print('udp socket damaged because the download probably finished!')
-            self.finished = True
-            return
-        pkt = self.curr_window[self.expected_ack]
-        del self.curr_window[self.expected_ack]
-        self.curr_window[self.expected_ack] = pkt
-        self.expected_ack = list(self.curr_window.keys())[0]
-        return
-
-        # old retransmission method also work fine but the new is better
-
-        # for seq, pkt in self.curr_window.items():
-        #     if self.expected_ack <= seq < skipped_ack and seq not in self.acked:
-        #         try:
-        #             print(f'retransmission pkt seq: {seq}')
-        #             self.sock.sendto(pkt, self.client_addr)
-        #         except error as e:
-        #             print(e)
-        #             print('udp socket damaged because the download probably finished!')
-        #             self.finished = True
-        #             return
-        #
-        #     if seq >= skipped_ack:
-        #         return
+            if seq >= skipped_ack:
+                return
 
     def timeout_occur(self):
         """
@@ -163,7 +127,7 @@ class SlidingWindow:
 
         self.dup_ack = 0
         self.ssthresh = self.max_win_size // 2
-        self.max_win_size = 1
+        self.max_win_size = 2
 
         # case which the same timeout occurred on the same sequence, meaning the client is probably disconnected, so stop the download.
         if self.last_seq_timeout == self.expected_ack:

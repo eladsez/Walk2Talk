@@ -23,7 +23,7 @@ class Test(TestCase):
     def test_list_req_and_receive(self):
         self.client.send_files_req()
         screen_view = self.client.receive()
-        self.assertEqual(' DSC02199.jpg elad.txt shaked.txt', screen_view[0])
+        self.assertEqual(' DSC02199.jpg shaked.txt elad.txt', screen_view[0])
         self.assertEqual('files_box', screen_view[1])
         self.client.send_names_req()
         screen_view = self.client.receive()
