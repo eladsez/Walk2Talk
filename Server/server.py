@@ -30,7 +30,7 @@ class Server:
     def listen_for_clients(self):
         self.serverSock.listen(5)
         print('Waitnig for clients to connect...')
-        while True:
+        while self.on:
             client_sock = client_addr = None
             try:
                 client_sock, client_addr = self.serverSock.accept()
@@ -61,7 +61,7 @@ class Server:
         print(f'***** {client_name} connected *****')
         connected_msg = tcp_packets.msg_packet('server', 'broadcast', f'***** {client_name} connected *****')
         self.broadcast(connected_msg, client_sock)
-        while True:
+        while self.on:
             try:
                 pkt = client_sock.recv(4096).decode()
             except error:
