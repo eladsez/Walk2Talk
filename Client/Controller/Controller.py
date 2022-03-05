@@ -198,7 +198,6 @@ class Controller:
         :return:
         """
         event.widget.config(image=event.widget.image_press)
-        pause_btn.place(relx=0.7, rely=0.725)
         try:
             file_number = int(files_box.curselection()[0])
         except IndexError:
@@ -213,6 +212,7 @@ class Controller:
         file.close()
         if file_path == '':
             return
+        pause_btn.place(relx=0.7, rely=0.725)
         self.client.request_download(file_name, file_path)
         threading.Thread(target=self.progress_bar_download, args=(pro_bar, pause_btn)).start()
 
@@ -222,11 +222,15 @@ class Controller:
             final_len = self.client.c_client.file_size
         progress_len = self.client.c_client.pkts_arrived_len
         jump = 100 / final_len
-
+        flag = False
         while progress_len < final_len:
             pro_bar.update()
             pro_bar['value'] = progress_len * jump
             progress_len = self.client.c_client.pkts_arrived_len
+
+            # if pro_bar['value'] >= 50 and not flag:  # for stopping the download in 50% and ask for continue
+            #     flag = True
+            #     messagebox.showinfo("DOWNLOAD", "the download is 50% do you wish to continue?")
 
         messagebox.showinfo("DOWNLOAD", "download complete!")
         pro_bar['value'] = 0

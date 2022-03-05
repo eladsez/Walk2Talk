@@ -82,7 +82,6 @@ class CClient:
             self.write_file(pkts)
             print('file downloaded!')
 
-
     def write_file(self, pkts: list):
         """
         This method writes the file to the location the client chose,

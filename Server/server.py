@@ -111,6 +111,7 @@ class Server:
                 print('resume pressed!!')
                 self.cc_server.pause = False
                 threading.Thread(target=self.cc_server.send_file())
+
             elif layers[1] == 'PAUSE-DOWNLOAD':
                 print('pause pressed!!')
                 self.cc_server.pause = True
@@ -118,7 +119,7 @@ class Server:
                 threading.Thread(target=self.download, args=(layers[1], client_sock,)).start()
 
     def broadcast(self, pkt, conn=None):
-        copy_client_sock = self.clients_sock.copy()  # important
+        copy_client_sock = self.clients_sock.copy()  # important to avoid iterable conflicts
         for client in copy_client_sock:
             if client == conn:
                 continue
