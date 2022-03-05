@@ -31,6 +31,10 @@ class SlidingWindow:
 
     # Private Method
     def init_win(self):
+        """
+        This method init the window size
+        :return:
+        """
         max_win = min(self.max_win_size, len(self.datagrams))
         for i in range(0, max_win):
             self.curr_window[self.datagrams[i][0]] = self.datagrams[i][1]
@@ -57,6 +61,13 @@ class SlidingWindow:
                 self.next_seq_to_send = seq
 
     def handle_ack(self, ack):
+        """
+        This method is the brain behind the window, it checks if an ack response has already been received by the client,
+        or if it was duplicated, timeout occurred, and updates the next packet we expect.
+        it handles each case in its own way.
+        :param ack:
+        :return:
+        """
         self.lock.acquire()
         deleted_from_window = False
         if self.finished or self.next_index >= len(self.datagrams):
@@ -104,6 +115,13 @@ class SlidingWindow:
 
     # Private Method
     def retransmission(self, skipped_ack):
+        """
+        This method is responsible for retransmission of the lost packet in the window.
+        How it works : if a packet was lost or not received, it will resend the window starting with the lost packet
+        to the last received packet.
+        :param skipped_ack:
+        :return:
+        """
         for seq, pkt in self.curr_window.items():
             if self.expected_ack <= seq < skipped_ack and seq not in self.acked:
                 try:

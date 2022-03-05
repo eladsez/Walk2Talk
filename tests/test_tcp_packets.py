@@ -29,19 +29,21 @@ class Test(TestCase):
         check = tcp_packets.msg_packet(sender_name=sender, receiver_name=receiver, msg=msg)
         self.assertEqual(check, '1|shaked|elad|how are you?')
 
-    # def test_display_list(self):
-    #     self.fail()
+    def test_display_list(self):
+        to_disp = ['shaked','ron.txt','elad','bla.jpg']
+        check = tcp_packets.display_list(to_disp)
+        self.assertEqual(check, ' shaked'+' ron.txt'+' elad'+' bla.jpg')
 
     def test_download_request(self):
         file_name = 'elad.txt'
         check = tcp_packets.download_request(file_name)
         self.assertEqual(check,'4|elad.txt')
 
-    # def test_download_details(self):
-    #     self.fail()
-    #
-    # def test_encrypt_packet(self):
-    #     self.fail()
-    #
-    # def test_decrypt_packet(self):
-    #     self.fail()
+    def test_resume_pkt(self):
+        check = tcp_packets.resume_pkt().decode()
+        self.assertEqual(check, "4|RESUME-DOWNLOAD")
+
+    def test_pause_pkt(self):
+        check = tcp_packets.pause_pkt().decode()
+        self.assertEqual(check, "4|PAUSE-DOWNLOAD")
+

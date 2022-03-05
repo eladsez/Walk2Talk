@@ -100,7 +100,7 @@ class CCServer:
         self.sock.close()
         print('file send successfully!')
 
-# if __name__ == '__main__':
-#     server = CCServer()
-#     server.connect(('127.0.0.1', 5550), './files/DSC02199.jpg')
-#     server.send_file()
+if __name__ == '__main__':
+    server = CCServer()
+    server.connect(('127.0.0.1', 5550), './files/DSC02199.jpg')
+    server.send_file()
