@@ -37,11 +37,8 @@ Our algorithm for file transfer over udp with CC -
    we used the idea of duplicate acks and timeouts to check wether we need to increase or decrease the window size given the connection validity. </br>
    our appoarch for flow control is to increase the window size by the power of 2 slowly on case where we got 3 dup acks, we will decrese the window in half, and         lastly if we get a timeout, we will restart from 0.
    
-  <img width="732" alt="state_Diagram v2" src="https://user-images.githubusercontent.com/73894107/156643374-286b21f7-932e-4b7b-a42b-6d86f1b00082.png">
+    <img width="732" alt="state_Diagram v2" src="https://user-images.githubusercontent.com/73894107/156897203-2efd5b61-9a1c-460c-b0cf-8f08e9825133.png">
 
-
-## The Classes
-DEDICATED WIKI FOR THAT.
 
 ## How To use
 To activate the application, there are few steps to be taken before. we will explain in detail below. </br>
