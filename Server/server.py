@@ -1,6 +1,6 @@
 import os
 import threading
-from socket import socket, AF_INET, SOCK_STREAM, error
+from socket import socket, AF_INET, SOCK_STREAM, error, SO_REUSEADDR, SOL_SOCKET
 
 from Server.CC_server import CCServer
 from Utilities import tcp_packets
@@ -23,6 +23,7 @@ class Server:
         self.files = None
         try:
             self.serverSock = socket(AF_INET, SOCK_STREAM)  # socket for Client to connect
+            self.serverSock.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
             self.serverSock.bind(self.addr)
         except error:
             print("ERROR with Server Socket creation or bind")

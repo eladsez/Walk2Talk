@@ -138,7 +138,7 @@ class Client:
         self.c_client = CClient(addr=('0.0.0.0', 5550))
         connect = False
         while not connect:
-            connect = self.c_client.connect(file_name)
+            connect = self.c_client.connect()
         self.c_client.recv_file(file_path)
 
     def pause_download(self):
@@ -148,6 +148,7 @@ class Client:
             except socket.error as e:
                 print(e)
                 print('error with Pause the download')
+        self.c_client.pause = True
 
     def resume_download(self):
         if self.sock:
@@ -156,6 +157,8 @@ class Client:
             except socket.error as e:
                 print(e)
                 print('error with resume the download')
+        self.c_client.pause = False
+        # self.c_client.
 
 
 # if __name__ == '__main__':
