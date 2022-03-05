@@ -1,0 +1,1730 @@
+/home/shaked/Downloads/walk2talk-main/venv/bin/python /home/shaked/Downloads/walk2talk-main/Server/server.py
+Waitnig for clients to connect...
+1 client connected: 127.0.0.1
+('127.0.0.1', 59628) connected
+***** shaked connected *****
+timed out
+server didnt recv syn-ack from the client due timeout
+timed out
+server didnt recv syn-ack from the client due timeout
+timed out
+server didnt recv syn-ack from the client due timeout
+timed out
+server didnt recv syn-ack from the client due timeout
+timed out
+server didnt recv syn-ack from the client due timeout
+reliable udp connection established
+server sending pkt seq: 60033
+server sending pkt seq: 120066
+server didnt recv data ack from the client (timeout)
+server sending pkt seq: 60033
+---------received ack of seq: 60033 - moving the window!------------
+server sending pkt seq: 120066
+server sending pkt seq: 180099
+server sending pkt seq: 240132
+server sending pkt seq: 300165
+length of curr window = 4 , curr max_win_size =  4
+-----------------------------------------------------
+-------expected ack was 120066 but received 180099--------
+odict_keys([120066, 240132, 300165, 360198])
+retransmission pkt seq: 120066
+length of curr window = 4 , curr max_win_size =  4
+-----------------------------------------------------
+---------received ack of seq: 120066 - moving the window!------------
+server sending pkt seq: 360198
+server sending pkt seq: 420231
+server sending pkt seq: 480264
+server sending pkt seq: 540297
+server sending pkt seq: 600330
+length of curr window = 7 , curr max_win_size =  7
+-----------------------------------------------------
+-------expected ack was 240132 but received 360198--------
+odict_keys([240132, 300165, 420231, 480264, 540297, 600330, 660363])
+retransmission pkt seq: 240132
+retransmission pkt seq: 300165
+length of curr window = 7 , curr max_win_size =  7
+-----------------------------------------------------
+-------expected ack was 240132 but received 600330--------
+odict_keys([240132, 300165, 420231, 480264, 540297, 660363, 720396])
+retransmission pkt seq: 240132
+retransmission pkt seq: 300165
+retransmission pkt seq: 420231
+retransmission pkt seq: 480264
+retransmission pkt seq: 540297
+length of curr window = 7 , curr max_win_size =  7
+-----------------------------------------------------
+-------expected ack was 240132 but received 540297--------
+odict_keys([240132, 300165, 420231, 480264, 660363, 720396])
+retransmission pkt seq: 240132
+retransmission pkt seq: 300165
+retransmission pkt seq: 420231
+retransmission pkt seq: 480264
+length of curr window = 6 , curr max_win_size =  6
+-----------------------------------------------------
+-------expected ack was 240132 but received 420231--------
+odict_keys([240132, 300165, 480264, 660363, 720396, 780429])
+retransmission pkt seq: 240132
+retransmission pkt seq: 300165
+length of curr window = 6 , curr max_win_size =  6
+-----------------------------------------------------
+---------received ack of seq: 240132 - moving the window!------------
+server sending pkt seq: 660363
+server sending pkt seq: 720396
+server sending pkt seq: 780429
+server sending pkt seq: 840462
+server sending pkt seq: 900495
+server sending pkt seq: 960528
+server sending pkt seq: 1020561
+length of curr window = 9 , curr max_win_size =  9
+-----------------------------------------------------
+---------received ack of seq: 300165 - moving the window!------------
+server sending pkt seq: 1080594
+server sending pkt seq: 1140627
+server sending pkt seq: 1200660
+server sending pkt seq: 1260693
+length of curr window = 12 , curr max_win_size =  12
+-----------------------------------------------------
+---------received ack of seq: 480264 - moving the window!------------
+server sending pkt seq: 1320726
+server sending pkt seq: 1380759
+server sending pkt seq: 1440792
+server sending pkt seq: 1500825
+length of curr window = 15 , curr max_win_size =  15
+-----------------------------------------------------
+-------expected ack was 660363 but received 840462--------
+odict_keys([660363, 720396, 780429, 900495, 960528, 1020561, 1080594, 1140627, 1200660, 1260693, 1320726, 1380759, 1440792, 1500825, 1560858])
+retransmission pkt seq: 660363
+retransmission pkt seq: 720396
+retransmission pkt seq: 780429
+length of curr window = 15 , curr max_win_size =  15
+-----------------------------------------------------
+---------received ack of seq: 660363 - moving the window!------------
+server sending pkt seq: 1560858
+server sending pkt seq: 1620891
+server sending pkt seq: 1680924
+server sending pkt seq: 1740957
+server sending pkt seq: 1800990
+length of curr window = 18 , curr max_win_size =  18
+-----------------------------------------------------
+-------expected ack was 720396 but received 780429--------
+odict_keys([720396, 900495, 960528, 1020561, 1080594, 1140627, 1200660, 1260693, 1320726, 1380759, 1440792, 1500825, 1560858, 1620891, 1680924, 1740957, 1800990, 1861023])
+retransmission pkt seq: 720396
+length of curr window = 18 , curr max_win_size =  18
+-----------------------------------------------------
+---------received ack of seq: 720396 - moving the window!------------
+server sending pkt seq: 1861023
+server sending pkt seq: 1921056
+server sending pkt seq: 1981089
+server sending pkt seq: 2041122
+server sending pkt seq: 2101155
+length of curr window = 21 , curr max_win_size =  21
+-----------------------------------------------------
+-------expected ack was 900495 but received 1080594--------
+odict_keys([900495, 960528, 1020561, 1140627, 1200660, 1260693, 1320726, 1380759, 1440792, 1500825, 1560858, 1620891, 1680924, 1740957, 1800990, 1861023, 1921056, 1981089, 2041122, 2101155, 2161188])
+retransmission pkt seq: 900495
+retransmission pkt seq: 960528
+retransmission pkt seq: 1020561
+length of curr window = 21 , curr max_win_size =  21
+-----------------------------------------------------
+-------expected ack was 900495 but received 1140627--------
+odict_keys([900495, 960528, 1020561, 1200660, 1260693, 1320726, 1380759, 1440792, 1500825, 1560858, 1620891, 1680924, 1740957, 1800990, 1861023, 1921056, 1981089, 2041122, 2101155, 2161188, 2221221])
+retransmission pkt seq: 900495
+retransmission pkt seq: 960528
+retransmission pkt seq: 1020561
+length of curr window = 21 , curr max_win_size =  21
+-----------------------------------------------------
+-------expected ack was 900495 but received 1200660--------
+odict_keys([900495, 960528, 1020561, 1260693, 1320726, 1380759, 1440792, 1500825, 1560858, 1620891, 1680924, 1740957, 1800990])
+retransmission pkt seq: 900495
+retransmission pkt seq: 960528
+retransmission pkt seq: 1020561
+length of curr window = 13 , curr max_win_size =  13
+-----------------------------------------------------
+-------expected ack was 900495 but received 1260693--------
+odict_keys([900495, 960528, 1020561, 1320726, 1380759, 1440792, 1500825, 1560858, 1620891, 1680924, 1740957, 1800990, 1861023])
+retransmission pkt seq: 900495
+retransmission pkt seq: 960528
+retransmission pkt seq: 1020561
+length of curr window = 13 , curr max_win_size =  13
+-----------------------------------------------------
+-------expected ack was 900495 but received 1380759--------
+odict_keys([900495, 960528, 1020561, 1320726, 1440792, 1500825, 1560858, 1620891, 1680924, 1740957, 1800990, 1861023, 1921056])
+retransmission pkt seq: 900495
+retransmission pkt seq: 960528
+retransmission pkt seq: 1020561
+retransmission pkt seq: 1320726
+length of curr window = 13 , curr max_win_size =  13
+-----------------------------------------------------
+-------expected ack was 900495 but received 1680924--------
+odict_keys([900495, 960528, 1020561, 1320726, 1440792, 1500825, 1560858, 1620891, 1740957])
+retransmission pkt seq: 900495
+retransmission pkt seq: 960528
+retransmission pkt seq: 1020561
+retransmission pkt seq: 1320726
+retransmission pkt seq: 1440792
+retransmission pkt seq: 1500825
+retransmission pkt seq: 1560858
+retransmission pkt seq: 1620891
+length of curr window = 9 , curr max_win_size =  9
+-----------------------------------------------------
+-------expected ack was 900495 but received 1740957--------
+odict_keys([900495, 960528, 1020561, 1320726, 1440792, 1500825, 1560858, 1620891, 1800990])
+retransmission pkt seq: 900495
+retransmission pkt seq: 960528
+retransmission pkt seq: 1020561
+retransmission pkt seq: 1320726
+retransmission pkt seq: 1440792
+retransmission pkt seq: 1500825
+retransmission pkt seq: 1560858
+retransmission pkt seq: 1620891
+length of curr window = 9 , curr max_win_size =  9
+-----------------------------------------------------
+-------expected ack was 900495 but received 1921056--------
+odict_keys([900495, 960528, 1020561, 1320726, 1440792, 1500825, 1560858, 1620891, 1800990])
+retransmission pkt seq: 900495
+retransmission pkt seq: 960528
+retransmission pkt seq: 1020561
+retransmission pkt seq: 1320726
+retransmission pkt seq: 1440792
+retransmission pkt seq: 1500825
+retransmission pkt seq: 1560858
+retransmission pkt seq: 1620891
+retransmission pkt seq: 1800990
+length of curr window = 9 , curr max_win_size =  9
+-----------------------------------------------------
+-------expected ack was 900495 but received 1981089--------
+odict_keys([900495, 960528, 1020561, 1320726, 1440792, 1500825, 1560858])
+retransmission pkt seq: 900495
+retransmission pkt seq: 960528
+retransmission pkt seq: 1020561
+retransmission pkt seq: 1320726
+retransmission pkt seq: 1440792
+retransmission pkt seq: 1500825
+retransmission pkt seq: 1560858
+length of curr window = 7 , curr max_win_size =  7
+-----------------------------------------------------
+-------expected ack was 900495 but received 2041122--------
+odict_keys([900495, 960528, 1020561, 1320726, 1440792, 1500825, 1560858])
+retransmission pkt seq: 900495
+retransmission pkt seq: 960528
+retransmission pkt seq: 1020561
+retransmission pkt seq: 1320726
+retransmission pkt seq: 1440792
+retransmission pkt seq: 1500825
+retransmission pkt seq: 1560858
+length of curr window = 7 , curr max_win_size =  7
+-----------------------------------------------------
+-------expected ack was 900495 but received 960528--------
+odict_keys([900495, 1020561, 1320726, 1440792, 1500825, 1560858, 1740957])
+retransmission pkt seq: 900495
+length of curr window = 7 , curr max_win_size =  7
+-----------------------------------------------------
+-------expected ack was 900495 but received 1020561--------
+odict_keys([900495, 1320726, 1440792, 1500825, 1560858, 1740957])
+retransmission pkt seq: 900495
+length of curr window = 6 , curr max_win_size =  6
+-----------------------------------------------------
+---------received ack of seq: 900495 - moving the window!------------
+length of curr window = 7 , curr max_win_size =  9
+-----------------------------------------------------
+-------expected ack was 1320726 but received 1440792--------
+odict_keys([1320726, 1500825, 1560858, 1740957, 1800990, 1861023, 2041122])
+retransmission pkt seq: 1320726
+length of curr window = 7 , curr max_win_size =  9
+-----------------------------------------------------
+-------expected ack was 1320726 but received 1500825--------
+odict_keys([1320726, 1560858, 1740957, 1800990, 1861023, 2041122, 2101155])
+retransmission pkt seq: 1320726
+length of curr window = 7 , curr max_win_size =  9
+-----------------------------------------------------
+---------received ack of seq: 1320726 - moving the window!------------
+server sending pkt seq: 2161188
+server sending pkt seq: 2221221
+server sending pkt seq: 2281254
+server sending pkt seq: 2341287
+server sending pkt seq: 2401320
+server sending pkt seq: 2461353
+length of curr window = 12 , curr max_win_size =  12
+-----------------------------------------------------
+---------received ack of seq: 1560858 - moving the window!------------
+server sending pkt seq: 2521386
+server sending pkt seq: 2581419
+server sending pkt seq: 2641452
+server sending pkt seq: 2701485
+length of curr window = 15 , curr max_win_size =  15
+-----------------------------------------------------
+-------expected ack was 1740957 but received 1620891--------
+odict_keys([1740957, 1800990, 1861023, 2041122, 2101155, 2161188, 2221221, 2281254, 2341287, 2401320, 2461353, 2521386, 2581419, 2641452, 2701485])
+length of curr window = 15 , curr max_win_size =  15
+-----------------------------------------------------
+-------expected ack was 1740957 but received 1800990--------
+odict_keys([1740957, 1861023, 2041122, 2101155, 2161188, 2221221, 2281254, 2341287, 2401320, 2461353, 2521386, 2581419, 2641452, 2701485, 2761518])
+length of curr window = 15 , curr max_win_size =  15
+-----------------------------------------------------
+-------expected ack was 1740957 but received 2161188--------
+odict_keys([1740957, 1861023, 2041122, 2101155, 2221221, 2281254, 2341287, 2401320, 2461353, 2521386])
+retransmission pkt seq: 1861023
+retransmission pkt seq: 2101155
+length of curr window = 10 , curr max_win_size =  10
+-----------------------------------------------------
+-------expected ack was 1740957 but received 2521386--------
+odict_keys([1740957, 1861023, 2041122, 2101155, 2221221, 2281254, 2341287, 2401320, 2461353, 2581419])
+retransmission pkt seq: 1861023
+retransmission pkt seq: 2101155
+retransmission pkt seq: 2221221
+retransmission pkt seq: 2281254
+retransmission pkt seq: 2341287
+retransmission pkt seq: 2401320
+retransmission pkt seq: 2461353
+length of curr window = 10 , curr max_win_size =  10
+-----------------------------------------------------
+-------expected ack was 1740957 but received 2581419--------
+odict_keys([1740957, 1861023, 2041122, 2101155, 2221221, 2281254, 2341287, 2401320, 2461353, 2641452])
+retransmission pkt seq: 1861023
+retransmission pkt seq: 2101155
+retransmission pkt seq: 2221221
+retransmission pkt seq: 2281254
+retransmission pkt seq: 2341287
+retransmission pkt seq: 2401320
+retransmission pkt seq: 2461353
+length of curr window = 10 , curr max_win_size =  10
+-----------------------------------------------------
+-------expected ack was 1740957 but received 1861023--------
+odict_keys([1740957, 2041122, 2101155, 2221221, 2281254, 2341287, 2401320, 2461353])
+length of curr window = 8 , curr max_win_size =  8
+-----------------------------------------------------
+-------expected ack was 1740957 but received 2221221--------
+odict_keys([1740957, 2041122, 2101155, 2281254, 2341287, 2401320, 2461353, 2641452])
+retransmission pkt seq: 2101155
+length of curr window = 8 , curr max_win_size =  8
+-----------------------------------------------------
+-------expected ack was 1740957 but received 2341287--------
+odict_keys([1740957, 2041122, 2101155, 2281254, 2401320, 2461353, 2641452, 2701485])
+retransmission pkt seq: 2101155
+retransmission pkt seq: 2281254
+length of curr window = 8 , curr max_win_size =  8
+-----------------------------------------------------
+-------expected ack was 1740957 but received 2401320--------
+odict_keys([1740957, 2041122, 2101155, 2281254, 2461353, 2641452, 2701485])
+retransmission pkt seq: 2101155
+retransmission pkt seq: 2281254
+length of curr window = 7 , curr max_win_size =  7
+-----------------------------------------------------
+-------expected ack was 1740957 but received 2101155--------
+odict_keys([1740957, 2041122, 2281254, 2461353, 2641452, 2701485, 2761518])
+length of curr window = 7 , curr max_win_size =  7
+-----------------------------------------------------
+-------expected ack was 1740957 but received 2281254--------
+odict_keys([1740957, 2041122, 2461353, 2641452, 2701485, 2761518, 2821551])
+length of curr window = 7 , curr max_win_size =  7
+-----------------------------------------------------
+-------expected ack was 1740957 but received 2461353--------
+odict_keys([1740957, 2041122, 2641452, 2701485, 2761518, 2821551])
+length of curr window = 6 , curr max_win_size =  6
+-----------------------------------------------------
+server didnt recv data ack from the client (timeout)
+server sending pkt seq: 1740957
+---------received ack of seq: 1740957 - moving the window!------------
+server sending pkt seq: 2641452
+length of curr window = 1 , curr max_win_size =  2
+-----------------------------------------------------
+server didnt recv data ack from the client (timeout)
+server sending pkt seq: 2641452
+---------received ack of seq: 2641452 - moving the window!------------
+server sending pkt seq: 2701485
+server sending pkt seq: 2761518
+server sending pkt seq: 2821551
+server sending pkt seq: 2881584
+length of curr window = 4 , curr max_win_size =  4
+-----------------------------------------------------
+-------expected ack was 2701485 but received 2821551--------
+odict_keys([2701485, 2761518, 2881584, 2941617])
+retransmission pkt seq: 2701485
+retransmission pkt seq: 2761518
+length of curr window = 4 , curr max_win_size =  4
+-----------------------------------------------------
+-------expected ack was 2701485 but received 2881584--------
+odict_keys([2701485, 2761518, 2941617, 3001650])
+retransmission pkt seq: 2701485
+retransmission pkt seq: 2761518
+length of curr window = 4 , curr max_win_size =  4
+-----------------------------------------------------
+---------received ack of seq: 2701485 - moving the window!------------
+server sending pkt seq: 2941617
+server sending pkt seq: 3001650
+server sending pkt seq: 3061683
+server sending pkt seq: 3121716
+server sending pkt seq: 3181749
+server sending pkt seq: 3241782
+length of curr window = 7 , curr max_win_size =  7
+-----------------------------------------------------
+-------expected ack was 2761518 but received 2941617--------
+odict_keys([2761518, 3001650, 3061683, 3121716, 3181749, 3241782, 3301815])
+retransmission pkt seq: 2761518
+length of curr window = 7 , curr max_win_size =  7
+-----------------------------------------------------
+-------expected ack was 2761518 but received 3001650--------
+odict_keys([2761518, 3061683, 3121716, 3181749, 3241782, 3301815, 3361848])
+retransmission pkt seq: 2761518
+length of curr window = 7 , curr max_win_size =  7
+-----------------------------------------------------
+---------received ack of seq: 2761518 - moving the window!------------
+server sending pkt seq: 3301815
+server sending pkt seq: 3361848
+server sending pkt seq: 3421881
+server sending pkt seq: 3481914
+server sending pkt seq: 3541947
+server sending pkt seq: 3601980
+length of curr window = 10 , curr max_win_size =  10
+-----------------------------------------------------
+---------received ack of seq: 3061683 - moving the window!------------
+server sending pkt seq: 3662013
+server sending pkt seq: 3722046
+server sending pkt seq: 3782079
+server sending pkt seq: 3842112
+length of curr window = 13 , curr max_win_size =  13
+-----------------------------------------------------
+---------received ack of seq: 3121716 - moving the window!------------
+server sending pkt seq: 3902145
+server sending pkt seq: 3962178
+server sending pkt seq: 4022211
+server sending pkt seq: 4082244
+length of curr window = 16 , curr max_win_size =  16
+-----------------------------------------------------
+-------expected ack was 3181749 but received 3541947--------
+odict_keys([3181749, 3241782, 3301815, 3361848, 3421881, 3481914, 3601980, 3662013, 3722046, 3782079, 3842112, 3902145, 3962178, 4022211, 4082244, 4142277])
+retransmission pkt seq: 3181749
+retransmission pkt seq: 3241782
+retransmission pkt seq: 3301815
+retransmission pkt seq: 3361848
+retransmission pkt seq: 3421881
+retransmission pkt seq: 3481914
+length of curr window = 16 , curr max_win_size =  16
+-----------------------------------------------------
+-------expected ack was 3181749 but received 3241782--------
+odict_keys([3181749, 3301815, 3361848, 3421881, 3481914, 3601980, 3662013, 3722046, 3782079, 3842112, 3902145, 3962178, 4022211, 4082244, 4142277, 4202310])
+retransmission pkt seq: 3181749
+length of curr window = 16 , curr max_win_size =  16
+-----------------------------------------------------
+-------expected ack was 3181749 but received 3842112--------
+odict_keys([3181749, 3301815, 3361848, 3421881, 3481914, 3601980, 3662013, 3722046, 3782079, 3902145, 3962178])
+retransmission pkt seq: 3181749
+retransmission pkt seq: 3301815
+retransmission pkt seq: 3361848
+retransmission pkt seq: 3421881
+retransmission pkt seq: 3481914
+retransmission pkt seq: 3601980
+retransmission pkt seq: 3662013
+retransmission pkt seq: 3722046
+retransmission pkt seq: 3782079
+length of curr window = 11 , curr max_win_size =  11
+-----------------------------------------------------
+-------expected ack was 3181749 but received 3481914--------
+odict_keys([3181749, 3301815, 3361848, 3421881, 3601980, 3662013, 3722046, 3782079, 3902145, 3962178, 4022211])
+retransmission pkt seq: 3181749
+retransmission pkt seq: 3301815
+retransmission pkt seq: 3361848
+retransmission pkt seq: 3421881
+length of curr window = 11 , curr max_win_size =  11
+-----------------------------------------------------
+-------expected ack was 3181749 but received 3601980--------
+odict_keys([3181749, 3301815, 3361848, 3421881, 3662013, 3722046, 3782079, 3902145, 3962178, 4022211, 4082244])
+retransmission pkt seq: 3181749
+retransmission pkt seq: 3301815
+retransmission pkt seq: 3361848
+retransmission pkt seq: 3421881
+length of curr window = 11 , curr max_win_size =  11
+-----------------------------------------------------
+-------expected ack was 3181749 but received 3722046--------
+odict_keys([3181749, 3301815, 3361848, 3421881, 3662013, 3782079, 3902145, 3962178])
+retransmission pkt seq: 3181749
+retransmission pkt seq: 3301815
+retransmission pkt seq: 3361848
+retransmission pkt seq: 3421881
+retransmission pkt seq: 3662013
+length of curr window = 8 , curr max_win_size =  8
+-----------------------------------------------------
+-------expected ack was 3181749 but received 3902145--------
+odict_keys([3181749, 3301815, 3361848, 3421881, 3662013, 3782079, 3962178, 4022211])
+retransmission pkt seq: 3181749
+retransmission pkt seq: 3301815
+retransmission pkt seq: 3361848
+retransmission pkt seq: 3421881
+retransmission pkt seq: 3662013
+retransmission pkt seq: 3782079
+length of curr window = 8 , curr max_win_size =  8
+-----------------------------------------------------
+-------expected ack was 3181749 but received 3962178--------
+odict_keys([3181749, 3301815, 3361848, 3421881, 3662013, 3782079, 4022211, 4082244])
+retransmission pkt seq: 3181749
+retransmission pkt seq: 3301815
+retransmission pkt seq: 3361848
+retransmission pkt seq: 3421881
+retransmission pkt seq: 3662013
+retransmission pkt seq: 3782079
+length of curr window = 8 , curr max_win_size =  8
+-----------------------------------------------------
+-------expected ack was 3181749 but received 4082244--------
+odict_keys([3181749, 3301815, 3361848, 3421881, 3662013, 3782079, 4022211])
+retransmission pkt seq: 3181749
+retransmission pkt seq: 3301815
+retransmission pkt seq: 3361848
+retransmission pkt seq: 3421881
+retransmission pkt seq: 3662013
+retransmission pkt seq: 3782079
+retransmission pkt seq: 4022211
+length of curr window = 7 , curr max_win_size =  7
+-----------------------------------------------------
+---------received ack of seq: 3181749 - moving the window!------------
+server sending pkt seq: 4142277
+server sending pkt seq: 4202310
+server sending pkt seq: 4262343
+server sending pkt seq: 4322376
+length of curr window = 10 , curr max_win_size =  10
+-----------------------------------------------------
+-------expected ack was 3301815 but received 3662013--------
+odict_keys([3301815, 3361848, 3421881, 3782079, 4022211, 4142277, 4202310, 4262343, 4322376, 4382409])
+retransmission pkt seq: 3301815
+retransmission pkt seq: 3361848
+retransmission pkt seq: 3421881
+length of curr window = 10 , curr max_win_size =  10
+-----------------------------------------------------
+---------received ack of seq: 3301815 - moving the window!------------
+server sending pkt seq: 4382409
+server sending pkt seq: 4442442
+server sending pkt seq: 4502475
+server sending pkt seq: 4562508
+server sending pkt seq: 4622541
+length of curr window = 13 , curr max_win_size =  13
+-----------------------------------------------------
+---------received ack of seq: 3361848 - moving the window!------------
+server sending pkt seq: 4682574
+server sending pkt seq: 4742607
+server sending pkt seq: 4802640
+server sending pkt seq: 4862673
+length of curr window = 16 , curr max_win_size =  16
+-----------------------------------------------------
+---------received ack of seq: 3421881 - moving the window!------------
+server sending pkt seq: 4922706
+server sending pkt seq: 4982739
+server sending pkt seq: 5042772
+server sending pkt seq: 5102805
+length of curr window = 19 , curr max_win_size =  19
+-----------------------------------------------------
+---------received ack of seq: 3782079 - moving the window!------------
+server sending pkt seq: 5162838
+server sending pkt seq: 5222871
+server sending pkt seq: 5282904
+server sending pkt seq: 5342937
+length of curr window = 22 , curr max_win_size =  22
+-----------------------------------------------------
+---------received ack of seq: 4022211 - moving the window!------------
+server sending pkt seq: 5402970
+server sending pkt seq: 5463003
+server sending pkt seq: 5523036
+server sending pkt seq: 5583069
+length of curr window = 25 , curr max_win_size =  25
+-----------------------------------------------------
+---------received ack of seq: 4142277 - moving the window!------------
+server sending pkt seq: 5643102
+server sending pkt seq: 5703135
+server sending pkt seq: 5763168
+server sending pkt seq: 5823201
+length of curr window = 28 , curr max_win_size =  28
+-----------------------------------------------------
+-------expected ack was 4202310 but received 4262343--------
+odict_keys([4202310, 4322376, 4382409, 4442442, 4502475, 4562508, 4622541, 4682574, 4742607, 4802640, 4862673, 4922706, 4982739, 5042772, 5102805, 5162838, 5222871, 5282904, 5342937, 5402970, 5463003, 5523036, 5583069, 5643102, 5703135, 5763168, 5823201, 5883234])
+retransmission pkt seq: 4202310
+length of curr window = 28 , curr max_win_size =  28
+-----------------------------------------------------
+-------expected ack was 4202310 but received 4322376--------
+odict_keys([4202310, 4382409, 4442442, 4502475, 4562508, 4622541, 4682574, 4742607, 4802640, 4862673, 4922706, 4982739, 5042772, 5102805, 5162838, 5222871, 5282904, 5342937, 5402970, 5463003, 5523036, 5583069, 5643102, 5703135, 5763168, 5823201, 5883234, 5943267])
+retransmission pkt seq: 4202310
+length of curr window = 28 , curr max_win_size =  28
+-----------------------------------------------------
+-------expected ack was 4202310 but received 4382409--------
+odict_keys([4202310, 4442442, 4502475, 4562508, 4622541, 4682574, 4742607, 4802640, 4862673, 4922706, 4982739, 5042772, 5102805, 5162838, 5222871, 5282904, 5342937])
+retransmission pkt seq: 4202310
+length of curr window = 17 , curr max_win_size =  17
+-----------------------------------------------------
+-------expected ack was 4202310 but received 4562508--------
+odict_keys([4202310, 4442442, 4502475, 4622541, 4682574, 4742607, 4802640, 4862673, 4922706, 4982739, 5042772, 5102805, 5162838, 5222871, 5282904, 5342937, 5402970])
+retransmission pkt seq: 4202310
+retransmission pkt seq: 4442442
+retransmission pkt seq: 4502475
+length of curr window = 17 , curr max_win_size =  17
+-----------------------------------------------------
+-------expected ack was 4202310 but received 4622541--------
+odict_keys([4202310, 4442442, 4502475, 4682574, 4742607, 4802640, 4862673, 4922706, 4982739, 5042772, 5102805, 5162838, 5222871, 5282904, 5342937, 5402970, 5463003])
+retransmission pkt seq: 4202310
+retransmission pkt seq: 4442442
+retransmission pkt seq: 4502475
+length of curr window = 17 , curr max_win_size =  17
+-----------------------------------------------------
+-------expected ack was 4202310 but received 4682574--------
+odict_keys([4202310, 4442442, 4502475, 4742607, 4802640, 4862673, 4922706, 4982739, 5042772, 5102805, 5162838])
+retransmission pkt seq: 4202310
+retransmission pkt seq: 4442442
+retransmission pkt seq: 4502475
+length of curr window = 11 , curr max_win_size =  11
+-----------------------------------------------------
+-------expected ack was 4202310 but received 4742607--------
+odict_keys([4202310, 4442442, 4502475, 4802640, 4862673, 4922706, 4982739, 5042772, 5102805, 5162838, 5222871])
+retransmission pkt seq: 4202310
+retransmission pkt seq: 4442442
+retransmission pkt seq: 4502475
+length of curr window = 11 , curr max_win_size =  11
+-----------------------------------------------------
+-------expected ack was 4202310 but received 4922706--------
+odict_keys([4202310, 4442442, 4502475, 4802640, 4862673, 4982739, 5042772, 5102805, 5162838, 5222871, 5282904])
+retransmission pkt seq: 4202310
+retransmission pkt seq: 4442442
+retransmission pkt seq: 4502475
+retransmission pkt seq: 4802640
+retransmission pkt seq: 4862673
+length of curr window = 11 , curr max_win_size =  11
+-----------------------------------------------------
+-------expected ack was 4202310 but received 5042772--------
+odict_keys([4202310, 4442442, 4502475, 4802640, 4862673, 4982739, 5102805, 5162838])
+retransmission pkt seq: 4202310
+retransmission pkt seq: 4442442
+retransmission pkt seq: 4502475
+retransmission pkt seq: 4802640
+retransmission pkt seq: 4862673
+retransmission pkt seq: 4982739
+length of curr window = 8 , curr max_win_size =  8
+-----------------------------------------------------
+-------expected ack was 4202310 but received 5102805--------
+odict_keys([4202310, 4442442, 4502475, 4802640, 4862673, 4982739, 5162838, 5222871])
+retransmission pkt seq: 4202310
+retransmission pkt seq: 4442442
+retransmission pkt seq: 4502475
+retransmission pkt seq: 4802640
+retransmission pkt seq: 4862673
+retransmission pkt seq: 4982739
+length of curr window = 8 , curr max_win_size =  8
+-----------------------------------------------------
+-------expected ack was 4202310 but received 5162838--------
+odict_keys([4202310, 4442442, 4502475, 4802640, 4862673, 4982739, 5222871, 5282904])
+retransmission pkt seq: 4202310
+retransmission pkt seq: 4442442
+retransmission pkt seq: 4502475
+retransmission pkt seq: 4802640
+retransmission pkt seq: 4862673
+retransmission pkt seq: 4982739
+length of curr window = 8 , curr max_win_size =  8
+-----------------------------------------------------
+-------expected ack was 4202310 but received 5282904--------
+odict_keys([4202310, 4442442, 4502475, 4802640, 4862673, 4982739, 5222871])
+retransmission pkt seq: 4202310
+retransmission pkt seq: 4442442
+retransmission pkt seq: 4502475
+retransmission pkt seq: 4802640
+retransmission pkt seq: 4862673
+retransmission pkt seq: 4982739
+retransmission pkt seq: 5222871
+length of curr window = 7 , curr max_win_size =  7
+-----------------------------------------------------
+-------expected ack was 4202310 but received 5463003--------
+odict_keys([4202310, 4442442, 4502475, 4802640, 4862673, 4982739, 5222871])
+retransmission pkt seq: 4202310
+retransmission pkt seq: 4442442
+retransmission pkt seq: 4502475
+retransmission pkt seq: 4802640
+retransmission pkt seq: 4862673
+retransmission pkt seq: 4982739
+retransmission pkt seq: 5222871
+length of curr window = 7 , curr max_win_size =  7
+-----------------------------------------------------
+---------received ack of seq: 4202310 - moving the window!------------
+length of curr window = 9 , curr max_win_size =  10
+-----------------------------------------------------
+-------expected ack was 4442442 but received 5823201--------
+odict_keys([4442442, 4502475, 4802640, 4862673, 4982739, 5222871, 5342937, 5402970, 5523036])
+retransmission pkt seq: 4442442
+retransmission pkt seq: 4502475
+retransmission pkt seq: 4802640
+retransmission pkt seq: 4862673
+retransmission pkt seq: 4982739
+retransmission pkt seq: 5222871
+retransmission pkt seq: 5342937
+retransmission pkt seq: 5402970
+retransmission pkt seq: 5523036
+length of curr window = 9 , curr max_win_size =  10
+-----------------------------------------------------
+---------received ack of seq: 4442442 - moving the window!------------
+length of curr window = 12 , curr max_win_size =  13
+-----------------------------------------------------
+---------received ack of seq: 4502475 - moving the window!------------
+server sending pkt seq: 5883234
+server sending pkt seq: 5943267
+server sending pkt seq: 6003300
+server sending pkt seq: 6063333
+server sending pkt seq: 6123366
+length of curr window = 16 , curr max_win_size =  16
+-----------------------------------------------------
+-------expected ack was 4802640 but received 4862673--------
+odict_keys([4802640, 4982739, 5222871, 5342937, 5402970, 5523036, 5583069, 5643102, 5703135, 5763168, 5883234, 5943267, 6003300, 6063333, 6123366, 6183399])
+retransmission pkt seq: 4802640
+length of curr window = 16 , curr max_win_size =  16
+-----------------------------------------------------
+---------received ack of seq: 4802640 - moving the window!------------
+server sending pkt seq: 6183399
+server sending pkt seq: 6243432
+server sending pkt seq: 6303465
+server sending pkt seq: 6363498
+server sending pkt seq: 6423531
+length of curr window = 19 , curr max_win_size =  19
+-----------------------------------------------------
+---------received ack of seq: 4982739 - moving the window!------------
+server sending pkt seq: 6483564
+server sending pkt seq: 6543597
+server sending pkt seq: 6603630
+server sending pkt seq: 6663663
+length of curr window = 22 , curr max_win_size =  22
+-----------------------------------------------------
+---------received ack of seq: 5222871 - moving the window!------------
+server sending pkt seq: 6723696
+server sending pkt seq: 6783729
+server sending pkt seq: 6843762
+server sending pkt seq: 6903795
+length of curr window = 25 , curr max_win_size =  25
+-----------------------------------------------------
+-------expected ack was 5342937 but received 5402970--------
+odict_keys([5342937, 5523036, 5583069, 5643102, 5703135, 5763168, 5883234, 5943267, 6003300, 6063333, 6123366, 6183399, 6243432, 6303465, 6363498, 6423531, 6483564, 6543597, 6603630, 6663663, 6723696, 6783729, 6843762, 6903795, 6963828])
+retransmission pkt seq: 5342937
+length of curr window = 25 , curr max_win_size =  25
+-----------------------------------------------------
+-------expected ack was 5342937 but received 5523036--------
+odict_keys([5342937, 5583069, 5643102, 5703135, 5763168, 5883234, 5943267, 6003300, 6063333, 6123366, 6183399, 6243432, 6303465, 6363498, 6423531, 6483564, 6543597, 6603630, 6663663, 6723696, 6783729, 6843762, 6903795, 6963828, 7023861])
+retransmission pkt seq: 5342937
+length of curr window = 25 , curr max_win_size =  25
+-----------------------------------------------------
+-------expected ack was 5342937 but received 5883234--------
+odict_keys([5342937, 5583069, 5643102, 5703135, 5763168, 5943267, 6003300, 6063333, 6123366, 6183399, 6243432, 6303465, 6363498, 6423531, 6483564])
+retransmission pkt seq: 5342937
+retransmission pkt seq: 5583069
+retransmission pkt seq: 5643102
+retransmission pkt seq: 5703135
+retransmission pkt seq: 5763168
+length of curr window = 15 , curr max_win_size =  15
+-----------------------------------------------------
+-------expected ack was 5342937 but received 6063333--------
+odict_keys([5342937, 5583069, 5643102, 5703135, 5763168, 5943267, 6003300, 6123366, 6183399, 6243432, 6303465, 6363498, 6423531, 6483564, 6543597])
+retransmission pkt seq: 5342937
+retransmission pkt seq: 5583069
+retransmission pkt seq: 5643102
+retransmission pkt seq: 5703135
+retransmission pkt seq: 5763168
+retransmission pkt seq: 5943267
+retransmission pkt seq: 6003300
+length of curr window = 15 , curr max_win_size =  15
+-----------------------------------------------------
+-------expected ack was 5342937 but received 6123366--------
+odict_keys([5342937, 5583069, 5643102, 5703135, 5763168, 5943267, 6003300, 6183399, 6243432, 6303465, 6363498, 6423531, 6483564, 6543597, 6603630])
+retransmission pkt seq: 5342937
+retransmission pkt seq: 5583069
+retransmission pkt seq: 5643102
+retransmission pkt seq: 5703135
+retransmission pkt seq: 5763168
+retransmission pkt seq: 5943267
+retransmission pkt seq: 6003300
+length of curr window = 15 , curr max_win_size =  15
+-----------------------------------------------------
+-------expected ack was 5342937 but received 6363498--------
+odict_keys([5342937, 5583069, 5643102, 5703135, 5763168, 5943267, 6003300, 6183399, 6243432, 6303465])
+retransmission pkt seq: 5342937
+retransmission pkt seq: 5583069
+retransmission pkt seq: 5643102
+retransmission pkt seq: 5703135
+retransmission pkt seq: 5763168
+retransmission pkt seq: 5943267
+retransmission pkt seq: 6003300
+retransmission pkt seq: 6183399
+retransmission pkt seq: 6243432
+retransmission pkt seq: 6303465
+length of curr window = 10 , curr max_win_size =  10
+-----------------------------------------------------
+-------expected ack was 5342937 but received 6543597--------
+odict_keys([5342937, 5583069, 5643102, 5703135, 5763168, 5943267, 6003300, 6183399, 6243432, 6303465])
+retransmission pkt seq: 5342937
+retransmission pkt seq: 5583069
+retransmission pkt seq: 5643102
+retransmission pkt seq: 5703135
+retransmission pkt seq: 5763168
+retransmission pkt seq: 5943267
+retransmission pkt seq: 6003300
+retransmission pkt seq: 6183399
+retransmission pkt seq: 6243432
+retransmission pkt seq: 6303465
+length of curr window = 10 , curr max_win_size =  10
+-----------------------------------------------------
+-------expected ack was 5342937 but received 5943267--------
+odict_keys([5342937, 5583069, 5643102, 5703135, 5763168, 6003300, 6183399, 6243432, 6303465, 6423531])
+retransmission pkt seq: 5342937
+retransmission pkt seq: 5583069
+retransmission pkt seq: 5643102
+retransmission pkt seq: 5703135
+retransmission pkt seq: 5763168
+length of curr window = 10 , curr max_win_size =  10
+-----------------------------------------------------
+-------expected ack was 5342937 but received 6423531--------
+odict_keys([5342937, 5583069, 5643102, 5703135, 5763168, 6003300, 6183399, 6243432])
+retransmission pkt seq: 5342937
+retransmission pkt seq: 5583069
+retransmission pkt seq: 5643102
+retransmission pkt seq: 5703135
+retransmission pkt seq: 5763168
+retransmission pkt seq: 6003300
+retransmission pkt seq: 6183399
+retransmission pkt seq: 6243432
+length of curr window = 8 , curr max_win_size =  8
+-----------------------------------------------------
+---------received ack of seq: 5342937 - moving the window!------------
+length of curr window = 9 , curr max_win_size =  11
+-----------------------------------------------------
+-------expected ack was 5583069 but received 6183399--------
+odict_keys([5583069, 5643102, 5703135, 5763168, 6003300, 6243432, 6483564, 6603630, 6663663])
+retransmission pkt seq: 5583069
+retransmission pkt seq: 5643102
+retransmission pkt seq: 5703135
+retransmission pkt seq: 5763168
+retransmission pkt seq: 6003300
+length of curr window = 9 , curr max_win_size =  11
+-----------------------------------------------------
+-------expected ack was 5583069 but received 6603630--------
+odict_keys([5583069, 5643102, 5703135, 5763168, 6003300, 6243432, 6483564, 6663663, 6723696])
+retransmission pkt seq: 5583069
+retransmission pkt seq: 5643102
+retransmission pkt seq: 5703135
+retransmission pkt seq: 5763168
+retransmission pkt seq: 6003300
+retransmission pkt seq: 6243432
+retransmission pkt seq: 6483564
+length of curr window = 9 , curr max_win_size =  11
+-----------------------------------------------------
+-------expected ack was 5583069 but received 6783729--------
+odict_keys([5583069, 5643102, 5703135, 5763168, 6003300, 6243432, 6483564, 6663663])
+retransmission pkt seq: 5583069
+retransmission pkt seq: 5643102
+retransmission pkt seq: 5703135
+retransmission pkt seq: 5763168
+retransmission pkt seq: 6003300
+retransmission pkt seq: 6243432
+retransmission pkt seq: 6483564
+retransmission pkt seq: 6663663
+length of curr window = 8 , curr max_win_size =  8
+-----------------------------------------------------
+-------expected ack was 5583069 but received 6843762--------
+odict_keys([5583069, 5643102, 5703135, 5763168, 6003300, 6243432, 6483564, 6663663])
+retransmission pkt seq: 5583069
+retransmission pkt seq: 5643102
+retransmission pkt seq: 5703135
+retransmission pkt seq: 5763168
+retransmission pkt seq: 6003300
+retransmission pkt seq: 6243432
+retransmission pkt seq: 6483564
+retransmission pkt seq: 6663663
+length of curr window = 8 , curr max_win_size =  8
+-----------------------------------------------------
+-------expected ack was 5583069 but received 6903795--------
+odict_keys([5583069, 5643102, 5703135, 5763168, 6003300, 6243432, 6483564, 6663663])
+retransmission pkt seq: 5583069
+retransmission pkt seq: 5643102
+retransmission pkt seq: 5703135
+retransmission pkt seq: 5763168
+retransmission pkt seq: 6003300
+retransmission pkt seq: 6243432
+retransmission pkt seq: 6483564
+retransmission pkt seq: 6663663
+length of curr window = 8 , curr max_win_size =  8
+-----------------------------------------------------
+---------received ack of seq: 5583069 - moving the window!------------
+length of curr window = 8 , curr max_win_size =  11
+-----------------------------------------------------
+-------expected ack was 5643102 but received 5703135--------
+odict_keys([5643102, 5763168, 6003300, 6243432, 6483564, 6663663, 6723696, 6963828])
+retransmission pkt seq: 5643102
+length of curr window = 8 , curr max_win_size =  11
+-----------------------------------------------------
+-------expected ack was 5643102 but received 5763168--------
+odict_keys([5643102, 6003300, 6243432, 6483564, 6663663, 6723696, 6963828, 7023861])
+retransmission pkt seq: 5643102
+length of curr window = 8 , curr max_win_size =  11
+-----------------------------------------------------
+-------expected ack was 5643102 but received 6483564--------
+odict_keys([5643102, 6003300, 6243432, 6663663, 6723696, 6963828, 7023861, 7083894])
+retransmission pkt seq: 5643102
+retransmission pkt seq: 6003300
+retransmission pkt seq: 6243432
+length of curr window = 8 , curr max_win_size =  8
+-----------------------------------------------------
+---------received ack of seq: 5643102 - moving the window!------------
+server sending pkt seq: 6963828
+server sending pkt seq: 7023861
+server sending pkt seq: 7083894
+server sending pkt seq: 7143927
+server sending pkt seq: 7203960
+server sending pkt seq: 7263993
+server sending pkt seq: 7324026
+length of curr window = 11 , curr max_win_size =  11
+-----------------------------------------------------
+---------received ack of seq: 6003300 - moving the window!------------
+server sending pkt seq: 7384059
+server sending pkt seq: 7444092
+server sending pkt seq: 7504125
+server sending pkt seq: 7564158
+length of curr window = 14 , curr max_win_size =  14
+-----------------------------------------------------
+-------expected ack was 6243432 but received 6303465--------
+odict_keys([6243432, 6663663, 6723696, 6963828, 7023861, 7083894, 7143927, 7203960, 7263993, 7324026, 7384059, 7444092, 7504125, 7564158])
+retransmission pkt seq: 6243432
+length of curr window = 14 , curr max_win_size =  14
+-----------------------------------------------------
+---------received ack of seq: 6243432 - moving the window!------------
+server sending pkt seq: 7624191
+server sending pkt seq: 7684224
+server sending pkt seq: 7744257
+server sending pkt seq: 7804290
+length of curr window = 17 , curr max_win_size =  17
+-----------------------------------------------------
+---------received ack of seq: 6663663 - moving the window!------------
+server sending pkt seq: 7864323
+server sending pkt seq: 7924356
+server sending pkt seq: 7984389
+server sending pkt seq: 8044422
+length of curr window = 20 , curr max_win_size =  20
+-----------------------------------------------------
+-------expected ack was 6723696 but received 6963828--------
+odict_keys([6723696, 7023861, 7083894, 7143927, 7203960, 7263993, 7324026, 7384059, 7444092, 7504125, 7564158, 7624191, 7684224, 7744257, 7804290, 7864323, 7924356, 7984389, 8044422, 8104455])
+retransmission pkt seq: 6723696
+length of curr window = 20 , curr max_win_size =  20
+-----------------------------------------------------
+-------expected ack was 6723696 but received 7203960--------
+odict_keys([6723696, 7023861, 7083894, 7143927, 7263993, 7324026, 7384059, 7444092, 7504125, 7564158, 7624191, 7684224, 7744257, 7804290, 7864323, 7924356, 7984389, 8044422, 8104455, 8164488])
+retransmission pkt seq: 6723696
+retransmission pkt seq: 7023861
+retransmission pkt seq: 7083894
+retransmission pkt seq: 7143927
+length of curr window = 20 , curr max_win_size =  20
+-----------------------------------------------------
+-------expected ack was 6723696 but received 7504125--------
+odict_keys([6723696, 7023861, 7083894, 7143927, 7263993, 7324026, 7384059, 7444092, 7564158, 7624191, 7684224, 7744257, 7804290])
+retransmission pkt seq: 6723696
+retransmission pkt seq: 7023861
+retransmission pkt seq: 7083894
+retransmission pkt seq: 7143927
+retransmission pkt seq: 7263993
+retransmission pkt seq: 7324026
+retransmission pkt seq: 7384059
+retransmission pkt seq: 7444092
+length of curr window = 13 , curr max_win_size =  13
+-----------------------------------------------------
+-------expected ack was 6723696 but received 7624191--------
+odict_keys([6723696, 7023861, 7083894, 7143927, 7263993, 7324026, 7384059, 7444092, 7564158, 7684224, 7744257, 7804290, 7864323])
+retransmission pkt seq: 6723696
+retransmission pkt seq: 7023861
+retransmission pkt seq: 7083894
+retransmission pkt seq: 7143927
+retransmission pkt seq: 7263993
+retransmission pkt seq: 7324026
+retransmission pkt seq: 7384059
+retransmission pkt seq: 7444092
+retransmission pkt seq: 7564158
+length of curr window = 13 , curr max_win_size =  13
+-----------------------------------------------------
+-------expected ack was 6723696 but received 7804290--------
+odict_keys([6723696, 7023861, 7083894, 7143927, 7263993, 7324026, 7384059, 7444092, 7564158, 7684224, 7744257, 7864323, 7924356])
+retransmission pkt seq: 6723696
+retransmission pkt seq: 7023861
+retransmission pkt seq: 7083894
+retransmission pkt seq: 7143927
+retransmission pkt seq: 7263993
+retransmission pkt seq: 7324026
+retransmission pkt seq: 7384059
+retransmission pkt seq: 7444092
+retransmission pkt seq: 7564158
+retransmission pkt seq: 7684224
+retransmission pkt seq: 7744257
+length of curr window = 13 , curr max_win_size =  13
+-----------------------------------------------------
+-------expected ack was 6723696 but received 7744257--------
+odict_keys([6723696, 7023861, 7083894, 7143927, 7263993, 7324026, 7384059, 7444092, 7564158])
+retransmission pkt seq: 6723696
+retransmission pkt seq: 7023861
+retransmission pkt seq: 7083894
+retransmission pkt seq: 7143927
+retransmission pkt seq: 7263993
+retransmission pkt seq: 7324026
+retransmission pkt seq: 7384059
+retransmission pkt seq: 7444092
+retransmission pkt seq: 7564158
+length of curr window = 9 , curr max_win_size =  9
+-----------------------------------------------------
+-------expected ack was 6723696 but received 7023861--------
+odict_keys([6723696, 7083894, 7143927, 7263993, 7324026, 7384059, 7444092, 7564158, 7804290])
+retransmission pkt seq: 6723696
+length of curr window = 9 , curr max_win_size =  9
+-----------------------------------------------------
+-------expected ack was 6723696 but received 7924356--------
+odict_keys([6723696, 7083894, 7143927, 7263993, 7324026, 7384059, 7444092, 7564158, 7804290])
+retransmission pkt seq: 6723696
+retransmission pkt seq: 7083894
+retransmission pkt seq: 7143927
+retransmission pkt seq: 7263993
+retransmission pkt seq: 7324026
+retransmission pkt seq: 7384059
+retransmission pkt seq: 7444092
+retransmission pkt seq: 7564158
+length of curr window = 9 , curr max_win_size =  9
+-----------------------------------------------------
+-------expected ack was 6723696 but received 7984389--------
+odict_keys([6723696, 7083894, 7143927, 7263993, 7324026, 7384059, 7444092])
+retransmission pkt seq: 6723696
+retransmission pkt seq: 7083894
+retransmission pkt seq: 7143927
+retransmission pkt seq: 7263993
+retransmission pkt seq: 7324026
+retransmission pkt seq: 7384059
+retransmission pkt seq: 7444092
+length of curr window = 7 , curr max_win_size =  7
+-----------------------------------------------------
+---------received ack of seq: 6723696 - moving the window!------------
+length of curr window = 7 , curr max_win_size =  10
+-----------------------------------------------------
+---------received ack of seq: 7083894 - moving the window!------------
+server sending pkt seq: 8104455
+server sending pkt seq: 8164488
+server sending pkt seq: 8224521
+server sending pkt seq: 8284554
+server sending pkt seq: 8344587
+length of curr window = 12 , curr max_win_size =  13
+-----------------------------------------------------
+---------received ack of seq: 7143927 - moving the window!------------
+server sending pkt seq: 8404620
+server sending pkt seq: 8464653
+server sending pkt seq: 8524686
+server sending pkt seq: 8584719
+server sending pkt seq: 8644752
+length of curr window = 16 , curr max_win_size =  16
+-----------------------------------------------------
+---------received ack of seq: 7263993 - moving the window!------------
+server sending pkt seq: 8704785
+server sending pkt seq: 8764818
+server sending pkt seq: 8824851
+server sending pkt seq: 8884884
+length of curr window = 19 , curr max_win_size =  19
+-----------------------------------------------------
+---------received ack of seq: 7324026 - moving the window!------------
+server sending pkt seq: 8944917
+server sending pkt seq: 9004950
+server sending pkt seq: 9064983
+server sending pkt seq: 9125016
+length of curr window = 22 , curr max_win_size =  22
+-----------------------------------------------------
+---------received ack of seq: 7384059 - moving the window!------------
+server sending pkt seq: 9185049
+server sending pkt seq: 9245082
+server sending pkt seq: 9305115
+server sending pkt seq: 9365148
+length of curr window = 25 , curr max_win_size =  25
+-----------------------------------------------------
+---------received ack of seq: 7444092 - moving the window!------------
+server sending pkt seq: 9425181
+server sending pkt seq: 9485214
+server sending pkt seq: 9545247
+server sending pkt seq: 9605280
+length of curr window = 28 , curr max_win_size =  28
+-----------------------------------------------------
+-------expected ack was 7864323 but received 7564158--------
+odict_keys([7864323, 8044422, 8104455, 8164488, 8224521, 8284554, 8344587, 8404620, 8464653, 8524686, 8584719, 8644752, 8704785, 8764818, 8824851, 8884884, 8944917, 9004950, 9064983, 9125016, 9185049, 9245082, 9305115, 9365148, 9425181, 9485214, 9545247, 9605280])
+length of curr window = 28 , curr max_win_size =  28
+-----------------------------------------------------
+-------expected ack was 7864323 but received 7684224--------
+odict_keys([7864323, 8044422, 8104455, 8164488, 8224521, 8284554, 8344587, 8404620, 8464653, 8524686, 8584719, 8644752, 8704785, 8764818, 8824851, 8884884, 8944917, 9004950, 9064983, 9125016, 9185049, 9245082, 9305115, 9365148, 9425181, 9485214, 9545247, 9605280])
+length of curr window = 28 , curr max_win_size =  28
+-----------------------------------------------------
+-------expected ack was 7864323 but received 8404620--------
+odict_keys([7864323, 8044422, 8104455, 8164488, 8224521, 8284554, 8344587, 8464653, 8524686, 8584719, 8644752, 8704785, 8764818, 8824851, 8884884, 8944917, 9004950])
+retransmission pkt seq: 7864323
+retransmission pkt seq: 8044422
+retransmission pkt seq: 8104455
+retransmission pkt seq: 8164488
+retransmission pkt seq: 8224521
+retransmission pkt seq: 8284554
+retransmission pkt seq: 8344587
+length of curr window = 17 , curr max_win_size =  17
+-----------------------------------------------------
+-------expected ack was 7864323 but received 8464653--------
+odict_keys([7864323, 8044422, 8104455, 8164488, 8224521, 8284554, 8344587, 8524686, 8584719, 8644752, 8704785, 8764818, 8824851, 8884884, 8944917, 9004950, 9064983])
+retransmission pkt seq: 7864323
+retransmission pkt seq: 8044422
+retransmission pkt seq: 8104455
+retransmission pkt seq: 8164488
+retransmission pkt seq: 8224521
+retransmission pkt seq: 8284554
+retransmission pkt seq: 8344587
+length of curr window = 17 , curr max_win_size =  17
+-----------------------------------------------------
+-------expected ack was 7864323 but received 8644752--------
+odict_keys([7864323, 8044422, 8104455, 8164488, 8224521, 8284554, 8344587, 8524686, 8584719, 8704785, 8764818, 8824851, 8884884, 8944917, 9004950, 9064983, 9125016])
+retransmission pkt seq: 7864323
+retransmission pkt seq: 8044422
+retransmission pkt seq: 8104455
+retransmission pkt seq: 8164488
+retransmission pkt seq: 8224521
+retransmission pkt seq: 8284554
+retransmission pkt seq: 8344587
+retransmission pkt seq: 8524686
+retransmission pkt seq: 8584719
+length of curr window = 17 , curr max_win_size =  17
+-----------------------------------------------------
+-------expected ack was 7864323 but received 8704785--------
+odict_keys([7864323, 8044422, 8104455, 8164488, 8224521, 8284554, 8344587, 8524686, 8584719, 8764818, 8824851])
+retransmission pkt seq: 7864323
+retransmission pkt seq: 8044422
+retransmission pkt seq: 8104455
+retransmission pkt seq: 8164488
+retransmission pkt seq: 8224521
+retransmission pkt seq: 8284554
+retransmission pkt seq: 8344587
+retransmission pkt seq: 8524686
+retransmission pkt seq: 8584719
+length of curr window = 11 , curr max_win_size =  11
+-----------------------------------------------------
+-------expected ack was 7864323 but received 8824851--------
+odict_keys([7864323, 8044422, 8104455, 8164488, 8224521, 8284554, 8344587, 8524686, 8584719, 8764818, 8884884])
+retransmission pkt seq: 7864323
+retransmission pkt seq: 8044422
+retransmission pkt seq: 8104455
+retransmission pkt seq: 8164488
+retransmission pkt seq: 8224521
+retransmission pkt seq: 8284554
+retransmission pkt seq: 8344587
+retransmission pkt seq: 8524686
+retransmission pkt seq: 8584719
+retransmission pkt seq: 8764818
+length of curr window = 11 , curr max_win_size =  11
+-----------------------------------------------------
+-------expected ack was 7864323 but received 9004950--------
+odict_keys([7864323, 8044422, 8104455, 8164488, 8224521, 8284554, 8344587, 8524686, 8584719, 8764818, 8884884])
+retransmission pkt seq: 7864323
+retransmission pkt seq: 8044422
+retransmission pkt seq: 8104455
+retransmission pkt seq: 8164488
+retransmission pkt seq: 8224521
+retransmission pkt seq: 8284554
+retransmission pkt seq: 8344587
+retransmission pkt seq: 8524686
+retransmission pkt seq: 8584719
+retransmission pkt seq: 8764818
+retransmission pkt seq: 8884884
+length of curr window = 11 , curr max_win_size =  11
+-----------------------------------------------------
+-------expected ack was 7864323 but received 9125016--------
+odict_keys([7864323, 8044422, 8104455, 8164488, 8224521, 8284554, 8344587, 8524686])
+retransmission pkt seq: 7864323
+retransmission pkt seq: 8044422
+retransmission pkt seq: 8104455
+retransmission pkt seq: 8164488
+retransmission pkt seq: 8224521
+retransmission pkt seq: 8284554
+retransmission pkt seq: 8344587
+retransmission pkt seq: 8524686
+length of curr window = 8 , curr max_win_size =  8
+-----------------------------------------------------
+-------expected ack was 7864323 but received 9245082--------
+odict_keys([7864323, 8044422, 8104455, 8164488, 8224521, 8284554, 8344587, 8524686])
+retransmission pkt seq: 7864323
+retransmission pkt seq: 8044422
+retransmission pkt seq: 8104455
+retransmission pkt seq: 8164488
+retransmission pkt seq: 8224521
+retransmission pkt seq: 8284554
+retransmission pkt seq: 8344587
+retransmission pkt seq: 8524686
+length of curr window = 8 , curr max_win_size =  8
+-----------------------------------------------------
+-------expected ack was 7864323 but received 9305115--------
+odict_keys([7864323, 8044422, 8104455, 8164488, 8224521, 8284554, 8344587, 8524686])
+retransmission pkt seq: 7864323
+retransmission pkt seq: 8044422
+retransmission pkt seq: 8104455
+retransmission pkt seq: 8164488
+retransmission pkt seq: 8224521
+retransmission pkt seq: 8284554
+retransmission pkt seq: 8344587
+retransmission pkt seq: 8524686
+length of curr window = 8 , curr max_win_size =  8
+-----------------------------------------------------
+-------expected ack was 7864323 but received 9485214--------
+odict_keys([7864323, 8044422, 8104455, 8164488, 8224521, 8284554, 8344587])
+retransmission pkt seq: 7864323
+retransmission pkt seq: 8044422
+retransmission pkt seq: 8104455
+retransmission pkt seq: 8164488
+retransmission pkt seq: 8224521
+retransmission pkt seq: 8284554
+retransmission pkt seq: 8344587
+length of curr window = 7 , curr max_win_size =  7
+-----------------------------------------------------
+-------expected ack was 7864323 but received 9605280--------
+odict_keys([7864323, 8044422, 8104455, 8164488, 8224521, 8284554, 8344587])
+retransmission pkt seq: 7864323
+retransmission pkt seq: 8044422
+retransmission pkt seq: 8104455
+retransmission pkt seq: 8164488
+retransmission pkt seq: 8224521
+retransmission pkt seq: 8284554
+retransmission pkt seq: 8344587
+length of curr window = 7 , curr max_win_size =  7
+-----------------------------------------------------
+---------received ack of seq: 7864323 - moving the window!------------
+length of curr window = 8 , curr max_win_size =  10
+-----------------------------------------------------
+---------received ack of seq: 8044422 - moving the window!------------
+length of curr window = 10 , curr max_win_size =  13
+-----------------------------------------------------
+---------received ack of seq: 8104455 - moving the window!------------
+server sending pkt seq: 9665313
+length of curr window = 13 , curr max_win_size =  16
+-----------------------------------------------------
+-------expected ack was 8164488 but received 9185049--------
+odict_keys([8164488, 8224521, 8284554, 8344587, 8764818, 8884884, 8944917, 9064983, 9365148, 9425181, 9545247, 9665313, 9725346])
+retransmission pkt seq: 8164488
+retransmission pkt seq: 8224521
+retransmission pkt seq: 8284554
+retransmission pkt seq: 8344587
+retransmission pkt seq: 8764818
+retransmission pkt seq: 8884884
+retransmission pkt seq: 8944917
+retransmission pkt seq: 9064983
+length of curr window = 13 , curr max_win_size =  16
+-----------------------------------------------------
+---------received ack of seq: 8164488 - moving the window!------------
+server sending pkt seq: 9725346
+server sending pkt seq: 9785379
+server sending pkt seq: 9845412
+server sending pkt seq: 9905445
+server sending pkt seq: 9965478
+server sending pkt seq: 10025511
+server sending pkt seq: 10085544
+server sending pkt seq: 10145577
+length of curr window = 19 , curr max_win_size =  19
+-----------------------------------------------------
+---------received ack of seq: 8224521 - moving the window!------------
+server sending pkt seq: 10205610
+server sending pkt seq: 10265643
+server sending pkt seq: 10325676
+server sending pkt seq: 10385709
+length of curr window = 22 , curr max_win_size =  22
+-----------------------------------------------------
+-------expected ack was 8284554 but received 8344587--------
+odict_keys([8284554, 8764818, 8884884, 8944917, 9064983, 9365148, 9425181, 9545247, 9665313, 9725346, 9785379, 9845412, 9905445, 9965478, 10025511, 10085544, 10145577, 10205610, 10265643, 10325676, 10385709, 10445742])
+retransmission pkt seq: 8284554
+length of curr window = 22 , curr max_win_size =  22
+-----------------------------------------------------
+---------received ack of seq: 8284554 - moving the window!------------
+server sending pkt seq: 10445742
+server sending pkt seq: 10505775
+server sending pkt seq: 10565808
+server sending pkt seq: 10625841
+server sending pkt seq: 10685874
+length of curr window = 25 , curr max_win_size =  25
+-----------------------------------------------------
+-------expected ack was 8764818 but received 8584719--------
+odict_keys([8764818, 8884884, 8944917, 9064983, 9365148, 9425181, 9545247, 9665313, 9725346, 9785379, 9845412, 9905445, 9965478, 10025511, 10085544, 10145577, 10205610, 10265643, 10325676, 10385709, 10445742, 10505775, 10565808, 10625841, 10685874])
+length of curr window = 25 , curr max_win_size =  25
+-----------------------------------------------------
+-------expected ack was 8764818 but received 8524686--------
+odict_keys([8764818, 8884884, 8944917, 9064983, 9365148, 9425181, 9545247, 9665313, 9725346, 9785379, 9845412, 9905445, 9965478, 10025511, 10085544, 10145577, 10205610, 10265643, 10325676, 10385709, 10445742, 10505775, 10565808, 10625841, 10685874])
+length of curr window = 25 , curr max_win_size =  25
+-----------------------------------------------------
+---------received ack of seq: 8764818 - moving the window!------------
+server sending pkt seq: 10745907
+server sending pkt seq: 10805940
+server sending pkt seq: 10865973
+server sending pkt seq: 10926006
+length of curr window = 28 , curr max_win_size =  28
+-----------------------------------------------------
+---------received ack of seq: 8884884 - moving the window!------------
+server sending pkt seq: 10986039
+server sending pkt seq: 11046072
+server sending pkt seq: 11106105
+server sending pkt seq: 11166138
+length of curr window = 31 , curr max_win_size =  31
+-----------------------------------------------------
+-------expected ack was 8944917 but received 9665313--------
+odict_keys([8944917, 9064983, 9365148, 9425181, 9545247, 9725346, 9785379, 9845412, 9905445, 9965478, 10025511, 10085544, 10145577, 10205610, 10265643, 10325676, 10385709, 10445742, 10505775, 10565808, 10625841, 10685874, 10745907, 10805940, 10865973, 10926006, 10986039, 11046072, 11106105, 11166138, 11226171])
+retransmission pkt seq: 8944917
+retransmission pkt seq: 9064983
+retransmission pkt seq: 9365148
+retransmission pkt seq: 9425181
+retransmission pkt seq: 9545247
+length of curr window = 31 , curr max_win_size =  31
+-----------------------------------------------------
+-------expected ack was 8944917 but received 9845412--------
+odict_keys([8944917, 9064983, 9365148, 9425181, 9545247, 9725346, 9785379, 9905445, 9965478, 10025511, 10085544, 10145577, 10205610, 10265643, 10325676, 10385709, 10445742, 10505775, 10565808, 10625841, 10685874, 10745907, 10805940, 10865973, 10926006, 10986039, 11046072, 11106105, 11166138, 11226171, 11286204])
+retransmission pkt seq: 8944917
+retransmission pkt seq: 9064983
+retransmission pkt seq: 9365148
+retransmission pkt seq: 9425181
+retransmission pkt seq: 9545247
+retransmission pkt seq: 9725346
+retransmission pkt seq: 9785379
+length of curr window = 31 , curr max_win_size =  31
+-----------------------------------------------------
+-------expected ack was 8944917 but received 9905445--------
+odict_keys([8944917, 9064983, 9365148, 9425181, 9545247, 9725346, 9785379, 9965478, 10025511, 10085544, 10145577, 10205610, 10265643, 10325676, 10385709, 10445742, 10505775, 10565808])
+retransmission pkt seq: 8944917
+retransmission pkt seq: 9064983
+retransmission pkt seq: 9365148
+retransmission pkt seq: 9425181
+retransmission pkt seq: 9545247
+retransmission pkt seq: 9725346
+retransmission pkt seq: 9785379
+length of curr window = 18 , curr max_win_size =  18
+-----------------------------------------------------
+-------expected ack was 8944917 but received 10145577--------
+odict_keys([8944917, 9064983, 9365148, 9425181, 9545247, 9725346, 9785379, 9965478, 10025511, 10085544, 10205610, 10265643, 10325676, 10385709, 10445742, 10505775, 10565808, 10625841])
+retransmission pkt seq: 8944917
+retransmission pkt seq: 9064983
+retransmission pkt seq: 9365148
+retransmission pkt seq: 9425181
+retransmission pkt seq: 9545247
+retransmission pkt seq: 9725346
+retransmission pkt seq: 9785379
+retransmission pkt seq: 9965478
+retransmission pkt seq: 10025511
+retransmission pkt seq: 10085544
+length of curr window = 18 , curr max_win_size =  18
+-----------------------------------------------------
+-------expected ack was 8944917 but received 10205610--------
+odict_keys([8944917, 9064983, 9365148, 9425181, 9545247, 9725346, 9785379, 9965478, 10025511, 10085544, 10265643, 10325676, 10385709, 10445742, 10505775, 10565808, 10625841, 10685874])
+retransmission pkt seq: 8944917
+retransmission pkt seq: 9064983
+retransmission pkt seq: 9365148
+retransmission pkt seq: 9425181
+retransmission pkt seq: 9545247
+retransmission pkt seq: 9725346
+retransmission pkt seq: 9785379
+retransmission pkt seq: 9965478
+retransmission pkt seq: 10025511
+retransmission pkt seq: 10085544
+length of curr window = 18 , curr max_win_size =  18
+-----------------------------------------------------
+-------expected ack was 8944917 but received 10565808--------
+odict_keys([8944917, 9064983, 9365148, 9425181, 9545247, 9725346, 9785379, 9965478, 10025511, 10085544, 10265643, 10325676])
+retransmission pkt seq: 8944917
+retransmission pkt seq: 9064983
+retransmission pkt seq: 9365148
+retransmission pkt seq: 9425181
+retransmission pkt seq: 9545247
+retransmission pkt seq: 9725346
+retransmission pkt seq: 9785379
+retransmission pkt seq: 9965478
+retransmission pkt seq: 10025511
+retransmission pkt seq: 10085544
+retransmission pkt seq: 10265643
+retransmission pkt seq: 10325676
+length of curr window = 12 , curr max_win_size =  12
+-----------------------------------------------------
+-------expected ack was 8944917 but received 10625841--------
+odict_keys([8944917, 9064983, 9365148, 9425181, 9545247, 9725346, 9785379, 9965478, 10025511, 10085544, 10265643, 10325676])
+retransmission pkt seq: 8944917
+retransmission pkt seq: 9064983
+retransmission pkt seq: 9365148
+retransmission pkt seq: 9425181
+retransmission pkt seq: 9545247
+retransmission pkt seq: 9725346
+retransmission pkt seq: 9785379
+retransmission pkt seq: 9965478
+retransmission pkt seq: 10025511
+retransmission pkt seq: 10085544
+retransmission pkt seq: 10265643
+retransmission pkt seq: 10325676
+length of curr window = 12 , curr max_win_size =  12
+-----------------------------------------------------
+-------expected ack was 8944917 but received 10745907--------
+odict_keys([8944917, 9064983, 9365148, 9425181, 9545247, 9725346, 9785379, 9965478, 10025511, 10085544, 10265643, 10325676])
+retransmission pkt seq: 8944917
+retransmission pkt seq: 9064983
+retransmission pkt seq: 9365148
+retransmission pkt seq: 9425181
+retransmission pkt seq: 9545247
+retransmission pkt seq: 9725346
+retransmission pkt seq: 9785379
+retransmission pkt seq: 9965478
+retransmission pkt seq: 10025511
+retransmission pkt seq: 10085544
+retransmission pkt seq: 10265643
+retransmission pkt seq: 10325676
+length of curr window = 12 , curr max_win_size =  12
+-----------------------------------------------------
+-------expected ack was 8944917 but received 10865973--------
+odict_keys([8944917, 9064983, 9365148, 9425181, 9545247, 9725346, 9785379, 9965478, 10025511])
+retransmission pkt seq: 8944917
+retransmission pkt seq: 9064983
+retransmission pkt seq: 9365148
+retransmission pkt seq: 9425181
+retransmission pkt seq: 9545247
+retransmission pkt seq: 9725346
+retransmission pkt seq: 9785379
+retransmission pkt seq: 9965478
+retransmission pkt seq: 10025511
+length of curr window = 9 , curr max_win_size =  9
+-----------------------------------------------------
+-------expected ack was 8944917 but received 10926006--------
+odict_keys([8944917, 9064983, 9365148, 9425181, 9545247, 9725346, 9785379, 9965478, 10025511])
+retransmission pkt seq: 8944917
+retransmission pkt seq: 9064983
+retransmission pkt seq: 9365148
+retransmission pkt seq: 9425181
+retransmission pkt seq: 9545247
+retransmission pkt seq: 9725346
+retransmission pkt seq: 9785379
+retransmission pkt seq: 9965478
+retransmission pkt seq: 10025511
+length of curr window = 9 , curr max_win_size =  9
+-----------------------------------------------------
+-------expected ack was 8944917 but received 10986039--------
+odict_keys([8944917, 9064983, 9365148, 9425181, 9545247, 9725346, 9785379, 9965478, 10025511])
+retransmission pkt seq: 8944917
+retransmission pkt seq: 9064983
+retransmission pkt seq: 9365148
+retransmission pkt seq: 9425181
+retransmission pkt seq: 9545247
+retransmission pkt seq: 9725346
+retransmission pkt seq: 9785379
+retransmission pkt seq: 9965478
+retransmission pkt seq: 10025511
+length of curr window = 9 , curr max_win_size =  9
+-----------------------------------------------------
+-------expected ack was 8944917 but received 11046072--------
+odict_keys([8944917, 9064983, 9365148, 9425181, 9545247, 9725346, 9785379])
+retransmission pkt seq: 8944917
+retransmission pkt seq: 9064983
+retransmission pkt seq: 9365148
+retransmission pkt seq: 9425181
+retransmission pkt seq: 9545247
+retransmission pkt seq: 9725346
+retransmission pkt seq: 9785379
+length of curr window = 7 , curr max_win_size =  7
+-----------------------------------------------------
+-------expected ack was 8944917 but received 11106105--------
+odict_keys([8944917, 9064983, 9365148, 9425181, 9545247, 9725346, 9785379])
+retransmission pkt seq: 8944917
+retransmission pkt seq: 9064983
+retransmission pkt seq: 9365148
+retransmission pkt seq: 9425181
+retransmission pkt seq: 9545247
+retransmission pkt seq: 9725346
+retransmission pkt seq: 9785379
+length of curr window = 7 , curr max_win_size =  7
+-----------------------------------------------------
+-------expected ack was 8944917 but received 11166138--------
+odict_keys([8944917, 9064983, 9365148, 9425181, 9545247, 9725346, 9785379])
+retransmission pkt seq: 8944917
+retransmission pkt seq: 9064983
+retransmission pkt seq: 9365148
+retransmission pkt seq: 9425181
+retransmission pkt seq: 9545247
+retransmission pkt seq: 9725346
+retransmission pkt seq: 9785379
+length of curr window = 7 , curr max_win_size =  7
+-----------------------------------------------------
+---------received ack of seq: 8944917 - moving the window!------------
+length of curr window = 8 , curr max_win_size =  10
+-----------------------------------------------------
+-------expected ack was 9064983 but received 9365148--------
+odict_keys([9064983, 9425181, 9545247, 9725346, 9785379, 10265643, 10325676, 10385709])
+retransmission pkt seq: 9064983
+length of curr window = 8 , curr max_win_size =  10
+-----------------------------------------------------
+-------expected ack was 9064983 but received 9425181--------
+odict_keys([9064983, 9545247, 9725346, 9785379, 10265643, 10325676, 10385709, 10445742])
+retransmission pkt seq: 9064983
+length of curr window = 8 , curr max_win_size =  10
+-----------------------------------------------------
+-------expected ack was 9064983 but received 9545247--------
+odict_keys([9064983, 9725346, 9785379, 10265643, 10325676, 10385709, 10445742, 10505775])
+retransmission pkt seq: 9064983
+length of curr window = 8 , curr max_win_size =  8
+-----------------------------------------------------
+-------expected ack was 9064983 but received 9725346--------
+odict_keys([9064983, 9785379, 10265643, 10325676, 10385709, 10445742, 10505775, 10565808])
+retransmission pkt seq: 9064983
+length of curr window = 8 , curr max_win_size =  8
+-----------------------------------------------------
+-------expected ack was 9064983 but received 9785379--------
+odict_keys([9064983, 10265643, 10325676, 10385709, 10445742, 10505775, 10565808, 10625841])
+retransmission pkt seq: 9064983
+length of curr window = 8 , curr max_win_size =  8
+-----------------------------------------------------
+---------received ack of seq: 9064983 - moving the window!------------
+length of curr window = 9 , curr max_win_size =  11
+-----------------------------------------------------
+-------expected ack was 10265643 but received 10025511--------
+odict_keys([10265643, 10325676, 10385709, 10445742, 10505775, 10565808, 10625841, 10685874, 10805940])
+length of curr window = 9 , curr max_win_size =  11
+-----------------------------------------------------
+-------expected ack was 10265643 but received 10085544--------
+odict_keys([10265643, 10325676, 10385709, 10445742, 10505775, 10565808, 10625841, 10685874, 10805940])
+length of curr window = 9 , curr max_win_size =  11
+-----------------------------------------------------
+-------expected ack was 10265643 but received 9965478--------
+odict_keys([10265643, 10325676, 10385709, 10445742, 10505775, 10565808, 10625841, 10685874])
+length of curr window = 8 , curr max_win_size =  8
+-----------------------------------------------------
+---------received ack of seq: 10265643 - moving the window!------------
+length of curr window = 7 , curr max_win_size =  11
+-----------------------------------------------------
+---------received ack of seq: 10325676 - moving the window!------------
+server sending pkt seq: 11226171
+server sending pkt seq: 11286204
+server sending pkt seq: 11346237
+server sending pkt seq: 11406270
+server sending pkt seq: 11466303
+server sending pkt seq: 11526336
+length of curr window = 12 , curr max_win_size =  14
+-----------------------------------------------------
+-------expected ack was 10385709 but received 11226171--------
+odict_keys([10385709, 10445742, 10505775, 10565808, 10625841, 10685874, 11286204, 11346237, 11406270, 11466303, 11526336, 11586369])
+retransmission pkt seq: 10385709
+retransmission pkt seq: 10445742
+retransmission pkt seq: 10505775
+retransmission pkt seq: 10685874
+length of curr window = 12 , curr max_win_size =  14
+-----------------------------------------------------
+-------expected ack was 10385709 but received 11286204--------
+odict_keys([10385709, 10445742, 10505775, 10565808, 10625841, 10685874, 11346237, 11406270, 11466303, 11526336, 11586369, 11646402])
+retransmission pkt seq: 10385709
+retransmission pkt seq: 10445742
+retransmission pkt seq: 10505775
+retransmission pkt seq: 10685874
+length of curr window = 12 , curr max_win_size =  14
+-----------------------------------------------------
+-------expected ack was 10385709 but received 11346237--------
+odict_keys([10385709, 10445742, 10505775, 10565808, 10625841, 10685874, 11406270, 11466303, 11526336, 11586369])
+retransmission pkt seq: 10385709
+retransmission pkt seq: 10445742
+retransmission pkt seq: 10505775
+retransmission pkt seq: 10685874
+length of curr window = 10 , curr max_win_size =  10
+-----------------------------------------------------
+-------expected ack was 10385709 but received 11406270--------
+odict_keys([10385709, 10445742, 10505775, 10565808, 10625841, 10685874, 11466303, 11526336, 11586369, 11646402])
+retransmission pkt seq: 10385709
+retransmission pkt seq: 10445742
+retransmission pkt seq: 10505775
+retransmission pkt seq: 10685874
+length of curr window = 10 , curr max_win_size =  10
+-----------------------------------------------------
+-------expected ack was 10385709 but received 11466303--------
+odict_keys([10385709, 10445742, 10505775, 10565808, 10625841, 10685874, 11526336, 11586369, 11646402, 11706435])
+retransmission pkt seq: 10385709
+retransmission pkt seq: 10445742
+retransmission pkt seq: 10505775
+retransmission pkt seq: 10685874
+length of curr window = 10 , curr max_win_size =  10
+-----------------------------------------------------
+---------received ack of seq: 10385709 - moving the window!------------
+server sending pkt seq: 11586369
+server sending pkt seq: 11646402
+server sending pkt seq: 11706435
+server sending pkt seq: 11766468
+server sending pkt seq: 11826501
+server sending pkt seq: 11886534
+server sending pkt seq: 11946567
+length of curr window = 13 , curr max_win_size =  13
+-----------------------------------------------------
+---------received ack of seq: 10445742 - moving the window!------------
+server sending pkt seq: 12006600
+server sending pkt seq: 12066633
+server sending pkt seq: 12126666
+server sending pkt seq: 12186699
+length of curr window = 16 , curr max_win_size =  16
+-----------------------------------------------------
+---------received ack of seq: 10505775 - moving the window!------------
+server sending pkt seq: 12246732
+server sending pkt seq: 12306765
+server sending pkt seq: 12366798
+server sending pkt seq: 12426831
+length of curr window = 19 , curr max_win_size =  19
+-----------------------------------------------------
+-------expected ack was 10565808 but received 10685874--------
+odict_keys([10565808, 10625841, 11526336, 11586369, 11646402, 11706435, 11766468, 11826501, 11886534, 11946567, 12006600, 12066633, 12126666, 12186699, 12246732, 12306765, 12366798, 12426831, 12486864])
+length of curr window = 19 , curr max_win_size =  19
+-----------------------------------------------------
+-------expected ack was 10565808 but received 11646402--------
+odict_keys([10565808, 10625841, 11526336, 11586369, 11706435, 11766468, 11826501, 11886534, 11946567, 12006600, 12066633, 12126666, 12186699, 12246732, 12306765, 12366798, 12426831, 12486864, 12546897])
+retransmission pkt seq: 11526336
+retransmission pkt seq: 11586369
+length of curr window = 19 , curr max_win_size =  19
+-----------------------------------------------------
+-------expected ack was 10565808 but received 11886534--------
+odict_keys([10565808, 10625841, 11526336, 11586369, 11706435, 11766468, 11826501, 11946567, 12006600, 12066633, 12126666, 12186699])
+retransmission pkt seq: 11526336
+retransmission pkt seq: 11586369
+retransmission pkt seq: 11706435
+retransmission pkt seq: 11766468
+retransmission pkt seq: 11826501
+length of curr window = 12 , curr max_win_size =  12
+-----------------------------------------------------
+-------expected ack was 10565808 but received 12066633--------
+odict_keys([10565808, 10625841, 11526336, 11586369, 11706435, 11766468, 11826501, 11946567, 12006600, 12126666, 12186699, 12246732])
+retransmission pkt seq: 11526336
+retransmission pkt seq: 11586369
+retransmission pkt seq: 11706435
+retransmission pkt seq: 11766468
+retransmission pkt seq: 11826501
+retransmission pkt seq: 11946567
+retransmission pkt seq: 12006600
+length of curr window = 12 , curr max_win_size =  12
+-----------------------------------------------------
+-------expected ack was 10565808 but received 12126666--------
+odict_keys([10565808, 10625841, 11526336, 11586369, 11706435, 11766468, 11826501, 11946567, 12006600, 12186699, 12246732, 12306765])
+retransmission pkt seq: 11526336
+retransmission pkt seq: 11586369
+retransmission pkt seq: 11706435
+retransmission pkt seq: 11766468
+retransmission pkt seq: 11826501
+retransmission pkt seq: 11946567
+retransmission pkt seq: 12006600
+length of curr window = 12 , curr max_win_size =  12
+-----------------------------------------------------
+-------expected ack was 10565808 but received 12366798--------
+odict_keys([10565808, 10625841, 11526336, 11586369, 11706435, 11766468, 11826501, 11946567, 12006600])
+retransmission pkt seq: 11526336
+retransmission pkt seq: 11586369
+retransmission pkt seq: 11706435
+retransmission pkt seq: 11766468
+retransmission pkt seq: 11826501
+retransmission pkt seq: 11946567
+retransmission pkt seq: 12006600
+length of curr window = 9 , curr max_win_size =  9
+-----------------------------------------------------
+-------expected ack was 10565808 but received 12426831--------
+odict_keys([10565808, 10625841, 11526336, 11586369, 11706435, 11766468, 11826501, 11946567, 12006600])
+retransmission pkt seq: 11526336
+retransmission pkt seq: 11586369
+retransmission pkt seq: 11706435
+retransmission pkt seq: 11766468
+retransmission pkt seq: 11826501
+retransmission pkt seq: 11946567
+retransmission pkt seq: 12006600
+length of curr window = 9 , curr max_win_size =  9
+-----------------------------------------------------
+-------expected ack was 10565808 but received 11526336--------
+odict_keys([10565808, 10625841, 11586369, 11706435, 11766468, 11826501, 11946567, 12006600, 12186699])
+length of curr window = 9 , curr max_win_size =  9
+-----------------------------------------------------
+-------expected ack was 10565808 but received 11766468--------
+odict_keys([10565808, 10625841, 11586369, 11706435, 11826501, 11946567, 12006600])
+retransmission pkt seq: 11586369
+retransmission pkt seq: 11706435
+length of curr window = 7 , curr max_win_size =  7
+-----------------------------------------------------
+-------expected ack was 10565808 but received 11826501--------
+odict_keys([10565808, 10625841, 11586369, 11706435, 11946567, 12006600, 12186699])
+retransmission pkt seq: 11586369
+retransmission pkt seq: 11706435
+length of curr window = 7 , curr max_win_size =  7
+-----------------------------------------------------
+-------expected ack was 10565808 but received 11586369--------
+odict_keys([10565808, 10625841, 11706435, 11946567, 12006600, 12186699, 12246732])
+length of curr window = 7 , curr max_win_size =  7
+-----------------------------------------------------
+-------expected ack was 10565808 but received 11706435--------
+odict_keys([10565808, 10625841, 11946567, 12006600, 12186699, 12246732])
+length of curr window = 6 , curr max_win_size =  6
+-----------------------------------------------------
+-------expected ack was 10565808 but received 11946567--------
+odict_keys([10565808, 10625841, 12006600, 12186699, 12246732, 12306765])
+length of curr window = 6 , curr max_win_size =  6
+-----------------------------------------------------
+-------expected ack was 10565808 but received 12006600--------
+odict_keys([10565808, 10625841, 12186699, 12246732, 12306765, 12366798])
+length of curr window = 6 , curr max_win_size =  6
+-----------------------------------------------------
+server didnt recv data ack from the client (timeout)
+server sending pkt seq: 10565808
+---------received ack of seq: 10565808 - moving the window!------------
+server sending pkt seq: 12186699
+length of curr window = 1 , curr max_win_size =  2
+-----------------------------------------------------
+server didnt recv data ack from the client (timeout)
+server sending pkt seq: 12186699
+---------received ack of seq: 12186699 - moving the window!------------
+server sending pkt seq: 12246732
+server sending pkt seq: 12306765
+length of curr window = 2 , curr max_win_size =  4
+-----------------------------------------------------
+---------received ack of seq: 12246732 - moving the window!------------
+server sending pkt seq: 12486864
+server sending pkt seq: 12546897
+server sending pkt seq: 12606930
+server sending pkt seq: 12666963
+server sending pkt seq: 12726996
+server sending pkt seq: 12787029
+length of curr window = 7 , curr max_win_size =  7
+-----------------------------------------------------
+-------expected ack was 12306765 but received 12486864--------
+odict_keys([12306765, 12546897, 12606930, 12666963, 12726996, 12787029, 12847062])
+retransmission pkt seq: 12306765
+length of curr window = 7 , curr max_win_size =  7
+-----------------------------------------------------
+-------expected ack was 12306765 but received 12546897--------
+odict_keys([12306765, 12606930, 12666963, 12726996, 12787029, 12847062, 12907095])
+retransmission pkt seq: 12306765
+length of curr window = 7 , curr max_win_size =  7
+-----------------------------------------------------
+-------expected ack was 12306765 but received 12606930--------
+odict_keys([12306765, 12666963, 12726996, 12787029, 12847062, 12907095])
+retransmission pkt seq: 12306765
+length of curr window = 6 , curr max_win_size =  6
+-----------------------------------------------------
+-------expected ack was 12306765 but received 12726996--------
+odict_keys([12306765, 12666963, 12787029, 12847062, 12907095, 12967128])
+retransmission pkt seq: 12306765
+retransmission pkt seq: 12666963
+length of curr window = 6 , curr max_win_size =  6
+-----------------------------------------------------
+-------expected ack was 12306765 but received 12787029--------
+odict_keys([12306765, 12666963, 12847062, 12907095, 12967128, 13027161])
+retransmission pkt seq: 12306765
+retransmission pkt seq: 12666963
+length of curr window = 6 , curr max_win_size =  6
+-----------------------------------------------------
+---------received ack of seq: 12306765 - moving the window!------------
+server sending pkt seq: 12847062
+server sending pkt seq: 12907095
+server sending pkt seq: 12967128
+server sending pkt seq: 13027161
+server sending pkt seq: 13087194
+server sending pkt seq: 13147227
+server sending pkt seq: 13207260
+server sending pkt seq: 13243051
+length of curr window = 9 , curr max_win_size =  9
+-----------------------------------------------------
+server didnt recv data ack from the client (timeout)
+server sending pkt seq: 12666963
+---------received ack of seq: 12666963 - moving the window!------------
+server sending pkt seq: 12847062
+server sending pkt seq: 12907095
+length of curr window = 2 , curr max_win_size =  2
+-----------------------------------------------------
+---------received ack of seq: 12847062 - moving the window!------------
+server sending pkt seq: 12967128
+server sending pkt seq: 13027161
+server sending pkt seq: 13087194
+length of curr window = 4 , curr max_win_size =  4
+-----------------------------------------------------
+---------received ack of seq: 12907095 - moving the window!------------
+server sending pkt seq: 13147227
+server sending pkt seq: 13207260
+server sending pkt seq: 13243051
+length of curr window = 6 , curr max_win_size =  6
+-----------------------------------------------------
+file send successfully!
+
