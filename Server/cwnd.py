@@ -136,10 +136,12 @@ class SlidingWindow:
             self.timeout_count = 1
             self.last_seq_timeout = self.expected_ack
 
-        if self.timeout_count > 3:  # Break the download
-            # self.sock.close()
-            # self.finished = True
-            pass
+        if self.timeout_count > 4:  # Break the download after 5 same seq timeout
+            self.sock.close()
+            self.finished = True
+            print('download stop because multiple timeouts')
+            return
+
         self.update_win_size()
 
         self.next_seq_to_send = self.expected_ack - 1

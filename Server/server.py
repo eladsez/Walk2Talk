@@ -108,7 +108,9 @@ class Server:
 
         if layers[0] == DOWNLOAD_REQ:
             if layers[1] == 'RESUME-DOWNLOAD':
-                pass
+                print('resume pressed!!')
+                self.cc_server.pause = False
+                threading.Thread(target=self.cc_server.send_file())
             elif layers[1] == 'PAUSE-DOWNLOAD':
                 print('pause pressed!!')
                 self.cc_server.pause = True

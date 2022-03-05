@@ -37,7 +37,7 @@ class CCServer:
             self.RTT = time.perf_counter() - self.RTT
             if syn_ack.decode() == udp_packets.client_handshake() and addr == self.client_addr:
                 self.sock.sendto(udp_packets.server_handshake('ack').encode(), self.client_addr)
-                self.sock.settimeout(self.RTT+1)
+                self.sock.settimeout(self.RTT+0.5)
 
         except timeout as tio:
             print(tio)
@@ -84,21 +84,22 @@ class CCServer:
         """
         ack = ''.encode()
         while ack.decode() != udp_packets.ack_from_client(None, final=True).decode() and not self.cwnd.finished:
-            if not self.pause:
-                try:
-                    ack, addr = self.sock.recvfrom(1024)
-                    if addr != self.client_addr: continue
-                except timeout:
-                    self.cwnd.lock.acquire()
-                    print('server didnt recv data ack from the client (timeout)')
-                    self.cwnd.timeout_occur()  # TODO: consider using thread on this method.
-                    self.cwnd.lock.release()
-                    continue
-                if ack.decode() != udp_packets.ack_from_client(None, final=True).decode():
-                    threading.Thread(target=self.cwnd.handle_ack, args=(ack,), daemon=True).start()
-
-        self.sock.close()
-        print('file send successfully!')
+            if self.pause:
+                break
+            try:
+                ack, addr = self.sock.recvfrom(1024)
+                if addr != self.client_addr: continue
+            except timeout:
+                self.cwnd.lock.acquire()
+                print('server didnt recv data ack from the client (timeout)')
+                self.cwnd.timeout_occur()  # TODO: consider using thread on this method.
+                self.cwnd.lock.release()
+                continue
+            if ack.decode() != udp_packets.ack_from_client(None, final=True).decode():
+                threading.Thread(target=self.cwnd.handle_ack, args=(ack,), daemon=True).start()
+        if not self.pause and self.cwnd.timeout_count < 4:
+            self.sock.close()
+            print('file send successfully!')
 
 # if __name__ == '__main__':
 #     server = CCServer()

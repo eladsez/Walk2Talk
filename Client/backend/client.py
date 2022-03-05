@@ -133,18 +133,22 @@ class Client:
     def download(self, file_name: str, file_path):
         """
         A simple download file method
+        file name is optional
         :return:
         """
         self.c_client = CClient(addr=('0.0.0.0', 5550))
         connect = False
         while not connect:
-            connect = self.c_client.connect(file_name)
+            connect = self.c_client.connect()
         self.c_client.recv_file(file_path)
 
     def pause_download(self):
         if self.sock:
             try:
+                self.c_client.pause = True
                 self.sock.send(tcp_packets.pause_pkt())
+                self.c_client.sock.settimeout(None)
+                print('download paused!!')
             except socket.error as e:
                 print(e)
                 print('error with Pause the download')
@@ -152,7 +156,11 @@ class Client:
     def resume_download(self):
         if self.sock:
             try:
+                self.c_client.pause = False
                 self.sock.send(tcp_packets.resume_pkt())
+                self.c_client.sock.settimeout(100)
+                threading.Thread(target=self.c_client.recv_file()).start()
+                print('download resume!!')
             except socket.error as e:
                 print(e)
                 print('error with resume the download')

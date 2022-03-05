@@ -8,19 +8,18 @@ class CClient:
         self.client_addr = addr  # client_addr to bind
         self.server_addr = None
         self.sock = None
-        self.file_name = None
+        self.file_path = None
         self.file_size = None  # here the file size is actually the length of datagrams list
         self.pkts_arrived_len = 0  # the length of the pkts list in recv_file func
         self.acked = []
         self.pause = False
 
-    def connect(self, file_name):
+    def connect(self):
         """
         This method connects the client to the server in a three way handshake method.
         :param file_name: the chosen file the client chose
         :return: True / False if the connection was established
         """
-        self.file_name = file_name
         try:
             self.sock = socket(AF_INET, SOCK_DGRAM)  # UDP
             self.sock.bind(self.client_addr)
@@ -44,17 +43,18 @@ class CClient:
             print('error occurred while opening or binding client udp socket')
             return False
 
-    def recv_file(self, file_path):
+    def recv_file(self, file_path=None):
         """
         This method receives the file over the udp socket and appending the datagrams of the file into a list.
         this way we could monitor when the file was done with the download.
         :param file_path: file path location.
         :return:
         """
+        if self.file_path is None and file_path is not None:
+            self.file_path = file_path
         buff = 80000  # this is the max size we allow the client to receive
         pkts = []  # list of tuples (seq, pkt)
-        k = l = m = y = True
-        while len(pkts) != self.file_size:
+        while len(pkts) != self.file_size and not self.pause:
             try:
                 pkt, addr = self.sock.recvfrom(buff)
                 if addr != self.server_addr: continue
@@ -63,22 +63,6 @@ class CClient:
                 if seq in self.acked:
                     self.sock.sendto(udp_packets.ack_from_client(seq), self.server_addr)
                     continue
-
-                # if seq == 3481914 and k:  # test
-                #     k = False
-                #     continue
-                #
-                # if seq == 12486864 and l:  # test
-                #     l = False
-                #     continue
-                #
-                # if seq == 9845412 and m:  # test
-                #     m = False
-                #     continue
-                #
-                # if seq == 9064983 and m:  # test
-                #     m = False
-                #     continue
 
                 print('client receiving pkt seq:' + str(seq))
                 pkts.append((seq, data))
@@ -95,10 +79,11 @@ class CClient:
         if len(pkts) >= self.file_size:
             self.sock.sendto(udp_packets.ack_from_client(None, final=True), self.server_addr)
             self.sock.close()
-            self.write_file(pkts, file_path)
+            self.write_file(pkts)
             print('file downloaded!')
 
-    def write_file(self, pkts: list, file_path):
+
+    def write_file(self, pkts: list):
         """
         This method writes the file to the location the client chose,
         while combining the datagrams that was transferred after sorting them.
@@ -108,7 +93,7 @@ class CClient:
         """
         pkts.sort(key=lambda pkt: pkt[0])
         try:
-            file = open(file_path, 'wb')
+            file = open(self.file_path, 'wb')
             for pkt in pkts:
                 file.write(pkt[1])
             file.close()
@@ -120,5 +105,5 @@ class CClient:
 
 if __name__ == '__main__':
     client = CClient(('127.0.0.1', 5550))
-    client.connect('DSC02199.jpg')
+    client.connect()
     client.recv_file("./bla.jpg")
