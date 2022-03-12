@@ -1,16 +1,9 @@
 # Walk2Talk
 
-This assignment is a part of our Computer Networking course in Ariel University 
-
-### Contributers: 
-
-* [Shaked's github](https://github.com/20shaked20)
-* [Elad's github](https://github.com/eladsez)
-
 ## Introduction
 - If you just want to know how to use this code please skip to the ``` How To Use ``` segment below.
 
-This assigenmnet is split into 2 parts, a TCP chat messenger which can trasnfer files over realiable UDP. </br>
+This project is split into 2 parts, a TCP chat messenger which can trasnfer files over realiable UDP. </br>
 We had to create an entire relialbe data transfer over UDP in order to allow our file transfer to be complete and whole. </br>
 our chat allows - 
 * communication over TCP in a broadcast and in between clients, meaning each client has the ability to send and receive messages from and to every guest in the room. 
@@ -42,7 +35,7 @@ Our algorithm for file transfer over udp with CC -
 
 ## How To use
 To activate the application, there are few steps to be taken before. we will explain in detail below. </br>
- * Start Pycharm and clone our git page - https://github.com/20shaked20/walk2talk.git .</br>
+ * Start Pycharm or any other IDE and clone our git page - https://github.com/20shaked20/walk2talk.git .</br>
  * The file heirarchy :
  
   <img width="287" alt="File_Heirarchy" src="https://user-images.githubusercontent.com/73894107/156638064-bf9b36b4-825c-4ad0-998c-c8328b8b4f59.png">
@@ -85,3 +78,5 @@ To activate the application, there are few steps to be taken before. we will exp
 * [What is TCP](https://www.techtarget.com/searchnetworking/definition/TCP)
 * [Extra on Selective Repeat](https://en.wikipedia.org/wiki/Selective_Repeat_ARQ)
 * [Congestion Control Video](https://www.youtube.com/watch?v=rib_ujnMqcs)
+
+> This assignment is a part of our Computer Networking course in Ariel University 
