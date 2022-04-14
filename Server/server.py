@@ -36,6 +36,9 @@ class Server:
             client_sock = client_addr = None
             try:
                 client_sock, client_addr = self.serverSock.accept()
+                if client_addr[0][0:3] == '127':
+                    print('This fucker connected again')
+                    continue
             except error:
                 pass
             print(f'{len(self.clients_sock) + 1} client connected: {client_addr[0]}')
