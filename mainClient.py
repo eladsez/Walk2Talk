@@ -1,3 +1,6 @@
-from Client.frontend.client_gui import Room
+import socket
 
-Room(('127.0.0.1', 12345))
+from Client.frontend.client_gui import Room
+IP = socket.gethostbyname('walk2talk.herokuapp.com')
+print(IP)
+Room((IP, 80))
