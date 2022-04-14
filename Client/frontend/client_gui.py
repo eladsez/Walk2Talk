@@ -21,11 +21,7 @@ class Room:
         # This is the chat window, it will be hidden for new users until they join the room.
         self.chat_window = Tk()
         # imgs abs paths:
-        os.chdir(os.path.abspath(os.path.join(os.getcwd(), os.pardir)))
-        # parent_path = Misc.resource_path(relative_path='frontend')
-        # self.images_path = parent_path + "/imgs/"
-        parent_path = Misc.resource_path(relative_path='Client')
-        self.images_path = parent_path + "/frontend/imgs/"
+        self.images_path = os.path.abspath('Client') + '/frontend/imgs/'
         # TXT BOXES:
         self.chat_box = None  # TODO: find better solution
         self.names_box = None
@@ -365,8 +361,8 @@ class Room:
 
     @staticmethod
     def resize_image(event, template_copy, bg):
-        new_width = event.width - 4
-        new_height = event.height - 4
+        new_width = event.width - 2
+        new_height = event.height - 2
         template = template_copy.resize((new_width, new_height))
         img = ImageTk.PhotoImage(template)
         bg.config(image=img)
