@@ -1,0 +1,2 @@
+Pillow==9.1.0
+ttkthemes @ git+https://github.com/RedFantom/ttkthemes@07e6509cc6bffbe7917e6ff456f0d1f16a5de636
