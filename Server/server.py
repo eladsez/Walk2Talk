@@ -27,6 +27,7 @@ class Server:
             self.serverSock.bind(self.addr)
         except error:
             print("ERROR with Server Socket creation or bind")
+            exit(1)
 
     def listen_for_clients(self):
         self.serverSock.listen(5)
