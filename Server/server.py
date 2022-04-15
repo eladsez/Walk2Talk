@@ -36,8 +36,6 @@ class Server:
             client_sock = client_addr = None
             try:
                 client_sock, client_addr = self.serverSock.accept()
-                if client_addr[0] != '87.71.94.199':
-                    continue
             except error:
                 pass
             print(f'{len(self.clients_sock) + 1} client connected: {client_addr[0]}')
