@@ -20,7 +20,9 @@ class Server:
         self.clients_threads = []
         self.cc_server = None
         self.on = True
-        self.files = None
+        self.files = None  # list represent the files name
+        self.file_path = os.path.abspath('./') + '/Server/files/'
+        print(self.file_path)
         try:
             self.serverSock = socket(AF_INET, SOCK_STREAM)  # socket for Client to connect
             self.serverSock.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
@@ -89,8 +91,9 @@ class Server:
                 except error as err:
                     raise err
             if layers[1] == 'files':
-                # updates files during running application
-                self.files = [file for file in os.listdir('./files') if os.path.isfile(os.path.join('./files', file))]
+                # Update files during running application
+                self.files = [file for file in os.listdir(self.file_path) if
+                              os.path.isfile(os.path.join(self.file_path, file))]
                 pkt = tcp_packets.server_files_packet(self.files)
                 try:
                     client_sock.send(pkt.encode())
@@ -143,7 +146,7 @@ class Server:
         # os.chdir(os.path.abspath(os.path.join(os.getcwd(), os.pardir)))
         # parent_path = Misc.resource_path(relative_path='Server')
         # file_path = parent_path + "\\files\\" + file_name
-        file_path = './files/' + file_name
+        file_path = self.file_path + file_name
 
         self.cc_server = CCServer()
         # extract the addr for the current client :
