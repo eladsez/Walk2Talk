@@ -119,7 +119,10 @@ class Server:
                 print('pause pressed!!')
                 self.cc_server.pause = True
             else:
-                threading.Thread(target=self.download, args=(layers[1], client_sock,)).start()
+                print(
+                    f'DOWNLOAD_REQ from client {self.clients_sock[client_sock]} at {self.clients_addr[self.clients_sock[client_sock]]}')
+                threading.Thread(target=self.download_tcp, args=(layers[1], client_sock,)).start()
+                # threading.Thread(target=self.download_rdt, args=(layers[1], client_sock,)).start()
 
     def broadcast(self, pkt, conn=None):
         copy_client_sock = self.clients_sock.copy()  # important to avoid iterable conflicts
@@ -140,7 +143,7 @@ class Server:
             del self.clients_sock[client_sock]
             del self.clients_addr[name]
 
-    def download(self, file_name: str, client_sock: socket):
+    def download_rdt(self, file_name: str, client_sock: socket):
         # Getting the absolute path for the file to download
         file_path = self.file_path + file_name
 
@@ -152,6 +155,21 @@ class Server:
         while not connect:
             connect = self.cc_server.connect((client_addr[0], 5550), file_path)
         self.cc_server.send_file()
+
+    # there is a problem with the tcp download implementation because its download and send message on the same socket
+    # TODO: fix it
+    def download_tcp(self, file_name: str, client_sock: socket):
+        # Getting the absolute path for the file to download
+        print(f'sending {file_name} to {self.clients_addr[self.clients_sock[client_sock]]}')
+        file_path = self.file_path + file_name
+        file = open(file_path, 'rb')
+        data = file.read(60000)
+        while data:
+            client_sock.send(data)
+            data = file.read(60000)
+        client_sock.send("~*DONE*~".encode())
+        file.close()
+        print('Done sending to {self.clients_addr[self.clients_sock[client_sock]]}')
 
     def shout_down(self):
         try:

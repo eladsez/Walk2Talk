@@ -198,7 +198,7 @@ class Controller:
         :return:
         """
         event.widget.config(image=event.widget.image_press)
-        messagebox.showinfo("DOWNLOAD", "Download files currently in development")
+        messagebox.showinfo("DOWNLOAD", "Download files currently in development.")
         try:
             file_number = int(files_box.curselection()[0])
         except IndexError:
@@ -215,7 +215,9 @@ class Controller:
             return
         pause_btn.place(relx=0.7, rely=0.725)
         self.client.request_download(file_name, file_path)
-        threading.Thread(target=self.progress_bar_download, args=(pro_bar, pause_btn)).start()
+        threading.Thread(target=self.client.download_tcp, args=(file_path, )).start()
+        # threading.Thread(target=self.client.download_rdt, args=(file_name, file_path)).start()
+        # threading.Thread(target=self.progress_bar_download, args=(pro_bar, pause_btn)).start()
 
     def progress_bar_download(self, pro_bar: ttk.Progressbar, pause_btn: Label):
         final_len = self.client.c_client.file_size
@@ -228,10 +230,6 @@ class Controller:
             pro_bar.update()
             pro_bar['value'] = progress_len * jump
             progress_len = self.client.c_client.pkts_arrived_len
-
-            # if pro_bar['value'] >= 50 and not flag:  # for stopping the download in 50% and ask for continue
-            #     flag = True
-            #     messagebox.showinfo("DOWNLOAD", "the download is 50% do you wish to continue?")
 
         messagebox.showinfo("DOWNLOAD", "download complete!")
         pro_bar['value'] = 0

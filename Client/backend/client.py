@@ -128,9 +128,7 @@ class Client:
             print(err)
             print('client failed to send file name to the server')
 
-        threading.Thread(target=self.download, args=(file_name, file_path)).start()
-
-    def download(self, file_name: str, file_path):
+    def download_rdt(self, file_name: str, file_path):
         """
         A simple download file method
         file name is optional
@@ -141,6 +139,18 @@ class Client:
         while not connect:
             connect = self.c_client.connect()
         self.c_client.recv_file(file_path)
+
+    # there is a problem with the tcp download implementation because its download and send message on the same socket
+    # TODO: fix it
+    def download_tcp(self, file_path):
+        file = open(file_path, 'wb')
+        data = self.sock.recv(60000)
+        print('download start!')
+        while data != '~*DONE*~'.encode():
+            print('download recv')
+            file.write(data)
+            data = self.sock.recv(60000)
+        file.close()
 
     def pause_download(self):
         if self.sock:
@@ -164,7 +174,3 @@ class Client:
             except socket.error as e:
                 print(e)
                 print('error with resume the download')
-
-# if __name__ == '__main__':
-#     client = Client()
-#     client.connect(('127.0.0.1', 12345))
