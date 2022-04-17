@@ -22,7 +22,6 @@ class Server:
         self.on = True
         self.files = None  # list represent the files name
         self.file_path = os.path.abspath('./') + '/Server/files/'
-        print(self.file_path)
         try:
             self.serverSock = socket(AF_INET, SOCK_STREAM)  # socket for Client to connect
             self.serverSock.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
@@ -143,9 +142,6 @@ class Server:
 
     def download(self, file_name: str, client_sock: socket):
         # Getting the absolute path for the file to download
-        # os.chdir(os.path.abspath(os.path.join(os.getcwd(), os.pardir)))
-        # parent_path = Misc.resource_path(relative_path='Server')
-        # file_path = parent_path + "\\files\\" + file_name
         file_path = self.file_path + file_name
 
         self.cc_server = CCServer()
@@ -165,8 +161,3 @@ class Server:
             return False
         print('the server have been shout down')
         return True
-
-
-if __name__ == '__main__':
-    server = Server(('0.0.0.0', 12345))
-    server.listen_for_clients()

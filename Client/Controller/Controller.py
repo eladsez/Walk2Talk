@@ -198,6 +198,7 @@ class Controller:
         :return:
         """
         event.widget.config(image=event.widget.image_press)
+        messagebox.showinfo("DOWNLOAD", "Download files currently in development")
         try:
             file_number = int(files_box.curselection()[0])
         except IndexError:
