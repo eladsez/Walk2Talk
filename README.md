@@ -1,7 +1,7 @@
 # Walk2Talk
 
 ## Introduction
-- If you just want to know how to use this code please skip to the ``` How To Use ``` segment below.
+- If you just want to know how to use this code please skip to the [``` How To Use ```](https://github.com/eladsez/Walk2Talk#how-to-use) segment below.
 
 This project is split into 2 parts, a TCP chat messenger which can trasnfer files over realiable UDP. </br>
 We had to create an entire relialbe data transfer over UDP in order to allow our file transfer to be complete and whole. </br>
